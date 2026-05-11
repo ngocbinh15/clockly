@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 class AppTextStyles {
   static final heading = GoogleFonts.inter(
     fontSize: 30,
-    fontWeight: FontWeight.w800,
+    fontWeight: FontWeight.w700,
     color: Colors.black,
   );
 

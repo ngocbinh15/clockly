@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       title: 'Clockly',
       theme: AppTheme.light,
 
-      initialRoute: AppRoutes.login,
+      initialRoute: AppRoutes.splash,
       getPages: AppPages.routes,
       debugShowCheckedModeBanner: false,
     );
