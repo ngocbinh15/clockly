@@ -1,5 +1,6 @@
 import 'package:clockly/core/components/text_heading.dart';
 import 'package:clockly/core/constants/app_size.dart';
+import 'package:clockly/features/task_home/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -23,16 +24,12 @@ class PageTaskHome extends GetView<TaskHomeController> {
 
         return Padding(
           padding: EdgeInsets.only(
-              top: MediaQuery.of(context).padding.top,
+            top: MediaQuery.of(context).padding.top,
             left: AppSizes.p12,
             right: AppSizes.p12,
             bottom: AppSizes.p12,
           ),
-          child: Column(
-            children: [
-              
-            ],
-          ),
+          child: Column(children: [CustomAppBar()]),
         );
       }),
     );

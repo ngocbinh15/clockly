@@ -27,6 +27,7 @@ dependencies:
   table_calendar: ^3.2.0
   shimmer: ^3.0.0
   pin_code_fields: ^9.3.0
+  package_info_plus: ^10.1.0
 
 dev_dependencies:
   flutter_test:

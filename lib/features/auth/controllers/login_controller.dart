@@ -8,7 +8,7 @@ import 'auth_helper.dart';
 
 class LoginController extends GetxController {
   final supabase = Supabase.instance.client;
-  final authService = Get.find <AuthService>();
+  final authService = Get.find<AuthService>();
 
   var obscurePassword = true.obs;
   final emailController = TextEditingController();
@@ -27,7 +27,14 @@ class LoginController extends GetxController {
 
     try {
       AuthHelper.showLoading();
+
       await authService.signIn(email, password);
+
+      AuthHelper.hideLoading();
+
+      emailController.clear();
+      passwordController.clear();
+
     } on AuthException catch (e) {
       AuthHelper.hideLoading();
       CustomSnackbar.snackbar("Login Failed", e.message, AppColors.red);
@@ -39,5 +46,12 @@ class LoginController extends GetxController {
 
   void toggleObscurePassword() {
     obscurePassword.value = !obscurePassword.value;
+  }
+
+  @override
+  void onClose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.onClose();
   }
 }

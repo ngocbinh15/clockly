@@ -1,6 +1,7 @@
 import 'package:clockly/features/auth/bidings/forgot_password_bidings.dart';
 import 'package:clockly/features/auth/bidings/login_bidings.dart';
 import 'package:clockly/features/auth/bidings/sign_up_bidings.dart';
+import 'package:clockly/features/auth/bidings/splash_bidings.dart';
 import 'package:clockly/features/auth/splash/splash_page.dart';
 import 'package:clockly/features/auth/views/page_forgot_password.dart';
 import 'package:clockly/features/auth/views/page_login.dart';
@@ -27,6 +28,7 @@ class AppPages {
     GetPage(
         name: AppRoutes.splash,
         page: () => PageSplash(),
+      binding: SplashBidings()
     ),
     GetPage(
         name: AppRoutes.forgotPassword,
