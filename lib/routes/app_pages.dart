@@ -11,7 +11,7 @@ import 'package:clockly/routes/app_routes.dart';
 import 'package:get/get.dart';
 
 import '../features/task_home/bidings/task_home.dart';
-import '../features/task_home/view/page_attendance.dart';
+import '../features/task_home/view/page_task_home.dart';
 
 class AppPages {
   static final routes = [

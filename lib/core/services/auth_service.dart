@@ -60,11 +60,11 @@ class AuthService extends GetxService {
       currentUser.value = UserModel.fromMap(response);
       isLoggedIn.value = true;
 
-      debugPrint("✅ [AuthService] Tải profile thành công. Bay vào Home!");
+      debugPrint("[AuthService] Tải profile thành công. Bay vào Home!");
       Get.offAllNamed(AppRoutes.home);
 
     } catch (e, stacktrace) {
-      debugPrint('❌ [AuthService] LỖI TẢI PROFILE: $e\n$stacktrace');
+      debugPrint('[AuthService] LỖI TẢI PROFILE: $e\n$stacktrace');
       CustomSnackbar.snackbar(
           'Lỗi kết nối',
           'Không thể lấy dữ liệu người dùng. Vui lòng kiểm tra mạng.',
@@ -112,10 +112,6 @@ class AuthService extends GetxService {
       UserAttributes(password: password),
     );
   }
-
-  // ===========================================================================
-  // HÀM DỌN DẸP
-  // ===========================================================================
 
   void _clearStateAndGoToLogin() {
     isLoggedIn.value = false;

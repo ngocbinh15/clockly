@@ -24,12 +24,17 @@ class PageTaskHome extends GetView<TaskHomeController> {
 
         return Padding(
           padding: EdgeInsets.only(
-            top: MediaQuery.of(context).padding.top,
-            left: AppSizes.p12,
-            right: AppSizes.p12,
-            bottom: AppSizes.p12,
+            top: MediaQuery.of(context).padding.top + AppSizes.p12,
+            left: AppSizes.p24,
+            right: AppSizes.p24,
+            bottom: AppSizes.p24,
           ),
-          child: Column(children: [CustomAppBar()]),
+          child: Column(
+              children: [
+                CustomAppBar(),
+
+              ]
+          ),
         );
       }),
     );
