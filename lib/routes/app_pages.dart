@@ -1,13 +1,16 @@
-import 'package:clockly/features/attendance/bidings/attendance_biding.dart';
-import 'package:clockly/features/attendance/view/page_attendance.dart';
 import 'package:clockly/features/auth/bidings/forgot_password_bidings.dart';
 import 'package:clockly/features/auth/bidings/login_bidings.dart';
+import 'package:clockly/features/auth/bidings/sign_up_bidings.dart';
 import 'package:clockly/features/auth/splash/splash_page.dart';
 import 'package:clockly/features/auth/views/page_forgot_password.dart';
 import 'package:clockly/features/auth/views/page_login.dart';
 import 'package:clockly/features/auth/views/page_reset_password.dart';
+import 'package:clockly/features/auth/views/page_sign_up.dart';
 import 'package:clockly/routes/app_routes.dart';
 import 'package:get/get.dart';
+
+import '../features/task_home/bidings/task_home.dart';
+import '../features/task_home/view/page_attendance.dart';
 
 class AppPages {
   static final routes = [
@@ -18,8 +21,8 @@ class AppPages {
     ),
     GetPage(
         name: AppRoutes.home,
-        page: () => PageAttendance(),
-      binding: AttendanceBiding()
+        page: () => PageTaskHome(),
+      binding: TaskHomeBiding()
     ),
     GetPage(
         name: AppRoutes.splash,
@@ -34,6 +37,11 @@ class AppPages {
     GetPage(
         name: AppRoutes.resetPassword,
         page: () => PageResetPassword(),
+    ),
+    GetPage(
+        name: AppRoutes.signUp,
+        page: () => PageSignUp(),
+      binding: SignUpBidings()
     )
   ];
 }

@@ -1,11 +1,8 @@
 import 'package:clockly/core/components/custom_text_button.dart';
-import 'package:clockly/core/components/text_heading.dart';
-import 'package:clockly/core/components/text_title.dart';
 import 'package:clockly/core/theme/app_colors.dart';
 import 'package:clockly/features/auth/controllers/login_controller.dart';
 import 'package:clockly/features/auth/widgets/form_forgot_password.dart';
 import 'package:clockly/features/auth/widgets/heading_auth.dart';
-import 'package:clockly/features/auth/widgets/main_icon.dart';
 import 'package:clockly/features/auth/widgets/main_theme.dart';
 import 'package:clockly/routes/app_routes.dart';
 import 'package:flutter/material.dart';

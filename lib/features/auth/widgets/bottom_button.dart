@@ -1,10 +1,17 @@
 import 'package:clockly/core/components/custom_text_button.dart';
+import 'package:clockly/core/constants/app_size.dart';
 import 'package:clockly/core/theme/app_colors.dart';
+import 'package:clockly/routes/app_pages.dart';
+import 'package:clockly/routes/app_routes.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ContactAdmin extends StatelessWidget {
-  const ContactAdmin({super.key});
+class BottomButton extends StatelessWidget {
+  BottomButton({super.key, required this.leftText, required this.buttonText, required this.onTap});
+
+  String leftText, buttonText;
+  VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -14,31 +21,20 @@ class ContactAdmin extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "Having trouble?",
+              leftText,
               style: GoogleFonts.inter(
                 color: const Color(0xFF334155),
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
               ),
             ),
-            const SizedBox(width: 6),
+            SizedBox(width: AppSizes.p8),
             CustomTextButton(
                 color: AppColors.primary,
-                text: "Contact Admin",
-                onTap: () {
-                  // TODO: Contact Admin Page
-                },
+                text: buttonText,
+                onTap: onTap,
             )
           ],
-        ),
-        const SizedBox(height: 12),
-        Text(
-          "Clockly v1.0.0",
-          style: GoogleFonts.inter(
-            color: const Color(0xFF64748B),
-            fontSize: 12,
-            fontWeight: FontWeight.w500,
-          ),
         ),
       ],
     );

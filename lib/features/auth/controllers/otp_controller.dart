@@ -57,9 +57,8 @@ class OtpController extends GetxController{
   void _handleSuccess(OtpType type) async {
     switch (type) {
       case OtpType.signup:
-        await supabase.auth.signOut();
+        await Get.find<AuthService>().logout();
         CustomSnackbar.snackbar("Welcome!", "Your account is ready. You can now log in.", AppColors.green);
-        Get.offAllNamed(AppRoutes.login);
         break;
 
       case OtpType.recovery:

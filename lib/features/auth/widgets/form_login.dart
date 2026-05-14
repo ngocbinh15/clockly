@@ -33,7 +33,7 @@ class FormLogin extends GetView<LoginController> {
             validator: (value) => Validate.validEmail(value),
           ),
 
-          const SizedBox(height: 24),
+          SizedBox(height: AppSizes.p24),
 
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -196,7 +196,7 @@ class AuthHelper {
                   ),
                   GestureDetector(
                     onTap: () {
-                      // TODO: Gọi lại hàm gửi OTP ở đây
+                      // TODO: Gọi lại hàm gửi OTP
                     },
                     child: const Text(
                       "Resend",

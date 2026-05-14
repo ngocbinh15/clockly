@@ -25,7 +25,6 @@ class AuthService extends GetxService {
 
       if (event == AuthChangeEvent.initialSession) {
         if (session != null) {
-          await Future.delayed(const Duration(seconds: 2));
           _fetchRoleAndRoute(session.user.id);
         } else {
           _handleNoSession();
@@ -55,6 +54,7 @@ class AuthService extends GetxService {
           .single();
 
       currentUser.value = UserModel.fromMap(response);
+      AuthHelper.hideLoading();
       Get.offAllNamed(AppRoutes.home);
     } catch (e) {
       AuthHelper.hideLoading();
@@ -69,6 +69,16 @@ class AuthService extends GetxService {
 
   Future<void> sendPasswordReset (String email) async {
     await _supabase.auth.resetPasswordForEmail(email);
+  }
+
+  Future<void> signUp(String email, String password, String name) async {
+    await _supabase.auth.signUp(
+      email: email,
+      password: password,
+      data: {
+        'full_name': name,
+      },
+    );
   }
 
   Future<void> verifyOTP (String email, String otp, OtpType type) async {

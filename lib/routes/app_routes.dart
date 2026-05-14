@@ -4,4 +4,5 @@ class AppRoutes {
   static const splash = "/splash";
   static const forgotPassword = "/forgotPassword";
   static const resetPassword = "/resetPassword";
+  static const signUp = "/signup";
 }

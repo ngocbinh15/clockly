@@ -23,6 +23,20 @@ class Validate {
     return null;
   }
 
+  static String? validName(String? value) {
+    if (value?.trim().isEmpty ?? true) {
+      return "Name cannot be empty";
+    }
+
+    final nameRegex = RegExp(r'^[a-zA-ZÀ-ỹ0-9\s]+$');
+
+    if (!nameRegex.hasMatch(value!.trim())) {
+      return "Name cannot contain special characters";
+    }
+
+    return null;
+  }
+
   static String? confirmPassword (String? value, String? confirmValue) {
     if (value == null || value.trim().isEmpty) {
       return "Password cannot be empty";
