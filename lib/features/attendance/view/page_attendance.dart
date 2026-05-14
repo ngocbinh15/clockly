@@ -27,8 +27,8 @@ class PageAttendance extends GetView<AttendanceController> {
           children: [
             const Spacer(),
             TextHeading(textHeading: currUser.id),
-            TextHeading(textHeading: currUser.full_name),
-            TextHeading(textHeading: currUser.role),
+            TextHeading(textHeading: currUser.fullName),
+            TextHeading(textHeading: currUser.totalPoints.toString()),
             TextHeading(textHeading: currUser.email),
             ElevatedButton(
                 onPressed: () => authService.logout(),

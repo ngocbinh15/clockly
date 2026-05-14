@@ -55,18 +55,7 @@ class AuthService extends GetxService {
           .single();
 
       currentUser.value = UserModel.fromMap(response);
-
-      final role = currentUser.value!.role;
-      const allowedRoles = ['admin', 'manager', 'employee'];
-
-      if (allowedRoles.contains(role)) {
-        AuthHelper.hideLoading();
-        Get.offAllNamed(AppRoutes.home);
-      } else {
-        AuthHelper.hideLoading();
-        CustomSnackbar.snackbar('Error', 'Invalid role', AppColors.red);
-        logout();
-      }
+      Get.offAllNamed(AppRoutes.home);
     } catch (e) {
       AuthHelper.hideLoading();
       CustomSnackbar.snackbar('System Error', 'Could not fetch user profile.', AppColors.red);

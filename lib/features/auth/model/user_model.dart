@@ -1,29 +1,30 @@
 class UserModel {
-  String id, full_name, email, role;
+  final String id;
+  final String fullName;
+  final String email;
+  final String? avatarUrl;
+  final int totalPoints;
+  final DateTime createdAt;
 
   UserModel({
     required this.id,
-    required this.full_name,
+    required this.fullName,
     required this.email,
-    required this.role
+    this.avatarUrl,
+    this.totalPoints = 0,
+    required this.createdAt,
   });
-
-  Map<String, dynamic> toMap() {
-    return {
-      'id': this.id,
-      'full_name': this.full_name,
-      'email': this.email,
-      'role': this.role,
-    };
-  }
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
-      id: map['id'] as String,
-      full_name: map['full_name'] as String,
-      email: map['email'] as String,
-      role: map['role'] as String,
+      id: map['id'] ?? '',
+      fullName: map['full_name'] ?? 'Người dùng',
+      email: map['email'] ?? '',
+      avatarUrl: map['avatar_url'],
+      totalPoints: map['total_points'] ?? 0,
+      createdAt: map['created_at'] != null
+          ? DateTime.parse(map['created_at'])
+          : DateTime.now(),
     );
   }
-
 }
