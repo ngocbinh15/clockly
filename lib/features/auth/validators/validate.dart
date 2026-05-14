@@ -22,4 +22,19 @@ class Validate {
 
     return null;
   }
+
+  static String? confirmPassword (String? value, String? confirmValue) {
+    if (value == null || value.trim().isEmpty) {
+      return "Password cannot be empty";
+    }
+
+    if (value.length < 6) {
+      return "Password must be at least 6 characters";
+    }
+
+    if (value != confirmValue) {
+      return "Confirm password does not match";
+    }
+    return null;
+  }
 }

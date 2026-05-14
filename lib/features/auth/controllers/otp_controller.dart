@@ -1,3 +1,5 @@
+import 'package:clockly/core/services/auth_service.dart';
+import 'package:clockly/features/auth/controllers/forgot_password_controller.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -11,19 +13,20 @@ class OtpController extends GetxController{
   final otpErrorText = RxnString(null);
   final pinController = PinInputController();
   final supabase = Supabase.instance.client;
+  final authService = Get.find<AuthService>();
 
-  Future<void> confirmOTP(String otp, OtpType type) async {
+  Future<void> confirmOTP(String otp, OtpType type, String email) async {
     try {
       AuthHelper.showLoading();
 
       // TEST submit OTP
-      // await authService.verifyOTP(
-      //   tempEmail.isNotEmpty ? tempEmail : emailController.text.trim(),
-      //   otp,
-      //   type,
-      // );
-
-      await Future.delayed(const Duration(seconds: 2));
+      await authService.verifyOTP(
+        email.trim(),
+        otp,
+        type,
+      );
+      //
+      // await Future.delayed(const Duration(seconds: 2));
       AuthHelper.hideLoading();
 
       if (Get.isDialogOpen ?? false) {
@@ -61,6 +64,7 @@ class OtpController extends GetxController{
 
       case OtpType.recovery:
         Get.toNamed(AppRoutes.resetPassword);
+        pinController.clear();
         break;
 
       default:

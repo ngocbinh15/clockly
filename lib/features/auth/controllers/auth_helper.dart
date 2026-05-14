@@ -5,6 +5,7 @@ import 'package:clockly/features/auth/controllers/otp_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hugeicons/hugeicons.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -55,7 +56,7 @@ class AuthHelper {
     }
   }
 
-  static void dialogOTP(OtpType type) {
+  static void dialogOTP(OtpType type, String email) {
     final controller = Get.put(OtpController());
 
     Get.dialog(
@@ -83,8 +84,8 @@ class AuthHelper {
                   color: AppColors.primary.withValues(alpha: 0.1),
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(
-                  Icons.lock_outline,
+                child: HugeIcon(
+                  icon: HugeIcons.strokeRoundedForgotPassword,
                   color: AppColors.primary,
                   size: 28,
                 ),
@@ -151,7 +152,7 @@ class AuthHelper {
                 },
 
                 onCompleted: (value) {
-                  controller.confirmOTP(value, type);
+                  controller.confirmOTP(value, type, email);
                 },
 
                 errorBuilder: (errorText) {
@@ -164,8 +165,8 @@ class AuthHelper {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(
-                          Icons.error_outline_rounded,
+                        HugeIcon(
+                        icon: HugeIcons.strokeRoundedSettingError03,
                           color: AppColors.red,
                           size: 18,
                         ),

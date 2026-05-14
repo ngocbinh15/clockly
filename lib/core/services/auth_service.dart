@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:clockly/core/components/custom_snackbar.dart';
 import 'package:clockly/core/theme/app_colors.dart';
 import 'package:clockly/features/auth/controllers/auth_helper.dart';
@@ -96,6 +94,14 @@ class AuthService extends GetxService {
     await _supabase.auth.signInWithPassword(
         password: password,
       email: email
+    );
+  }
+
+  Future <void> resetPassword (String password) async {
+    await _supabase.auth.updateUser(
+      UserAttributes(
+        password: password
+      )
     );
   }
 
