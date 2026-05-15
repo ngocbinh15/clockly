@@ -1,6 +1,7 @@
 import 'package:clockly/core/components/app_alerts.dart';
 import 'package:clockly/core/constants/app_message.dart';
 import 'package:clockly/core/services/auth_service.dart';
+import 'package:clockly/routes/app_routes.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -19,6 +20,8 @@ class TaskHomeController extends GetxController{
   var isLoading = true.obs;
   var allTasks = <TaskModel>[].obs;
   var selectedCategory = TaskCategory.all.obs;
+
+  RxInt bottomNavIndex = 0.obs;
 
   @override
   void onInit() {
@@ -128,7 +131,6 @@ class TaskHomeController extends GetxController{
     if (hour >= 12) return "Good Afternoon";
     return "Good Morning";
   }
-
 
   String formatTime(DateTime? date) {
     if (date == null) return "No time";

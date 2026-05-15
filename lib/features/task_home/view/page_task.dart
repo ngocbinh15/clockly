@@ -1,7 +1,9 @@
+import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:clockly/core/components/text_heading.dart';
 import 'package:clockly/core/constants/app_size.dart';
 import 'package:clockly/core/theme/app_colors.dart';
 import 'package:clockly/features/task_home/widgets/custom_app_bar.dart';
+import 'package:clockly/features/task_home/widgets/custom_bottom_nav.dart';
 import 'package:clockly/features/task_home/widgets/custom_choices_chip.dart';
 import 'package:clockly/features/task_home/widgets/task_list.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +14,8 @@ import 'package:hugeicons/hugeicons.dart';
 import '../../../core/services/auth_service.dart';
 import '../controllers/task_home_controller.dart';
 
-class PageTaskHome extends GetView<TaskHomeController> {
-  PageTaskHome({super.key});
+class PageTask extends GetView<TaskHomeController> {
+  PageTask({super.key});
 
   final authService = Get.find<AuthService>();
 
@@ -76,20 +78,6 @@ class PageTaskHome extends GetView<TaskHomeController> {
           ),
         );
       }),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: AppColors.primary,
-        onPressed: () {
-
-        },
-        shape: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(100)
-        ),
-        child: HugeIcon(
-          icon: HugeIcons.strokeRoundedAdd01,
-          color: AppColors.secondary,
-          strokeWidth: 2.5,
-        ),
-      ),
     );
   }
 }

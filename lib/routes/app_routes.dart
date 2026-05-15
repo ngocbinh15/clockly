@@ -5,4 +5,7 @@ class AppRoutes {
   static const forgotPassword = "/forgotPassword";
   static const resetPassword = "/resetPassword";
   static const signUp = "/signup";
+  static const team = "/team";
+  static const calendar = "/calendar";
+  static const analys = "/analys";
 }
