@@ -30,7 +30,7 @@ class TaskHomeController extends GetxController{
     if (selected.value == TaskCategory.all.displayName) {
       return allTasks;
     }
-    return allTasks.where((task) => task.category == selectedCategory.value).toList();
+    return allTasks.where((task) => task.category.displayName == selected.value).toList();
   }
 
   List<TaskModel> get todayTasks {

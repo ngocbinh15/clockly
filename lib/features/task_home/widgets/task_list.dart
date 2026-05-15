@@ -163,12 +163,13 @@ class TaskList extends GetView<TaskHomeController> {
                             ),
                           ),
 
-                          IconButton(
-                            icon: const Icon(Icons.more_vert, color: Colors.grey),
-                            onPressed: () {
-                              // TODO: Mở menu Sửa/Xóa task
-                            },
-                          )
+                          if (!isCompleted)
+                            IconButton(
+                              icon: const Icon(Icons.more_vert, color: Colors.grey),
+                              onPressed: () {
+                                // TODO: Mở menu Sửa/Xóa task
+                              },
+                            )
                         ],
                       ),
                     )
