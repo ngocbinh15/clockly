@@ -22,7 +22,7 @@ class CustomAppBar extends StatelessWidget {
             Text(
               controller.today,
               style: TextStyle(
-                color: AppColors.primary,
+                color: AppColors.third,
                 fontSize: AppSizes.p16,
                 fontWeight: FontWeight.w600,
               ),

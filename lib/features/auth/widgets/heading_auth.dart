@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:hugeicons/hugeicons.dart';
 
 import '../../../core/components/text_heading.dart';
 import '../../../core/components/text_title.dart';

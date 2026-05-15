@@ -6,6 +6,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/components/app_alerts.dart';
+
 class SignUpController extends GetxController{
   final nameController = TextEditingController();
   final emailController = TextEditingController();
@@ -34,7 +36,7 @@ class SignUpController extends GetxController{
       passwordController.clear();
     } catch (e) {
       AuthHelper.hideLoading();
-      CustomSnackbar.snackbar('Error', e.toString(), AppColors.red);
+      AppAlerts.error(message: "$e");
     }
   }
 }
