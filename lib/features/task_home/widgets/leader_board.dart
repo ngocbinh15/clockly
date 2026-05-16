@@ -8,6 +8,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hugeicons/hugeicons.dart';
 
+import '../../../core/utils/dialog_helper.dart';
+
 class LeaderBoard extends GetView<TeamController> {
   LeaderBoard({super.key});
 
@@ -117,79 +119,95 @@ class LeaderBoard extends GetView<TeamController> {
                 int rank = index + 1;
                 bool isMe = currUserModel.id == currUser.id;
 
-                return Container(
-                  margin: const EdgeInsets.only(bottom: AppSizes.p12),
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                  decoration: BoxDecoration(
-                    color: AppColors.secondary,
-                    borderRadius: BorderRadius.circular(AppSizes.p16),
-                    border: isMe
-                        ? Border.all(color: AppColors.primary, width: 1.5)
-                        : Border.all(color: AppColors.grey.withValues(alpha: 0.1)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.02),
-                        blurRadius: 8,
-                        offset: const Offset(0, 4),
-                      )
-                    ],
-                  ),
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 30,
-                        child: Text(
-                          "$rank",
-                          style: GoogleFonts.inter(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
-                            color: isMe ? AppColors.primary : AppColors.third,
-                          ),
-                        ),
-                      ),
-
-                      Avatar(avatarURL: currUserModel.avatarUrl),
-                      const SizedBox(width: 16),
-
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              isMe ? "You" : currUserModel.fullName,
-                              style: GoogleFonts.inter(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black87,
-                              ),
+                return GestureDetector(
+                  onLongPress: () {
+                    if (!isMe) {
+                      CustomDialog.showDeleteConfirm(
+                        title: "Unfriend ${currUserModel.fullName}?",
+                        content: "Are you sure you want to remove this person from your friend list? They will be removed from your leaderboard.",
+                        cancle: "Cancel",
+                        confirm: "Unfriend",
+                        onConfirm: () {
+                          Get.back();
+                          controller.unfriend(currUserModel.id);
+                        },
+                      );
+                    }
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.only(bottom: AppSizes.p12),
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                    decoration: BoxDecoration(
+                      color: AppColors.secondary,
+                      borderRadius: BorderRadius.circular(AppSizes.p16),
+                      border: isMe
+                          ? Border.all(color: AppColors.primary, width: 1.5)
+                          : Border.all(color: AppColors.grey.withValues(alpha: 0.1)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.02),
+                          blurRadius: 8,
+                          offset: const Offset(0, 4),
+                        )
+                      ],
+                    ),
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 30,
+                          child: Text(
+                            "$rank",
+                            style: GoogleFonts.inter(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                              color: isMe ? AppColors.primary : AppColors.third,
                             ),
-                            const SizedBox(height: 4),
-                            Text(
-                              "${currUserModel.totalPoints} Tasks Points",
-                              style: GoogleFonts.inter(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.grey,
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
 
-                      if (rank <= 3)
-                        Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                              color: colorPosition[rank].withValues(alpha: 0.15),
-                              shape: BoxShape.circle
-                          ),
-                          child: HugeIcon(
-                            icon: HugeIcons.strokeRoundedStarAward01,
-                            color: colorPosition[rank],
-                            size: 20,
+                        Avatar(avatarURL: currUserModel.avatarUrl),
+                        const SizedBox(width: 16),
+
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                isMe ? "You" : currUserModel.fullName,
+                                style: GoogleFonts.inter(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black87,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                "${currUserModel.totalPoints} Tasks Points",
+                                style: GoogleFonts.inter(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.grey,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                    ],
+
+                        if (rank <= 3)
+                          Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                                color: colorPosition[rank].withValues(alpha: 0.15),
+                                shape: BoxShape.circle
+                            ),
+                            child: HugeIcon(
+                              icon: HugeIcons.strokeRoundedStarAward01,
+                              color: colorPosition[rank],
+                              size: 20,
+                            ),
+                          ),
+                      ],
+                    ),
                   ),
                 );
               }

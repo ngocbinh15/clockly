@@ -17,11 +17,13 @@ class TeamController extends GetxController{
 
   final _supabase = Supabase.instance.client;
   final authService = Get.find<AuthService>();
+  RxList<Map<String, dynamic>> pendingRequests = <Map<String, dynamic>>[].obs;
 
   @override
   void onInit() {
     super.onInit();
     fetchFriendList();
+    fetchPendingRequests();
   }
 
   Future<void> fetchFriendList() async {
@@ -88,8 +90,6 @@ class TeamController extends GetxController{
       isSearching.value = true;
       final String userId = authService.currentUser.value!.id;
 
-      // Tìm kiếm theo tên hoặc email, bỏ qua chính mình
-      // limit(10) để giới hạn 10 kết quả tránh bị lag
       final response = await _supabase
           .from('profiles')
           .select()
@@ -105,13 +105,11 @@ class TeamController extends GetxController{
     }
   }
 
-  // 3. Hàm Gửi lời mời kết bạn
   Future<void> sendFriendRequest(String receiverId) async {
     try {
-      AuthHelper.showLoading(); // Nhớ import AuthHelper nếu IDE báo lỗi đỏ nhé
+      AuthHelper.showLoading();
       final String userId = authService.currentUser.value!.id;
 
-      // Kiểm tra xem 2 người đã kết bạn / hoặc đã gửi lời mời trước đó chưa
       final check = await _supabase
           .from('friendships')
           .select()
@@ -146,6 +144,69 @@ class TeamController extends GetxController{
           user.fullName.toLowerCase().contains(query.toLowerCase()) ||
               user.email.toLowerCase().contains(query.toLowerCase()))
       );
+    }
+  }
+
+  Future<void> fetchPendingRequests() async {
+    try {
+      final String userId = authService.currentUser.value!.id;
+      final response = await _supabase
+          .from('friendships')
+          .select('id, requester:profiles!requester_id(*)')
+          .eq('receiver_id', userId)
+          .eq('status', 'pending');
+
+      pendingRequests.assignAll(List<Map<String, dynamic>>.from(response));
+    } catch (e) {
+      debugPrint("Lỗi tải lời mời kết bạn: $e");
+    }
+  }
+
+  Future<void> acceptRequest(String friendshipId) async {
+    try {
+      AuthHelper.showLoading();
+      await _supabase
+          .from('friendships')
+          .update({'status': 'accepted'})
+          .eq('id', friendshipId);
+
+      await fetchPendingRequests();
+      await fetchFriendList();
+
+      AuthHelper.hideLoading();
+      AppAlerts.success(message: "Friend request accepted!");
+    } catch (e) {
+      AuthHelper.hideLoading();
+      AppAlerts.error(message: "Error: $e");
+    }
+  }
+
+  Future<void> declineRequest(String friendshipId) async {
+    try {
+      AuthHelper.showLoading();
+      await _supabase.from('friendships').delete().eq('id', friendshipId);
+      await fetchPendingRequests();
+      AuthHelper.hideLoading();
+    } catch (e) {
+      AuthHelper.hideLoading();
+      AppAlerts.error(message: "Error: $e");
+    }
+  }
+
+  Future<void> unfriend(String friendId) async {
+    try {
+      AuthHelper.showLoading();
+      final String userId = authService.currentUser.value!.id;
+
+      await _supabase.from('friendships').delete().or(
+          'and(requester_id.eq.$userId,receiver_id.eq.$friendId),and(requester_id.eq.$friendId,receiver_id.eq.$userId)');
+
+      await fetchFriendList();
+      AuthHelper.hideLoading();
+      AppAlerts.success(message: "Unfriended successfully.");
+    } catch (e) {
+      AuthHelper.hideLoading();
+      AppAlerts.error(message: "Error unfriending: $e");
     }
   }
 }

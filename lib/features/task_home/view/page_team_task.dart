@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 import '../../../core/constants/app_size.dart';
+import '../widgets/friend_requests_bottom_sheet.dart';
 import '../widgets/search_friend_bottom_sheet.dart';
 
 class PageTeamTask extends GetView <TeamController> {
@@ -66,28 +67,55 @@ class PageTeamTask extends GetView <TeamController> {
                           ],
                         ),
 
-                        Container(
-                          decoration: BoxDecoration(
-                            color: AppColors.primary.withValues(alpha: 0.1),
-                            shape: BoxShape.circle,
-                          ),
-                          child: IconButton(
-                            onPressed: () {
-                              controller.searchResults.clear();
+                        Row(
+                          children: [
+                            Obx(() => Stack(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(color: AppColors.grey.withValues(alpha: 0.05), shape: BoxShape.circle),
+                                  child: IconButton(
+                                    onPressed: () {
+                                      Get.bottomSheet(
+                                        FriendRequestsBottomSheet(),
+                                        isScrollControlled: true,
+                                        backgroundColor: Colors.transparent,
+                                      );
+                                    },
+                                    icon: const HugeIcon(icon: HugeIcons.strokeRoundedNotification03, color: Colors.black87, size: 24),
+                                  ),
+                                ),
+                                if (controller.pendingRequests.isNotEmpty)
+                                  Positioned(
+                                    right: 0, top: 0,
+                                    child: Container(
+                                      padding: const EdgeInsets.all(5),
+                                      decoration: const BoxDecoration(color: Colors.red, shape: BoxShape.circle),
+                                      child: Text(
+                                          '${controller.pendingRequests.length}',
+                                          style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold)
+                                      ),
+                                    ),
+                                  )
+                              ],
+                            )),
 
-                              Get.bottomSheet(
-                                const SearchFriendBottomSheet(),
-                                isScrollControlled: true,
-                                backgroundColor: Colors.transparent,
-                                ignoreSafeArea: false,
-                              );
-                            },
-                            icon: const HugeIcon(
-                              icon: HugeIcons.strokeRoundedUserAdd01,
-                              color: AppColors.primary,
-                              size: 24,
+                            const SizedBox(width: 12),
+
+                            Container(
+                              decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.1), shape: BoxShape.circle),
+                              child: IconButton(
+                                onPressed: () {
+                                  controller.searchResults.clear();
+                                  Get.bottomSheet(
+                                    const SearchFriendBottomSheet(),
+                                    isScrollControlled: true,
+                                    backgroundColor: Colors.transparent,
+                                  );
+                                },
+                                icon: const HugeIcon(icon: HugeIcons.strokeRoundedUserAdd01, color: AppColors.primary, size: 24),
+                              ),
                             ),
-                          ),
+                          ],
                         )
                       ],
                     ),
