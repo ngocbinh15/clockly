@@ -2,7 +2,8 @@ import 'package:clockly/core/theme/app_colors.dart';
 import 'package:clockly/core/constants/app_size.dart';
 import 'package:clockly/core/utils/dialog_helper.dart';
 import 'package:clockly/features/task_home/controllers/task_home_controller.dart';
-import 'package:clockly/features/task_home/model/task_category.dart';
+import 'package:clockly/features/task_home/widgets/list_avatar.dart';
+import 'package:clockly/features/task_home/widgets/task_details_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,12 +11,14 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 import '../model/task.dart';
+import '../model/task_category.dart';
 
 class TaskList extends GetView<TaskHomeController> {
-  const TaskList({super.key, required this.label, required this.tasks});
+  const TaskList({super.key, required this.label, required this.tasks, this.labelColor});
 
   final String label;
   final List<TaskModel> tasks;
+  final Color? labelColor;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +32,7 @@ class TaskList extends GetView<TaskHomeController> {
           Text(
             label.toUpperCase(),
             style: GoogleFonts.inter(
-              color: AppColors.third,
+              color: labelColor ?? AppColors.third,
               fontWeight: FontWeight.w700,
               fontSize: 14,
               letterSpacing: 1.2,
@@ -46,55 +49,50 @@ class TaskList extends GetView<TaskHomeController> {
               final task = tasks[index];
               final isCompleted = task.status == 'completed';
 
+              final List<String> listAvatars = controller.taskMembersMap[task.id] ?? [];
+              final bool isTeamTask = listAvatars.isNotEmpty;
+
               return Padding(
                 padding: EdgeInsets.only(bottom: AppSizes.p12),
                 child: Slidable(
-                  key: ValueKey(task.id),
-                  startActionPane: ActionPane(
-                      motion: const StretchMotion(),
-                      dismissible: DismissiblePane(
-                          onDismissed: () {
-                            controller.deleteTask(task);
-                          },
-                      ),
-                      children: [
-                        CustomSlidableAction(
-                          onPressed: (context) {
-                            CustomDialog.showDeleteConfirm(
+                    key: ValueKey(task.id),
+                    startActionPane: ActionPane(
+                        motion: const StretchMotion(),
+                        children: [
+                          CustomSlidableAction(
+                            onPressed: (context) {
+                              CustomDialog.showDeleteConfirm(
                                 title: "Delete task?",
                                 content: "This will permanently delete this task. You can’t undo this action.",
                                 cancle: "Cancel",
                                 confirm: "Delete",
                                 onConfirm: () => controller.deleteTask(task),
-                            );
-                          },
-                          backgroundColor: AppColors.fouth,
-                          borderRadius: BorderRadius.circular(16),
-                          child: SizedBox(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                HugeIcon(
-                                  icon: HugeIcons.strokeRoundedDelete02,
-                                  color: Colors.white,
-                                  size: 22,
-                                ),
-                                const SizedBox(height: 4),
-                                const Text(
-                                  'Delete',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ],
+                              );
+                            },
+                            backgroundColor: AppColors.fouth,
+                            borderRadius: BorderRadius.circular(16),
+                            child: const SizedBox(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  HugeIcon(
+                                    icon: HugeIcons.strokeRoundedDelete02,
+                                    color: Colors.white,
+                                    size: 22,
+                                  ),
+                                  SizedBox(height: 4),
+                                  Text('Delete', style: TextStyle(color: Colors.white)),
+                                ],
+                              ),
                             ),
-                          ),
-                        )
-                      ]
-                  ),
+                          )
+                        ]
+                    ),
                     child: Container(
                       padding: const EdgeInsets.all(AppSizes.p16),
                       decoration: BoxDecoration(
-                        color: isCompleted? AppColors.background : AppColors.secondary,
+                        color: isCompleted ? AppColors.background : AppColors.secondary,
                         borderRadius: BorderRadius.circular(16),
                         boxShadow: [
                           BoxShadow(
@@ -109,10 +107,7 @@ class TaskList extends GetView<TaskHomeController> {
                           Transform.scale(
                             scale: 1.4,
                             child: Checkbox(
-                              side: BorderSide(
-                                color: AppColors.grey,
-                                width: 1.2
-                              ),
+                              side: BorderSide(color: AppColors.grey, width: 1.2),
                               value: isCompleted,
                               shape: const CircleBorder(),
                               activeColor: AppColors.primary,
@@ -142,32 +137,39 @@ class TaskList extends GetView<TaskHomeController> {
                                 Row(
                                   children: [
                                     Container(
-                                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                                       decoration: BoxDecoration(
-                                        color: isCompleted? AppColors.grey.withValues(alpha: 0.1) : task.category.color.withValues(alpha: 0.1),
+                                        color: isCompleted ? AppColors.grey.withValues(alpha: 0.1) : task.category.color.withValues(alpha: 0.1),
                                         borderRadius: BorderRadius.circular(6),
                                       ),
                                       child: Text(
                                         task.category.displayName.toUpperCase(),
                                         style: GoogleFonts.inter(
-                                          color: isCompleted? AppColors.grey : task.category.color,
+                                          color: isCompleted ? AppColors.grey : task.category.color,
                                           fontSize: 12,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
                                     ),
-                                    SizedBox(width: AppSizes.p12),
+
+                                    SizedBox(width: AppSizes.p12,),
 
                                     Text(
                                       controller.formatTime(task.dueDate),
                                       style: GoogleFonts.inter(
                                         color: AppColors.third,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w600,
                                       ),
                                     ),
                                   ],
-                                )
+                                ),
+
+
+                                if (isTeamTask) ...[
+                                  SizedBox(height: AppSizes.p8),
+                                  ListAvatar(avatarUrls: listAvatars,),
+                                ],
                               ],
                             ),
                           ),
@@ -176,7 +178,15 @@ class TaskList extends GetView<TaskHomeController> {
                             IconButton(
                               icon: const Icon(Icons.more_vert, color: Colors.grey),
                               onPressed: () {
-                                // TODO: Mở menu Sửa/Xóa task
+                                Get.bottomSheet(
+                                  TaskDetailsBottomSheet(
+                                    task: task,
+                                    isTeamTask: isTeamTask,
+                                    listAvatars: listAvatars,
+                                  ),
+                                  isScrollControlled: true,
+                                  backgroundColor: Colors.transparent,
+                                );
                               },
                             )
                         ],

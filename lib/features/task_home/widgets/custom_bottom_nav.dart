@@ -27,7 +27,7 @@ class CustomBottomNav extends StatelessWidget {
         gapLocation: GapLocation.center,
         notchSmoothness: NotchSmoothness.verySmoothEdge,
         backgroundColor: AppColors.secondary,
-        height: 50,
+        height: 60,
         shadow: BoxShadow(
           color: Colors.black.withValues(alpha: 0.15),
           blurRadius: 10,

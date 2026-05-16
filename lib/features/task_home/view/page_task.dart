@@ -75,6 +75,13 @@ class PageTask extends GetView<TaskHomeController> {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          if (controller.overdueTasks.isNotEmpty)
+                            TaskList(
+                              label: "OVERDUE",
+                              tasks: controller.overdueTasks,
+                              labelColor: AppColors.fouth,
+                            ),
+
                           if (controller.todayTasks.isNotEmpty)
                             TaskList(
                               label: "TODAY",
@@ -85,6 +92,12 @@ class PageTask extends GetView<TaskHomeController> {
                             TaskList(
                               label: "TOMORROW",
                               tasks: controller.tomorrowTasks,
+                            ),
+
+                          if (controller.upcomingTasks.isNotEmpty)
+                            TaskList(
+                              label: "UPCOMING",
+                              tasks: controller.upcomingTasks,
                             ),
                         ],
                       );

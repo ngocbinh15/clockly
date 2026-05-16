@@ -36,10 +36,60 @@ class TaskHomeController extends GetxController{
 
   GlobalKey <FormState> formStateAddTask = GlobalKey<FormState>();
 
+  RxMap<String, List<String>> taskMembersMap = <String, List<String>>{}.obs;
+
+
   @override
   void onInit() {
     super.onInit();
     fetchTasks();
+  }
+
+  void prepareEditData(TaskModel task) {
+    nameController.text = task.title;
+    decriptionController.text = task.description ?? '';
+    dateController.text = task.dueDate != null ? DateHelper.formatDateTime(task.dueDate!) : '';
+
+    selectedPriority.value = task.priority.isNotEmpty
+        ? "${task.priority[0].toUpperCase()}${task.priority.substring(1)}"
+        : "Low";
+
+    selectedAddTask.value = task.category.displayName;
+  }
+
+  Future<void> updateTask(String taskId) async {
+    try {
+      DateTime? parsedDate;
+      if (dateController.text.isNotEmpty) {
+        parsedDate = DateFormat('MMM dd, yyyy - hh:mm a').parse(dateController.text);
+      }
+
+      AuthHelper.showLoading();
+
+      await _supabase.from('tasks').update({
+        'title': nameController.text.trim(),
+        'description': decriptionController.text.trim(),
+        'priority': selectedPriority.value.toLowerCase(),
+        'due_date': parsedDate?.toIso8601String(),
+        'category': selectedAddTask.value.toLowerCase()
+      }).eq('id', taskId);
+
+      await fetchTasks();
+
+      AuthHelper.hideLoading();
+      Get.back();
+      AppAlerts.success(message: "Task updated successfully!");
+
+      nameController.clear();
+      decriptionController.clear();
+      dateController.clear();
+      selectedAddTask.value = "General";
+      selectedPriority.value = "Low";
+
+    } catch (e) {
+      AuthHelper.hideLoading();
+      AppAlerts.error(message: "Lỗi cập nhật: $e");
+    }
   }
 
   void toggleMemberSelection(String userId) {
@@ -87,17 +137,20 @@ class TaskHomeController extends GetxController{
       Get.back();
       AppAlerts.success(message: "Task created successfully!");
 
-      nameController.clear();
-      decriptionController.clear();
-      dateController.clear();
-      selectedMemberIds.clear();
-      selectedAddTask.value = "General";
-      selectedPriority.value = "Medium";
-
+      resetStateController();
     } catch (e) {
       AuthHelper.hideLoading();
       AppAlerts.error(message: "$e");
     }
+  }
+
+  void resetStateController () {
+    nameController.clear();
+    decriptionController.clear();
+    dateController.clear();
+    selectedMemberIds.clear();
+    selectedAddTask.value = "General";
+    selectedPriority.value = "Medium";
   }
 
   List<TaskModel> get filteredTasks {
@@ -127,21 +180,93 @@ class TaskHomeController extends GetxController{
     }).toList();
   }
 
+  List<TaskModel> get overdueTasks {
+    final now = DateTime.now();
+    final startOfToday = DateTime(now.year, now.month, now.day);
+    return filteredTasks.where((task) {
+      if (task.dueDate == null || task.status == 'completed') return false;
+      return task.dueDate!.isBefore(startOfToday);
+    }).toList();
+  }
+
+  List<TaskModel> get upcomingTasks {
+    final tomorrow = DateTime.now().add(const Duration(days: 1));
+    final endOfTomorrow = DateTime(tomorrow.year, tomorrow.month, tomorrow.day, 23, 59, 59);
+    return filteredTasks.where((task) {
+      if (task.dueDate == null) return false;
+      return task.dueDate!.isAfter(endOfTomorrow);
+    }).toList();
+  }
+
   Future<void> fetchTasks() async {
     try {
       isLoading.value = true;
       final userId = _authService.currentUser.value?.id;
       if (userId == null) return;
 
-      final response = await _supabase
+      final myTasksResponse = await _supabase
           .from('tasks')
           .select()
-          .eq('profile_id', userId)
-          .order('due_date', ascending: true);
+          .eq('profile_id', userId);
 
-      allTasks.value = response.map((e) => TaskModel.fromMap(e)).toList();
+      final teamTasksResponse = await _supabase
+          .from('task_members')
+          .select('tasks(*)')
+          .eq('profile_id', userId);
+
+      List<TaskModel> tempList = [];
+      tempList.addAll(myTasksResponse.map((e) => TaskModel.fromMap(e)).toList());
+
+      for (var row in teamTasksResponse) {
+        if (row['tasks'] != null) {
+          tempList.add(TaskModel.fromMap(row['tasks']));
+        }
+      }
+
+      final uniqueTasks = {for (var t in tempList) t.id: t}.values.toList();
+
+      uniqueTasks.sort((a, b) {
+        if (a.dueDate == null && b.dueDate == null) return 0;
+        if (a.dueDate == null) return 1;
+        if (b.dueDate == null) return -1;
+        return a.dueDate!.compareTo(b.dueDate!);
+      });
+
+      allTasks.value = uniqueTasks;
+
+      if (uniqueTasks.isNotEmpty) {
+        // Gom tất cả ID của các task hiện tại thành một mảng
+        final List<String> taskIds = uniqueTasks.map((t) => t.id).toList();
+
+        final membersResponse = await _supabase
+            .from('task_members')
+            .select('task_id, profiles(avatar_url)')
+            .inFilter('task_id', taskIds); // Lọc những bản ghi nằm trong danh sách taskIds
+
+        Map<String, List<String>> tempMembersMap = {};
+
+        for (var row in membersResponse) {
+          final String taskId = row['task_id'];
+          final profile = row['profiles'];
+
+          if (profile != null && profile['avatar_url'] != null) {
+            final String avatarUrl = profile['avatar_url'];
+
+            // Nếu Map chưa có taskId này thì khởi tạo mảng rỗng
+            if (!tempMembersMap.containsKey(taskId)) {
+              tempMembersMap[taskId] = [];
+            }
+            tempMembersMap[taskId]!.add(avatarUrl);
+          }
+        }
+
+        taskMembersMap.value = tempMembersMap;
+      } else {
+        taskMembersMap.clear();
+      }
+
     } catch (e) {
-      AppAlerts.error(message: "$e");
+      AppAlerts.error(message: "Lỗi tải Task: $e");
     } finally {
       isLoading.value = false;
     }
@@ -209,10 +334,6 @@ class TaskHomeController extends GetxController{
 
   String formatTime(DateTime? date) {
     if (date == null) return "No time";
-    final hour = date.hour;
-    final minute = date.minute.toString().padLeft(2, '0');
-    final period = hour >= 12 ? 'PM' : 'AM';
-    final formattedHour = hour > 12 ? hour - 12 : (hour == 0 ? 12 : hour);
-    return "$formattedHour:$minute $period";
+    return DateFormat('MMM dd, hh:mm a').format(date);
   }
 }

@@ -29,6 +29,8 @@ class PageMainHome extends GetView<TaskHomeController> {
 
       floatingActionButton: FloatingActionButton(
           onPressed: () {
+            controller.resetStateController();
+
             BottomDialog.showAddTaskBottomSheet();
           },
           backgroundColor: AppColors.primary,
