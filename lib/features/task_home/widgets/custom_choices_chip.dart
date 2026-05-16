@@ -38,10 +38,10 @@ class CustomChoicesChip extends GetView<TaskHomeController> {
             itemCount: TaskCategory.values.length,
             itemBuilder: (context, index) {
               final categoryEnum = TaskCategory.values[index].displayName;
-          
+
               return Obx(() {
                 final isSelected = controller.selected.value == categoryEnum;
-          
+
                 Map<String, dynamic> theme = isSelected ? selectedTheme : noneSelectedTheme;
                 return Padding(
                   padding: const EdgeInsets.only(right: AppSizes.p12),
@@ -49,7 +49,8 @@ class CustomChoicesChip extends GetView<TaskHomeController> {
                     onTap: () {
                       controller.selected.value = categoryEnum;
                     },
-                    child: Container(
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 200),
                       padding: const EdgeInsets.symmetric(
                           horizontal: AppSizes.p24, vertical: AppSizes.p8),
                       decoration: BoxDecoration(

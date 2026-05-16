@@ -2,6 +2,7 @@ import 'package:clockly/core/components/app_alerts.dart';
 import 'package:clockly/core/constants/app_message.dart';
 import 'package:clockly/core/services/auth_service.dart';
 import 'package:clockly/routes/app_routes.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -14,6 +15,9 @@ class TaskHomeController extends GetxController{
   final currUser = Get.find<AuthService>().currentUser.value;
   RxString selected = "All Tasks".obs;
 
+  RxString selectedAddTask = "General".obs;
+  RxString selectedPriority = "Low".obs;
+
   final _supabase = Supabase.instance.client;
   final _authService = Get.find<AuthService>();
 
@@ -22,6 +26,12 @@ class TaskHomeController extends GetxController{
   var selectedCategory = TaskCategory.all.obs;
 
   RxInt bottomNavIndex = 0.obs;
+
+  TextEditingController nameController = TextEditingController();
+  TextEditingController decriptionController = TextEditingController();
+  TextEditingController dateController = TextEditingController();
+
+  GlobalKey <FormState> formStateAddTask = GlobalKey<FormState>();
 
   @override
   void onInit() {

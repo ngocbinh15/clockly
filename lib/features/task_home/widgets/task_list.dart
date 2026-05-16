@@ -123,7 +123,7 @@ class TaskList extends GetView<TaskHomeController> {
                                   style: GoogleFonts.inter(
                                     color: isCompleted ? AppColors.grey : Colors.black87,
                                     fontWeight: FontWeight.w700,
-                                    fontSize: 18,
+                                    fontSize: 17,
                                     letterSpacing: 0,
                                     decoration: isCompleted ? TextDecoration.lineThrough : null,
                                   ),

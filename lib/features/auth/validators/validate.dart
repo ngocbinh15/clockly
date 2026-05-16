@@ -51,4 +51,11 @@ class Validate {
     }
     return null;
   }
+
+  static String? validDate(String? value) {
+    if (value?.trim().isEmpty ?? true) {
+      return "Due date cannot be empty";
+    }
+    return null;
+  }
 }

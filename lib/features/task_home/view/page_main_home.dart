@@ -1,3 +1,4 @@
+import 'package:clockly/features/task_home/widgets/bottom_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
@@ -27,7 +28,9 @@ class PageMainHome extends GetView<TaskHomeController> {
       )),
 
       floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            BottomDialog.showAddTaskBottomSheet();
+          },
           backgroundColor: AppColors.primary,
           elevation: 8,
           shape: const CircleBorder(),
