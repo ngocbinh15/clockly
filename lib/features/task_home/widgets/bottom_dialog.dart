@@ -1,7 +1,10 @@
+import 'package:clockly/core/components/primary_button.dart';
 import 'package:clockly/core/constants/app_size.dart';
 import 'package:clockly/core/theme/app_colors.dart';
+import 'package:clockly/core/utils/dialog_helper.dart';
 import 'package:clockly/features/task_home/controllers/task_home_controller.dart';
 import 'package:clockly/features/task_home/widgets/pick_date_add_task.dart';
+import 'package:clockly/features/task_home/widgets/picked_friends.dart';
 import 'package:clockly/features/task_home/widgets/priority_selector.dart';
 import 'package:clockly/features/task_home/widgets/text_filed_add_task.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +24,7 @@ class BottomDialog {
           Get.focusScope?.unfocus();
         },
         child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
           child: Container(
             padding: EdgeInsets.symmetric(
                 horizontal: AppSizes.p24, vertical: AppSizes.p8),
@@ -52,7 +56,25 @@ class BottomDialog {
                         fontWeight: FontWeight.w700
                     )),
                     GestureDetector(
-                      onTap: () => Get.back(),
+                      onTap: () {
+                        if (controller.nameController.text.isNotEmpty || controller.decriptionController.text.isNotEmpty || controller.dateController.text.isNotEmpty) {
+                          CustomDialog.showDeleteConfirm(
+                            title: "Discard draft?",
+                            content: "Your changes haven’t been saved yet. Are you sure you want to discard them?",
+                            cancle: "Keep editing",
+                            confirm: "Discard",
+                            onConfirm: () {
+                              Get.back();
+                              controller.dateController.clear();
+                              controller.nameController.clear();
+                              controller.decriptionController.clear();
+                            },
+                          );
+                        }
+                        else {
+                          Get.back();
+                        }
+                      },
                       child: Container(
                         padding: EdgeInsetsGeometry.all(AppSizes.p4),
                         decoration: BoxDecoration(
@@ -92,10 +114,25 @@ class BottomDialog {
                       }),
 
                       SizedBox(height: AppSizes.p16,),
-                      PickDateAddTask()
+                      PickDateAddTask(),
+
+                      SizedBox(height: AppSizes.p16,),
+                      PickedFriends(),
+
+                      SizedBox(height: AppSizes.p24,),
+                      PrimaryButton(
+                          text: "Save Task",
+                          onPressed: () async {
+                            if (controller.formStateAddTask.currentState!.validate()) {
+                              await controller.saveTask();
+                            }
+                          },
+                        suffixIcon: HugeIcons.strokeRoundedArrowUp01,
+                      )
                     ],
                   ),
                 ),
+                SizedBox(height: AppSizes.p12,)
               ],
             ),
           ),

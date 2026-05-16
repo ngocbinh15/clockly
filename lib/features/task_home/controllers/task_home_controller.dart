@@ -1,12 +1,13 @@
 import 'package:clockly/core/components/app_alerts.dart';
 import 'package:clockly/core/constants/app_message.dart';
 import 'package:clockly/core/services/auth_service.dart';
-import 'package:clockly/routes/app_routes.dart';
+import 'package:clockly/features/auth/controllers/auth_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/utils/date_helper.dart';
 import '../model/task.dart';
 import '../model/task_category.dart';
 
@@ -20,6 +21,8 @@ class TaskHomeController extends GetxController{
 
   final _supabase = Supabase.instance.client;
   final _authService = Get.find<AuthService>();
+
+  RxList<String> selectedMemberIds = <String>[].obs;
 
   var isLoading = true.obs;
   var allTasks = <TaskModel>[].obs;
@@ -37,6 +40,64 @@ class TaskHomeController extends GetxController{
   void onInit() {
     super.onInit();
     fetchTasks();
+  }
+
+  void toggleMemberSelection(String userId) {
+    if (selectedMemberIds.contains(userId)) {
+      selectedMemberIds.remove(userId);
+    } else {
+      selectedMemberIds.add(userId);
+    }
+  }
+
+  Future<void> saveTask() async {
+    try {
+      DateTime? parsedDate;
+      if (dateController.text.isNotEmpty) {
+        parsedDate = DateFormat('MMM dd, yyyy - hh:mm a').parse(dateController.text);
+      }
+
+      AuthHelper.showLoading();
+
+      final taskResponse = await _supabase.from('tasks').insert({
+        'profile_id': currUser!.id,
+        'title': nameController.text.trim(),
+        'description': decriptionController.text.trim(),
+        'status': 'pending',
+        'priority': selectedPriority.value.toLowerCase(),
+        'due_date': parsedDate?.toIso8601String(),
+        'category': selectedAddTask.value.toLowerCase()
+      }).select();
+
+      final String newTaskId = taskResponse.first['id'];
+
+      if (selectedMemberIds.isNotEmpty) {
+        final List<Map<String, dynamic>> membersToInsert = selectedMemberIds.map((userId) {
+          return {
+            'task_id': newTaskId,
+            'profile_id': userId,
+          };
+        }).toList();
+
+        await _supabase.from('task_members').insert(membersToInsert);
+      }
+
+      fetchTasks();
+      AuthHelper.hideLoading();
+      Get.back();
+      AppAlerts.success(message: "Task created successfully!");
+
+      nameController.clear();
+      decriptionController.clear();
+      dateController.clear();
+      selectedMemberIds.clear();
+      selectedAddTask.value = "General";
+      selectedPriority.value = "Medium";
+
+    } catch (e) {
+      AuthHelper.hideLoading();
+      AppAlerts.error(message: "$e");
+    }
   }
 
   List<TaskModel> get filteredTasks {
@@ -140,6 +201,10 @@ class TaskHomeController extends GetxController{
     if (hour >= 18) return "Good Evening";
     if (hour >= 12) return "Good Afternoon";
     return "Good Morning";
+  }
+
+  void updateDueDate(DateTime date) {
+    dateController.text = DateHelper.formatDateTime(date);
   }
 
   String formatTime(DateTime? date) {

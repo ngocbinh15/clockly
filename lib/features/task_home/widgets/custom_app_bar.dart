@@ -37,7 +37,7 @@ class CustomAppBar extends StatelessWidget {
             ),
           ],
         ),
-        Avatar(),
+        Avatar(avatarURL: controller.currUser!.avatarUrl,),
       ],
     );
   }

@@ -1,5 +1,6 @@
 import 'package:clockly/core/theme/app_colors.dart';
 import 'package:clockly/core/constants/app_size.dart';
+import 'package:clockly/core/utils/dialog_helper.dart';
 import 'package:clockly/features/task_home/controllers/task_home_controller.dart';
 import 'package:clockly/features/task_home/model/task_category.dart';
 import 'package:flutter/material.dart';
@@ -53,13 +54,21 @@ class TaskList extends GetView<TaskHomeController> {
                       motion: const StretchMotion(),
                       dismissible: DismissiblePane(
                           onDismissed: () {
-                            // controller.deleteTask(task);
+                            controller.deleteTask(task);
                           },
                       ),
                       children: [
                         CustomSlidableAction(
-                          onPressed: (context) {},
-                          backgroundColor: const Color(0xFFD32F2F),
+                          onPressed: (context) {
+                            CustomDialog.showDeleteConfirm(
+                                title: "Delete task?",
+                                content: "This will permanently delete this task. You can’t undo this action.",
+                                cancle: "Cancel",
+                                confirm: "Delete",
+                                onConfirm: () => controller.deleteTask(task),
+                            );
+                          },
+                          backgroundColor: AppColors.fouth,
                           borderRadius: BorderRadius.circular(16),
                           child: SizedBox(
                             child: Column(

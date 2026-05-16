@@ -29,6 +29,7 @@ dependencies:
   pin_code_fields: ^9.3.0
   package_info_plus: ^10.1.0
   animated_bottom_navigation_bar: ^1.4.0
+  cupertino_calendar_picker: ^2.2.6
 
 dev_dependencies:
   flutter_test:

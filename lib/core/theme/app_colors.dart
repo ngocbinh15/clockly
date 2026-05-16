@@ -9,4 +9,5 @@
     static final green = Color(0xFF16A34A).withValues(alpha: 0.5);
     static final orange = Color(0xFFFFB74D).withValues(alpha: 0.5);
     static const third = Color(0xFF594CA7);
+    static const fouth = Color(0xFFE53935);
   }
