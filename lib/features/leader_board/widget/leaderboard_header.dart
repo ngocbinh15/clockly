@@ -4,8 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 import '../../../core/theme/app_colors.dart';
-import '../controllers/team_controller.dart';
-import 'heading_text_page.dart';
+import '../controller/team_controller.dart';
+import '../../../core/components/heading_text_page.dart';
 import 'friend_requests_bottom_sheet.dart';
 import 'search_friend_bottom_sheet.dart';
 
@@ -23,14 +23,6 @@ class LeaderboardHeader extends GetView<TeamController> {
           children: [
             HeadingTextPage(text: "Leaderboard"),
             const SizedBox(height: 4),
-            Text(
-              "Compete with your friends!",
-              style: GoogleFonts.inter(
-                color: AppColors.grey,
-                fontSize: 15,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
           ],
         ),
         Row(

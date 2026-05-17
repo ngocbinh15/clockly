@@ -1,11 +1,6 @@
-import 'dart:math';
-
 import 'package:clockly/core/components/app_alerts.dart';
 import 'package:clockly/features/task_home/controllers/task_home_controller.dart';
-import 'package:clockly/features/task_home/model/task.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:intl/date_symbols.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -73,7 +68,7 @@ class CalendarController extends GetxController {
   }
 
   List<dynamic> getEventsForDay(DateTime day) {
-    bool hasEvent = daysWithTasks.any((taskDate) => isSameDay(taskDate, day));
+    bool hasEvent = taskHome.allTasks.any((task) => isSameDay(task.dueDate, day));
     return hasEvent ? ['has_task'] : [];
   }
 }

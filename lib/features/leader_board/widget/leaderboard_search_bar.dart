@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 import '../../../core/theme/app_colors.dart';
-import '../controllers/team_controller.dart';
+import '../controller/team_controller.dart';
 
 class LeaderboardSearchBar extends GetView<TeamController> {
   const LeaderboardSearchBar({super.key});

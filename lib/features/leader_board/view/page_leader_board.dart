@@ -1,15 +1,15 @@
 import 'package:clockly/core/theme/app_colors.dart';
-import 'package:clockly/features/task_home/controllers/team_controller.dart';
-import 'package:clockly/features/task_home/widgets/leader_board.dart';
+import 'package:clockly/features/leader_board/controller/team_controller.dart';
+import 'package:clockly/features/leader_board/widget/leader_board.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../core/constants/app_size.dart';
-import '../widgets/leaderboard_header.dart';
-import '../widgets/leaderboard_search_bar.dart';
+import '../widget/leaderboard_header.dart';
+import '../widget/leaderboard_search_bar.dart';
 
-class PageTeamTask extends GetView<TeamController> {
-  const PageTeamTask({super.key});
+class PageLeaderBoard extends GetView<TeamController> {
+  const PageLeaderBoard({super.key});
 
   @override
   Widget build(BuildContext context) {

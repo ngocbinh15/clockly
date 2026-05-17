@@ -1,8 +1,8 @@
 import 'package:clockly/core/constants/app_size.dart';
 import 'package:clockly/core/theme/app_colors.dart';
 import 'package:clockly/features/auth/model/user_model.dart';
-import 'package:clockly/features/task_home/controllers/team_controller.dart';
-import 'package:clockly/features/task_home/widgets/avatar.dart';
+import 'package:clockly/features/leader_board/controller/team_controller.dart';
+import 'package:clockly/core/components/avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';

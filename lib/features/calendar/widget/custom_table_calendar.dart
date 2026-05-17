@@ -1,5 +1,5 @@
 import 'package:clockly/core/constants/app_size.dart';
-import 'package:clockly/features/task_home/controllers/calendar_controller.dart';
+import 'package:clockly/features/calendar/controller/calendar_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,7 +17,7 @@ class CustomTableCalendar extends GetView<CalendarController> {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(AppSizes.p16),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.05),
@@ -26,7 +26,10 @@ class CustomTableCalendar extends GetView<CalendarController> {
           )
         ],
       ),
-      child: Obx(() => TableCalendar(
+      child: Obx(() {
+        final trackingTasks = controller.taskHome.allTasks.length;
+
+        return TableCalendar (
         firstDay: DateTime.utc(2020, 1, 1),
         lastDay: DateTime.utc(2030, 12, 31),
         focusedDay: controller.focusedDay.value,
@@ -138,7 +141,7 @@ class CustomTableCalendar extends GetView<CalendarController> {
             return const SizedBox();
           },
         ),
-      )),
+      );}),
     );
   }
 }

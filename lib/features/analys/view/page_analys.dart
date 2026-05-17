@@ -1,16 +1,21 @@
-import 'package:clockly/features/task_home/controllers/calendar_controller.dart';
-import 'package:clockly/features/task_home/widgets/custom_table_calendar.dart';
-import 'package:clockly/features/task_home/widgets/today_task.dart';
+import 'package:clockly/core/components/heading_text_page.dart';
+import 'package:clockly/features/analys/controller/analys_controller.dart';
+import 'package:clockly/features/analys/widget/custom_pie_chart.dart';
+import 'package:clockly/features/analys/widget/information_card.dart';
+import 'package:clockly/features/analys/widget/list_infomation.dart';
+import 'package:clockly/features/analys/widget/note_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:table_calendar/table_calendar.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 import '../../../core/constants/app_size.dart';
 import '../../../core/theme/app_colors.dart';
+import '../widget/weekly_performance_card.dart';
 
-class PageCalendar extends GetView<CalendarController> {
-  const PageCalendar({super.key});
+
+class PageAnalys extends GetView <AnalysController> {
+  const PageAnalys({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +25,7 @@ class PageCalendar extends GetView<CalendarController> {
         bottom: false,
         child: RefreshIndicator(
           onRefresh: () async {
-            controller.fetchTaskDates();
+            controller.calcPercent();
           },
           color: AppColors.secondary,
           backgroundColor: AppColors.primary,
@@ -35,21 +40,18 @@ class PageCalendar extends GetView<CalendarController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Calendar", style: GoogleFonts.inter(
-                    fontSize: 30,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: -1,
-                  )),
-                  const SizedBox(height: AppSizes.p24),
+                  HeadingTextPage(text: "Analytics"),
+                  SizedBox(height: AppSizes.p24),
 
-                  CustomTableCalendar(),
-                  SizedBox(height: AppSizes.p16,),
-
-                  Divider(color: AppColors.grey.withValues(alpha: 0.3),),
+                  CustomPieChart(),
 
                   SizedBox(height: AppSizes.p16,),
 
-                  TodayTask(),
+                  ListInfomation(),
+
+                  SizedBox(height: AppSizes.p16),
+
+                  WeeklyPerformanceCard(),
                 ],
               ),
             ),

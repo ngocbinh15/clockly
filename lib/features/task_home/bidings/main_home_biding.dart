@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
-import '../controllers/analys_controller.dart';
-import '../controllers/calendar_controller.dart';
+import '../../analys/controller/analys_controller.dart';
+import '../../calendar/controller/calendar_controller.dart';
 import '../controllers/task_home_controller.dart';
-import '../controllers/team_controller.dart';
+import '../../leader_board/controller/team_controller.dart';
 
 class MainHomeBiding extends Bindings{
   @override
