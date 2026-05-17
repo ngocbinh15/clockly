@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:clockly/core/components/app_info.dart';
 import 'package:clockly/core/components/text_heading.dart';
 import 'package:clockly/core/components/text_title.dart';
 import 'package:clockly/core/constants/app_size.dart';
@@ -50,14 +51,7 @@ class PageLogin extends GetView<LoginController> {
 
             SizedBox(height: AppSizes.p12,),
 
-            Text(
-              "Clockly v1.0.0",
-              style: GoogleFonts.inter(
-                color: const Color(0xFF64748B),
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
+            AppInfo()
           ],
         ),
     );

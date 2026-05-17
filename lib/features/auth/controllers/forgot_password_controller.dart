@@ -1,5 +1,4 @@
-import 'package:clockly/routes/app_routes.dart';
-import 'package:email_validator/email_validator.dart';
+import 'package:clockly/core/components/app_alerts.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -23,11 +22,6 @@ class ForgotPasswordController extends GetxController{
   Future<void> sendPasswordReset() async {
     final email = emailController.text.trim();
 
-    if (email.isEmpty || !EmailValidator.validate(email)) {
-      CustomSnackbar.snackbar("Error", "Please enter a valid email", AppColors.red);
-      return;
-    }
-
     try {
       AuthHelper.showLoading();
 
@@ -38,15 +32,15 @@ class ForgotPasswordController extends GetxController{
 
       AuthHelper.hideLoading();
 
-      CustomSnackbar.snackbar("Success", "OTP has been sent to your email", AppColors.green);
+      AppAlerts.success(message: "OTP has been sent to your email");
       AuthHelper.dialogOTP(OtpType.recovery, email);
 
     } on AuthException catch (e) {
       AuthHelper.hideLoading();
-      CustomSnackbar.snackbar("Oops", e.message, AppColors.red);
+      AppAlerts.error(message: "$e");
     } catch (e) {
       AuthHelper.hideLoading();
-      CustomSnackbar.snackbar("Oops", "An unexpected error occurred", AppColors.red);
+      AppAlerts.error(message: "$e");
     }
   }
 
@@ -56,7 +50,7 @@ class ForgotPasswordController extends GetxController{
       authService.logout();
       CustomSnackbar.snackbar("Welcome!", "Your account is ready.", AppColors.green);
     } catch (e) {
-      CustomSnackbar.snackbar("Oops", "$e", AppColors.red);
+      AppAlerts.error(message: "$e");
     }
   }
 

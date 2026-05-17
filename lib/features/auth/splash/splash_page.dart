@@ -2,13 +2,15 @@ import 'package:clockly/core/components/text_heading.dart';
 import 'package:clockly/core/components/text_title.dart';
 import 'package:clockly/core/constants/app_size.dart';
 import 'package:clockly/core/theme/app_colors.dart';
+import 'package:clockly/features/auth/controllers/splash_controller.dart';
 import 'package:clockly/features/auth/splash/widget/bottom_text.dart';
 import 'package:clockly/features/auth/splash/widget/loading_process.dart';
 import 'package:clockly/features/auth/splash/widget/main_logo.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class PageSplash extends StatelessWidget {
+class PageSplash extends GetView <SplashController> {
   const PageSplash({super.key});
 
   @override
