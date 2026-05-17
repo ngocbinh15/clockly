@@ -19,11 +19,28 @@ class TeamController extends GetxController{
   final authService = Get.find<AuthService>();
   RxList<Map<String, dynamic>> pendingRequests = <Map<String, dynamic>>[].obs;
 
+  RealtimeChannel? _realtimeChannel;
+
   @override
   void onInit() {
     super.onInit();
     fetchFriendList();
     fetchPendingRequests();
+
+    setupRealtimeLeaderBoard();
+  }
+
+  void setupRealtimeLeaderBoard () {
+    _realtimeChannel = _supabase
+        .channel('public:profiles')
+        .onPostgresChanges(
+        event: PostgresChangeEvent.update,
+        schema: 'public',
+        table: 'profiles',
+        callback: (payload) {
+          fetchFriendList();
+        },
+    ).subscribe();
   }
 
   Future<void> fetchFriendList() async {
@@ -208,5 +225,13 @@ class TeamController extends GetxController{
       AuthHelper.hideLoading();
       AppAlerts.error(message: "Error unfriending: $e");
     }
+  }
+
+  @override
+  void onClose() {
+    if (_realtimeChannel != null) {
+      _supabase.removeChannel(_realtimeChannel!);
+    }
+    super.onClose();
   }
 }

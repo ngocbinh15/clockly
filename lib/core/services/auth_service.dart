@@ -60,7 +60,7 @@ class AuthService extends GetxService {
       currentUser.value = UserModel.fromMap(response);
       isLoggedIn.value = true;
 
-      debugPrint("[AuthService] Tải profile thành công. Bay vào Home!");
+      debugPrint("[AuthService] Tải profile thành công");
       Get.offAllNamed(AppRoutes.home);
 
     } catch (e, stacktrace) {
