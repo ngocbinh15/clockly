@@ -1,13 +1,60 @@
+import 'package:clockly/features/task_home/controllers/calendar_controller.dart';
+import 'package:clockly/features/task_home/widgets/custom_table_calendar.dart';
+import 'package:clockly/features/task_home/widgets/today_task.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:table_calendar/table_calendar.dart';
 
-class PageCalendar extends StatelessWidget {
+import '../../../core/constants/app_size.dart';
+import '../../../core/theme/app_colors.dart';
+
+class PageCalendar extends GetView<CalendarController> {
   const PageCalendar({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Page calendar"),
+      backgroundColor: AppColors.background,
+      body: SafeArea(
+        bottom: false,
+        child: RefreshIndicator(
+          onRefresh: () async {
+            controller.fetchTaskDates();
+          },
+          color: AppColors.secondary,
+          backgroundColor: AppColors.primary,
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: Padding(
+              padding: const EdgeInsets.only(
+                top: AppSizes.p12,
+                left: AppSizes.p24,
+                right: AppSizes.p24,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Calendar", style: GoogleFonts.inter(
+                    fontSize: 30,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: -1,
+                  )),
+                  const SizedBox(height: AppSizes.p24),
+
+                  CustomTableCalendar(),
+                  SizedBox(height: AppSizes.p16,),
+
+                  Divider(color: AppColors.grey.withValues(alpha: 0.3),),
+
+                  SizedBox(height: AppSizes.p16,),
+
+                  TodayTask(),
+                ],
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
