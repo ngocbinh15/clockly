@@ -9,6 +9,8 @@ import 'package:clockly/features/auth/views/page_sign_up.dart';
 import 'package:clockly/routes/app_routes.dart';
 import 'package:get/get.dart';
 
+import '../features/setting/bindings/settings_binding.dart';
+import '../features/setting/views/page_settings.dart';
 import '../features/task_home/bidings/task_home.dart';
 import '../features/task_home/view/page_attendance.dart';
 
@@ -42,6 +44,11 @@ class AppPages {
         name: AppRoutes.signUp,
         page: () => PageSignUp(),
       binding: SignUpBidings()
-    )
+    ),
+    GetPage(
+      name: AppRoutes.settings,
+      page: () => const PageSettings(),
+      binding: SettingsBinding(),
+    ),
   ];
 }
