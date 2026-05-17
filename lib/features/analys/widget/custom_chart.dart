@@ -51,7 +51,7 @@ class CustomChart extends GetView<AnalysController> {
                   ),
                 ),
                 Text(
-                  "${controller.taskHome.allTasks.length}",
+                  "${controller.filteredTotalCount.value}",
                   style: GoogleFonts.inter(
                     color: Colors.black87,
                     fontSize: 22,
