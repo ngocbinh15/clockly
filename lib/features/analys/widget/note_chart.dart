@@ -27,7 +27,7 @@ class NoteChart extends GetView<AnalysController> {
                 isDimmed: isAnyTouched && touchedIdx != 2,
               ),
 
-              const SizedBox(width: 32),
+              const SizedBox(width: 30),
 
               Indicator(
                 color: AppColors.contentPending,
