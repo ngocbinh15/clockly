@@ -8,4 +8,5 @@ class AppRoutes {
   static const team = "/team";
   static const calendar = "/calendar";
   static const analys = "/analys";
+  static const settings = "/settings";
 }
