@@ -1,5 +1,9 @@
+import 'dart:ui';
+
 import 'package:clockly/features/task_home/controllers/task_home_controller.dart';
 import 'package:get/get.dart';
+
+import '../../../core/theme/app_colors.dart';
 
 class AnalysisController extends GetxController {
   RxString timeFilter = 'This Week'.obs;
@@ -113,6 +117,33 @@ class AnalysisController extends GetxController {
       weeklyPercent.value = 0;
     } else {
       weeklyPercent.value = ((periodDone / filteredTasks.length) * 100).round();
+    }
+  }
+
+  String get chartCenterLabel {
+    switch (touchedIdx.value) {
+      case 0: return "Late";
+      case 1: return "Pending";
+      case 2: return "Completed";
+      default: return "Total";
+    }
+  }
+
+  String get chartCenterValue {
+    switch (touchedIdx.value) {
+      case 0: return "${lateCount.value}";
+      case 1: return "${pendingCount.value}";
+      case 2: return "${doneCount.value}";
+      default: return "${filteredTotalCount.value}";
+    }
+  }
+
+  Color get chartCenterColor {
+    switch (touchedIdx.value) {
+      case 0: return AppColors.contentLate;
+      case 1: return AppColors.contentPending;
+      case 2: return AppColors.contentDone;
+      default: return AppColors.grey;
     }
   }
 }

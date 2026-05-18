@@ -19,7 +19,7 @@ class ListInfomation extends GetView <AnalysisController> {
             child: CustomInformationCard(
                 icon: HugeIcons.strokeRoundedCheckmarkCircle02,
                 taskCount: controller.doneCount.value,
-                label: "Conpleted",
+                label: "Completed",
                 color: AppColors.contentDone
             ),
           ),

@@ -13,6 +13,8 @@ class CustomChart extends GetView<AnalysisController> {
     return AspectRatio(
       aspectRatio: 1.3,
       child: Obx(() {
+        final touchedIndex = controller.touchedIdx.value;
+
         return Stack(
           alignment: Alignment.center,
           children: [
@@ -32,34 +34,41 @@ class CustomChart extends GetView<AnalysisController> {
                 ),
                 borderData: FlBorderData(show: false),
                 sectionsSpace: 3,
-                centerSpaceRadius: 50,
+                centerSpaceRadius: 55,
                 sections: showingSections(),
               ),
-              duration: const Duration(milliseconds: 800),
+              duration: const Duration(milliseconds: 500),
               curve: Curves.easeOutBack,
             ),
 
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  "Total",
-                  style: GoogleFonts.inter(
-                    color: AppColors.grey,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
+            AnimatedSwitcher(
+              duration: const Duration(milliseconds: 50),
+              transitionBuilder: (Widget child, Animation<double> animation) {
+                return FadeTransition(opacity: animation, child: child);
+              },
+              child: Column(
+                key: ValueKey<int>(touchedIndex),
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    controller.chartCenterLabel,
+                    style: GoogleFonts.inter(
+                      color: controller.chartCenterColor,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
-                ),
-                Text(
-                  "${controller.filteredTotalCount.value}",
-                  style: GoogleFonts.inter(
-                    color: Colors.black87,
-                    fontSize: 22,
-                    fontWeight: FontWeight.w800,
-                    height: 1.2,
+                  Text(
+                    controller.chartCenterValue,
+                    style: GoogleFonts.inter(
+                      color: Colors.black87,
+                      fontSize: 26,
+                      fontWeight: FontWeight.w800,
+                      height: 1.2,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         );
@@ -86,9 +95,9 @@ class CustomChart extends GetView<AnalysisController> {
       final isTouched = i == controller.touchedIdx.value;
 
       final fontSize = isTouched ? 22.0 : 14.0;
-      final radius = isTouched ? 60.0 : 50.0;
+      final radius = isTouched ? 55.0 : 45.0;
 
-      final opacity = (!isAnyTouched || isTouched) ? 1.0 : 0.5;
+      final opacity = (!isAnyTouched || isTouched) ? 1.0 : 0.4;
 
       return switch (i) {
         0 => PieChartSectionData(
