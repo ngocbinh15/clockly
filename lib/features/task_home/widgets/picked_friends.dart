@@ -1,13 +1,13 @@
 import 'package:clockly/core/constants/app_size.dart';
 import 'package:clockly/core/theme/app_colors.dart';
 import 'package:clockly/features/task_home/controllers/task_home_controller.dart';
-import 'package:clockly/features/task_home/widgets/avatar.dart';
+import 'package:clockly/core/components/avatar.dart';
 import 'package:clockly/features/task_home/widgets/text_title_add_task.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../controllers/team_controller.dart';
+import '../../leader_board/controller/team_controller.dart';
 
 class PickedFriends extends StatelessWidget {
   PickedFriends({super.key});

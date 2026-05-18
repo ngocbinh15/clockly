@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
 
-import '../../../core/theme/app_colors.dart';
-import '../controllers/task_home_controller.dart';
-import 'page_task.dart';
-import 'page_team_task.dart';
-import 'page_calendar.dart';
-import 'page_analys.dart';
-import '../widgets/custom_bottom_nav.dart';
+import '../core/theme/app_colors.dart';
+import 'task_home/controllers/task_home_controller.dart';
+import 'task_home/view/page_task.dart';
+import 'leader_board/view/page_leader_board.dart';
+import 'calendar/view/page_calendar.dart';
+import 'analys/view/page_analys.dart';
+import 'task_home/widgets/custom_bottom_nav.dart';
 
 class PageMainHome extends GetView<TaskHomeController> {
   const PageMainHome({super.key});
@@ -21,9 +21,9 @@ class PageMainHome extends GetView<TaskHomeController> {
         index: controller.bottomNavIndex.value,
         children: [
           PageTask(),
-          PageTeamTask(),
           PageCalendar(),
           PageAnalys(),
+          PageLeaderBoard(),
         ],
       )),
 

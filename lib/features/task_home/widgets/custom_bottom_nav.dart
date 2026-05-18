@@ -13,9 +13,9 @@ class CustomBottomNav extends StatelessWidget {
 
   final iconList = [
     HugeIcons.strokeRoundedHome01,
-    HugeIcons.strokeRoundedUserGroup,
     HugeIcons.strokeRoundedCalendar04,
     HugeIcons.strokeRoundedAnalysisTextLink,
+    HugeIcons.strokeRoundedUserGroup,
   ];
 
   @override

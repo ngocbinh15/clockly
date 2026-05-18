@@ -10,4 +10,7 @@
     static final orange = Color(0xFFFFB74D).withValues(alpha: 0.5);
     static const third = Color(0xFF594CA7);
     static const fouth = Color(0xFFE53935);
+    static const contentDone = Color(0xFF5B8DEF);
+    static const contentPending = Color(0xFF8A84E2);
+    static const contentLate = Color(0xFFFF8FA3);
   }

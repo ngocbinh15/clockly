@@ -5,8 +5,8 @@ import 'package:hugeicons/hugeicons.dart';
 
 import '../../../core/constants/app_size.dart';
 import '../../../core/theme/app_colors.dart';
-import '../controllers/team_controller.dart';
-import 'avatar.dart';
+import '../controller/team_controller.dart';
+import '../../../core/components/avatar.dart';
 
 class SearchFriendBottomSheet extends GetView<TeamController> {
   const SearchFriendBottomSheet({super.key});
