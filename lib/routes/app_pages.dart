@@ -47,7 +47,7 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.settings,
-      page: () => const PageSettings(),
+      page: () => PageSettings(),
       binding: SettingsBinding(),
     ),
   ];

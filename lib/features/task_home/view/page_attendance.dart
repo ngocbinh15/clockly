@@ -17,7 +17,7 @@ class PageTaskHome extends GetView<TaskHomeController> {
       _buildTaskView(),
       const Center(child: Text("Calendar Page", style: TextStyle(fontSize: 20))),
       const Center(child: Text("Focus Page", style: TextStyle(fontSize: 20))),
-      const PageSettings(),
+      PageSettings(),
     ];
 
     return Scaffold(
