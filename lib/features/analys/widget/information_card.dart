@@ -1,12 +1,12 @@
 import 'package:clockly/core/constants/app_size.dart';
 import 'package:clockly/core/theme/app_colors.dart';
-import 'package:clockly/features/analys/controller/analys_controller.dart';
+import 'package:clockly/features/analys/controller/analysis_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hugeicons/hugeicons.dart';
 
-class CustomInformationCard extends GetView <AnalysController> {
+class CustomInformationCard extends GetView <AnalysisController> {
   CustomInformationCard({super.key, required this.icon, required this.taskCount, required this.label, required this.color});
 
   int taskCount;

@@ -1,28 +1,28 @@
 import 'package:clockly/core/constants/app_size.dart';
 import 'package:clockly/core/theme/app_colors.dart';
-import 'package:clockly/features/analys/controller/analys_controller.dart';
+import 'package:clockly/features/analys/controller/analysis_controller.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ProductivityTrendCard extends GetView<AnalysController> {
-  const ProductivityTrendCard({super.key});
+class ProductivityTrendCard extends GetView<AnalysisController> {
+  ProductivityTrendCard({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(AppSizes.p20),
+      padding: const EdgeInsets.all(AppSizes.p24),
       decoration: BoxDecoration(
         color: AppColors.secondary,
         borderRadius: BorderRadius.circular(AppSizes.p16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.04),
-            blurRadius: 24,
-            offset: const Offset(0, 8),
-          ),
+            color: Colors.black.withValues(alpha: 0.03),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          )
         ],
       ),
       child: Column(
@@ -50,20 +50,62 @@ class ProductivityTrendCard extends GetView<AnalysController> {
                   alignment: BarChartAlignment.spaceAround,
                   maxY: maxY,
 
+                  barTouchData: BarTouchData(
+                    touchCallback: (FlTouchEvent event, barTouchResponse) {
+                      if (!event.isInterestedForInteractions ||
+                          barTouchResponse == null ||
+                          barTouchResponse.spot == null) {
+                        controller.touchedBarIdx.value = -1;
+                        return;
+                      }
+                      controller.touchedBarIdx.value = barTouchResponse.spot!.touchedBarGroupIndex;
+                    },
+                    touchTooltipData: BarTouchTooltipData(
+                      getTooltipColor: (group) => Colors.black87,
+                      tooltipBorderRadius: BorderRadius.circular(8),
+                      tooltipPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                      tooltipMargin: 8,
+                      getTooltipItem: (group, groupIndex, rod, rodIndex) {
+                        return BarTooltipItem(
+                          '${rod.toY.toInt()} Tasks',
+                          GoogleFonts.inter(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+
                   barGroups: List.generate(7, (index) {
+                    final isTouched = index == controller.touchedBarIdx.value;
+                    final isAnyTouched = controller.touchedBarIdx.value != -1;
+
+                    final double opacity = (!isAnyTouched || isTouched) ? 1.0 : 0.3;
+
                     return BarChartGroupData(
                       x: index,
                       barRods: [
                         BarChartRodData(
                           toY: trendData[index].toDouble(),
-                          color: AppColors.primary,
-                          width: 14,
-                          borderRadius: BorderRadius.circular(4),
+                          // Phình to từ 14 lên 18 nếu được chạm
+                          width: isTouched ? 18 : 14,
+                          borderRadius: BorderRadius.circular(6),
+
+                          gradient: LinearGradient(
+                            colors: [
+                              AppColors.primary.withValues(alpha: opacity), // Dưới đậm
+                              const Color(0xFF42A5F5).withValues(alpha: opacity), // Trên sáng
+                            ],
+                            begin: Alignment.bottomCenter,
+                            end: Alignment.topCenter,
+                          ),
 
                           backDrawRodData: BackgroundBarChartRodData(
                             show: true,
                             toY: maxY,
-                            color: AppColors.primary.withValues(alpha: 0.05),
+                            color: AppColors.grey.withValues(alpha: 0.08),
                           ),
                         ),
                       ],
@@ -83,14 +125,19 @@ class ProductivityTrendCard extends GetView<AnalysController> {
                         showTitles: true,
                         getTitlesWidget: (value, meta) {
                           const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+                          final isTouched = value.toInt() == controller.touchedBarIdx.value;
+                          final isAnyTouched = controller.touchedBarIdx.value != -1;
+                          final double textOpacity = (!isAnyTouched || isTouched) ? 1.0 : 0.4;
+
                           return Padding(
                             padding: const EdgeInsets.only(top: 8.0),
                             child: Text(
                               days[value.toInt()],
                               style: GoogleFonts.inter(
-                                color: AppColors.grey,
+                                color: AppColors.grey.withValues(alpha: textOpacity),
                                 fontSize: 12,
-                                fontWeight: FontWeight.w500,
+                                fontWeight: isTouched ? FontWeight.w700 : FontWeight.w500, // Đậm lên nếu chạm
                               ),
                             ),
                           );
@@ -99,8 +146,8 @@ class ProductivityTrendCard extends GetView<AnalysController> {
                     ),
                   ),
                 ),
-                duration: const Duration(milliseconds: 600),
-                curve: Curves.easeOutBack,
+                duration: const Duration(milliseconds: 400),
+                curve: Curves.easeOutCubic,
               );
             }),
           ),

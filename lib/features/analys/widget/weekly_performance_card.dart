@@ -1,25 +1,28 @@
 import 'package:clockly/core/constants/app_size.dart';
 import 'package:clockly/core/theme/app_colors.dart';
-import 'package:clockly/features/analys/controller/analys_controller.dart';
+import 'package:clockly/features/analys/controller/analysis_controller.dart'; // Chú ý sửa tên import nếu cần
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class WeeklyPerformanceCard extends GetView<AnalysController> {
+class WeeklyPerformanceCard extends GetView<AnalysisController> {
   const WeeklyPerformanceCard({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Obx(() {
       final percent = controller.weeklyPercent.value;
+      final filterText = controller.timeFilter.value;
 
-      String message = "You completed $percent% of your tasks this week. Keep it up!";
+      String timeStr = filterText == 'Today' ? 'today' : (filterText == 'This Week' ? 'this week' : 'this month');
+
+      String message = "You completed $percent% of your tasks $timeStr. Keep it up!";
       if (percent == 100) {
-        message = "Perfect! You completed all your tasks this week. 🎉";
+        message = "Perfect! You completed all your tasks $timeStr. 🎉";
       } else if (percent < 50 && percent > 0) {
         message = "You completed $percent% of your tasks. Let's push a bit harder! 💪";
       } else if (percent == 0) {
-        message = "You haven't completed any tasks this week yet. Let's get started!";
+        message = "You haven't completed any tasks $timeStr yet. Let's get started!";
       }
 
       return Container(
@@ -43,7 +46,7 @@ class WeeklyPerformanceCard extends GetView<AnalysController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Weekly Performance",
+                  "$filterText Performance",
                   style: GoogleFonts.inter(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,

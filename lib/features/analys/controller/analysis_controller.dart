@@ -1,10 +1,12 @@
 import 'package:clockly/features/task_home/controllers/task_home_controller.dart';
 import 'package:get/get.dart';
 
-class AnalysController extends GetxController {
+class AnalysisController extends GetxController {
   RxString timeFilter = 'This Week'.obs;
 
   RxInt touchedIdx = (-1).obs;
+  RxInt touchedBarIdx = (-1).obs;
+
   RxInt latePercent = 0.obs;
   RxInt pendingPercent = 0.obs;
   RxInt donePercent = 0.obs;
@@ -23,12 +25,13 @@ class AnalysController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-
     calcPercent();
-
     ever(taskHome.allTasks, (_) => calcPercent());
-
     ever(timeFilter, (_) => calcPercent());
+  }
+
+  bool isBetween(DateTime date, DateTime start, DateTime end) {
+    return !date.isBefore(start) && !date.isAfter(end);
   }
 
   void calcPercent() {
@@ -41,33 +44,23 @@ class AnalysController extends GetxController {
     final startOfWeekDate = DateTime(startOfWeek.year, startOfWeek.month, startOfWeek.day);
     final endOfWeekDate = startOfWeekDate.add(const Duration(days: 6, hours: 23, minutes: 59, seconds: 59));
 
-    // 👉 BƯỚC 1: LỌC DANH SÁCH TASK THEO THỜI GIAN ĐƯỢC CHỌN
-    List<dynamic> filteredTasks = [];
+    final filteredTasks = taskHome.allTasks.where((task) {
+      if (task.dueDate == null) return false;
 
-    for (var task in taskHome.allTasks) {
-      if (task.dueDate == null) continue;
-
-      if (timeFilter.value == 'Today') {
-        if (task.dueDate!.isAfter(todayStart.subtract(const Duration(seconds: 1))) &&
-            task.dueDate!.isBefore(todayEnd.add(const Duration(seconds: 1)))) {
-          filteredTasks.add(task);
-        }
-      } else if (timeFilter.value == 'This Week') {
-        if (task.dueDate!.isAfter(startOfWeekDate.subtract(const Duration(seconds: 1))) &&
-            task.dueDate!.isBefore(endOfWeekDate.add(const Duration(seconds: 1)))) {
-          filteredTasks.add(task);
-        }
-      } else if (timeFilter.value == 'This Month') {
-        if (task.dueDate!.year == now.year && task.dueDate!.month == now.month) {
-          filteredTasks.add(task);
-        }
+      switch (timeFilter.value) {
+        case 'Today':
+          return isBetween(task.dueDate!, todayStart, todayEnd);
+        case 'This Week':
+          return isBetween(task.dueDate!, startOfWeekDate, endOfWeekDate);
+        case 'This Month':
+          return task.dueDate!.year == now.year && task.dueDate!.month == now.month;
+        default:
+          return true;
       }
-    }
+    }).toList();
 
-    // Cập nhật tổng số lượng sau khi lọc
     filteredTotalCount.value = filteredTasks.length;
 
-    // Nếu không có dữ liệu nào khớp thời gian, reset sạch về 0 tránh lỗi chia cho 0
     if (filteredTasks.isEmpty) {
       latePercent.value = 0;
       pendingPercent.value = 0;
@@ -103,27 +96,23 @@ class AnalysController extends GetxController {
     pendingPercent.value = 100 - donePercent.value - latePercent.value;
 
     List<int> tempTrend = List.filled(7, 0);
-    int weeklyDone = 0;
-    int weeklyTotalInFilter = 0;
+    int periodDone = 0;
 
     for (var task in filteredTasks) {
-      if (task.dueDate!.isAfter(startOfWeekDate.subtract(const Duration(seconds: 1))) &&
-          task.dueDate!.isBefore(endOfWeekDate.add(const Duration(seconds: 1)))) {
+      DateTime localDue = task.dueDate!.toLocal();
 
-        weeklyTotalInFilter++;
-        if (task.status == 'completed') {
-          weeklyDone++;
-          int dayIndex = task.dueDate!.weekday - 1;
-          tempTrend[dayIndex]++;
-        }
+      if (task.status == 'completed') {
+        periodDone++;
       }
+      tempTrend[localDue.weekday - 1]++;
     }
 
     weeklyTrend.value = tempTrend;
-    if (weeklyTotalInFilter == 0) {
+
+    if (filteredTasks.isEmpty) {
       weeklyPercent.value = 0;
     } else {
-      weeklyPercent.value = ((weeklyDone / weeklyTotalInFilter) * 100).round();
+      weeklyPercent.value = ((periodDone / filteredTasks.length) * 100).round();
     }
   }
 }

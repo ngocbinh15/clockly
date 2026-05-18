@@ -1,8 +1,8 @@
 import 'package:clockly/core/components/heading_text_page.dart';
-import 'package:clockly/features/analys/controller/analys_controller.dart';
+import 'package:clockly/features/analys/controller/analysis_controller.dart';
+import 'package:clockly/features/analys/widget/custom_button_dropdown.dart';
 import 'package:clockly/features/analys/widget/custom_pie_chart.dart';
 import 'package:clockly/features/analys/widget/list_infomation.dart';
-// 👉 1. IMPORT LẠI 2 WIDGET BỊ THIẾU
 import 'package:clockly/features/analys/widget/productivity_trend_card.dart';
 import 'package:clockly/features/analys/widget/weekly_performance_card.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +12,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../core/constants/app_size.dart';
 import '../../../core/theme/app_colors.dart';
 
-class PageAnalys extends GetView<AnalysController> {
+class PageAnalys extends GetView<AnalysisController> {
   const PageAnalys({super.key});
 
   @override
@@ -42,52 +42,8 @@ class PageAnalys extends GetView<AnalysController> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       HeadingTextPage(text: "Analytics"),
-                      Obx(() {
-                        return Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 2),
-                          decoration: BoxDecoration(
-                            color: AppColors.secondary,
-                            borderRadius: BorderRadius.circular(12),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withValues(alpha: 0.03),
-                                blurRadius: 12,
-                                offset: const Offset(0, 4),
-                              )
-                            ],
-                          ),
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton<String>(
-                              value: controller.timeFilter.value,
-                              icon: const Icon(
-                                Icons.keyboard_arrow_down_rounded,
-                                color: AppColors.primary,
-                                size: 20,
-                              ),
-                              style: GoogleFonts.inter(
-                                color: AppColors.primary,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13,
-                              ),
-                              dropdownColor: AppColors.secondary,
-                              borderRadius: BorderRadius.circular(12),
-                              items: <String>['Today', 'This Week', 'This Month']
-                                  .map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                              onChanged: (String? newValue) {
-                                if (newValue != null) {
-                                  controller.timeFilter.value = newValue;
-                                  controller.calcPercent();
-                                }
-                              },
-                            ),
-                          ),
-                        );
-                      }),
+
+                      CustomButtonDropdown(),
                     ],
                   ),
                   const SizedBox(height: AppSizes.p24),
@@ -97,7 +53,7 @@ class PageAnalys extends GetView<AnalysController> {
 
                   const SizedBox(height: AppSizes.p16),
 
-                  const ProductivityTrendCard(),
+                  ProductivityTrendCard(),
 
                   const SizedBox(height: AppSizes.p16),
 

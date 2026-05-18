@@ -1,6 +1,6 @@
 import 'package:clockly/core/constants/app_size.dart';
 import 'package:clockly/core/theme/app_colors.dart';
-import 'package:clockly/features/analys/controller/analys_controller.dart';
+import 'package:clockly/features/analys/controller/analysis_controller.dart';
 import 'package:clockly/features/analys/widget/custom_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,7 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'note_chart.dart';
 
 
-class CustomPieChart extends GetView <AnalysController> {
+class CustomPieChart extends GetView <AnalysisController> {
   const CustomPieChart({super.key});
 
   @override
@@ -32,9 +32,9 @@ class CustomPieChart extends GetView <AnalysController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text("Task Distribution", style: GoogleFonts.inter(
-            color: Colors.black87,
             fontSize: 18,
-            fontWeight: FontWeight.w500
+            fontWeight: FontWeight.w600,
+            color: Colors.black87,
           ),),
 
           CustomChart (),

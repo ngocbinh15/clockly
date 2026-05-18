@@ -1,10 +1,10 @@
 import 'package:clockly/core/theme/app_colors.dart';
-import 'package:clockly/features/analys/controller/analys_controller.dart';
+import 'package:clockly/features/analys/controller/analysis_controller.dart';
 import 'package:clockly/features/analys/widget/indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class NoteChart extends GetView<AnalysController> {
+class NoteChart extends GetView<AnalysisController> {
   const NoteChart({super.key});
 
   @override

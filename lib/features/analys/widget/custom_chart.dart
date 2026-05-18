@@ -1,11 +1,11 @@
 import 'package:clockly/core/theme/app_colors.dart';
-import 'package:clockly/features/analys/controller/analys_controller.dart';
+import 'package:clockly/features/analys/controller/analysis_controller.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class CustomChart extends GetView<AnalysController> {
+class CustomChart extends GetView<AnalysisController> {
   const CustomChart({super.key});
 
   @override

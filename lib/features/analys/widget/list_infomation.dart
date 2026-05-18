@@ -1,4 +1,4 @@
-import 'package:clockly/features/analys/controller/analys_controller.dart';
+import 'package:clockly/features/analys/controller/analysis_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
@@ -7,7 +7,7 @@ import '../../../core/constants/app_size.dart';
 import '../../../core/theme/app_colors.dart';
 import 'information_card.dart';
 
-class ListInfomation extends GetView <AnalysController> {
+class ListInfomation extends GetView <AnalysisController> {
   const ListInfomation({super.key});
 
   @override
