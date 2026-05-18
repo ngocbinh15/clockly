@@ -89,14 +89,14 @@ class ProductivityTrendCard extends GetView<AnalysisController> {
                       barRods: [
                         BarChartRodData(
                           toY: trendData[index].toDouble(),
-                          // Phình to từ 14 lên 18 nếu được chạm
                           width: isTouched ? 18 : 14,
                           borderRadius: BorderRadius.circular(6),
 
                           gradient: LinearGradient(
                             colors: [
-                              AppColors.primary.withValues(alpha: opacity), // Dưới đậm
-                              const Color(0xFF42A5F5).withValues(alpha: opacity), // Trên sáng
+                              AppColors.primary.withValues(alpha: opacity),
+                              AppColors.primary.withValues(alpha: opacity),
+                              // const Color(0xFF42A5F5).withValues(alpha: opacity),
                             ],
                             begin: Alignment.bottomCenter,
                             end: Alignment.topCenter,
