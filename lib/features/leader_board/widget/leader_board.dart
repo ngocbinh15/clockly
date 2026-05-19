@@ -122,10 +122,10 @@ class LeaderBoard extends GetView<TeamController> {
                 return GestureDetector(
                   onLongPress: () {
                     if (!isMe) {
-                      CustomDialog.showDeleteConfirm(
+                      CustomDialog.confirmDialog(
                         title: "Unfriend ${currUserModel.fullName}?",
                         content: "Are you sure you want to remove this person from your friend list? They will be removed from your leaderboard.",
-                        cancle: "Cancel",
+                        cancel: "Cancel",
                         confirm: "Unfriend",
                         onConfirm: () {
                           Get.back();

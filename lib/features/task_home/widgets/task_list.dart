@@ -61,10 +61,10 @@ class TaskList extends GetView<TaskHomeController> {
                         children: [
                           CustomSlidableAction(
                             onPressed: (context) {
-                              CustomDialog.showDeleteConfirm(
+                              CustomDialog.confirmDialog(
                                 title: "Delete task?",
                                 content: "This will permanently delete this task. You can’t undo this action.",
-                                cancle: "Cancel",
+                                cancel: "Cancel",
                                 confirm: "Delete",
                                 onConfirm: () => controller.deleteTask(task),
                               );

@@ -5,10 +5,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 class CustomDialog {
-  static void showDeleteConfirm({
+  static void confirmDialog({
     required String title,
     required String content,
-    required String cancle,
+    required String cancel,
     required String confirm,
     required VoidCallback onConfirm,
   }) {
@@ -104,7 +104,7 @@ class CustomDialog {
                       ),
 
                       child: Text(
-                        cancle,
+                        cancel,
                         style: GoogleFonts.inter(
                           fontSize: 15,
                           fontWeight: FontWeight.w600,
