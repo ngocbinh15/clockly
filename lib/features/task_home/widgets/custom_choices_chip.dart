@@ -32,41 +32,45 @@ class CustomChoicesChip extends GetView<TaskHomeController> {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 45,
-        child: Expanded(
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: TaskCategory.values.length,
-            itemBuilder: (context, index) {
-              final categoryEnum = TaskCategory.values[index].displayName;
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: TaskCategory.values.length,
+        itemBuilder: (context, index) {
+          final categoryEnum = TaskCategory.values[index].displayName;
 
-              return Obx(() {
-                final isSelected = controller.selected.value == categoryEnum;
+          return Obx(() {
+            final isSelected = controller.selected.value == categoryEnum;
+            Map<String, dynamic> theme = isSelected ? selectedTheme : noneSelectedTheme;
 
-                Map<String, dynamic> theme = isSelected ? selectedTheme : noneSelectedTheme;
-                return Padding(
-                  padding: const EdgeInsets.only(right: AppSizes.p12),
-                  child: GestureDetector(
-                    onTap: () {
-                      controller.selected.value = categoryEnum;
-                    },
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 200),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: AppSizes.p24, vertical: AppSizes.p8),
-                      decoration: BoxDecoration(
-                        color: theme["color"],
-                        borderRadius: BorderRadius.circular(100),
-                      ),
-                      child: Center(
-                        child: Text(categoryEnum, style: theme["style"]),
-                      ),
+            return Padding(
+              padding: const EdgeInsets.only(right: AppSizes.p12),
+              child: GestureDetector(
+                onTap: () {
+                  controller.selected.value = categoryEnum;
+                  controller.changeCategory(categoryEnum, index);
+                },
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: AppSizes.p24, vertical: AppSizes.p8),
+                  decoration: BoxDecoration(
+                    color: theme["color"],
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                  child: Center(
+                    child: AnimatedDefaultTextStyle(
+                      duration: const Duration(milliseconds: 300),
+                      style: theme["style"],
+                      child: Text(categoryEnum),
                     ),
                   ),
-                );
-              });
-            },
-          ),
-        )
+                ),
+              ),
+            );
+          });
+        },
+      ),
     );
   }
 }

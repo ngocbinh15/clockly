@@ -336,4 +336,19 @@ class TaskHomeController extends GetxController{
     if (date == null) return "No time";
     return DateFormat('MMM dd, hh:mm a').format(date);
   }
+
+  // Animation
+  RxInt currentCategoryIndex = 0.obs;
+  RxDouble slideDirection = 1.0.obs;
+
+  void changeCategory(String categoryName, int newIndex) {
+    if (newIndex > currentCategoryIndex.value) {
+      slideDirection.value = 1.0;
+    } else if (newIndex < currentCategoryIndex.value) {
+      slideDirection.value = -1.0;
+    }
+
+    selected.value = categoryName;
+    currentCategoryIndex.value = newIndex;
+  }
 }
