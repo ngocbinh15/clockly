@@ -9,4 +9,5 @@ class AppRoutes {
   static const calendar = "/calendar";
   static const analys = "/analys";
   static const editProfile = "/edit";
+  static const setting = "/setting";
 }

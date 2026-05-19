@@ -36,11 +36,22 @@ class EditProfileController extends GetxController {
   }
 
   Future<void> pickImage() async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    try {
+      AuthHelper.showLoading();
 
-    if (image != null) {
-      selectedImagePath.value = image.path;
+      final ImagePicker picker = ImagePicker();
+      final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+
+      AuthHelper.hideLoading();
+
+      if (image != null) {
+        selectedImagePath.value = image.path;
+      }
+
+    } catch (e) {
+      AuthHelper.hideLoading();
+
+      AppAlerts.error(message: "Cannot open gallery: $e");
     }
   }
 

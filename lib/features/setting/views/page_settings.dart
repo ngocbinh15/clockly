@@ -1,3 +1,6 @@
+import 'package:clockly/core/components/text_heading.dart';
+import 'package:clockly/features/setting/widgets/button_logout.dart';
+import 'package:clockly/features/setting/widgets/heading_setting.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -23,14 +26,7 @@ class PageSettings extends StatelessWidget {
         child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: AppSizes.p20, vertical: AppSizes.p16),
           children: [
-            Text(
-              "Settings",
-              style: GoogleFonts.inter(
-                fontSize: 32,
-                fontWeight: FontWeight.w800,
-                color: Colors.black87,
-              ),
-            ),
+            HeadingSetting(),
             const SizedBox(height: AppSizes.p24),
 
             const SectionTitle(title: "ACCOUNT"),
@@ -45,36 +41,8 @@ class PageSettings extends StatelessWidget {
             const SupportSection(),
             const SizedBox(height: AppSizes.p24),
 
-            _buildLogoutButton(controller),
+            ButtonLogout(),
             const SizedBox(height: 40),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildLogoutButton(SettingsController controller) {
-    return GestureDetector(
-      onTap: () => controller.authService.logout(),
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: AppSizes.p16),
-        decoration: BoxDecoration(
-          color: AppColors.red,
-          borderRadius: BorderRadius.circular(AppSizes.p16),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(Icons.logout, color: AppColors.fouth, size: 20),
-            const SizedBox(width: AppSizes.p8),
-            Text(
-              "Log Out",
-              style: GoogleFonts.inter(
-                color: AppColors.fouth,
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-              ),
-            ),
           ],
         ),
       ),

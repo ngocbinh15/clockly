@@ -1,3 +1,6 @@
+import 'package:clockly/core/services/auth_service.dart';
+import 'package:clockly/routes/app_pages.dart';
+import 'package:clockly/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -25,18 +28,21 @@ class AccountSection extends GetView<SettingsController> {
           ListTile(
             contentPadding: const EdgeInsets.symmetric(horizontal: AppSizes.p16, vertical: AppSizes.p8),
             onTap: () {
-              Get.to(() => const EditProfilePage());
+              Get.toNamed(AppRoutes.editProfile);
             },
-            leading: Obx(() => CircleAvatar(
+            leading: Obx(() {
+              final url = Get.find<AuthService>().currentUser.value?.avatarUrl;
+              return CircleAvatar(
               radius: 26,
               backgroundColor: AppColors.background,
               backgroundImage: controller.avatarUrl.value.isNotEmpty
-                  ? NetworkImage(controller.avatarUrl.value)
+                  ? NetworkImage(url ?? " ")
                   : null,
               child: controller.avatarUrl.value.isEmpty
                   ? Icon(Icons.person, color: AppColors.grey)
                   : null,
-            )),
+            );}
+            ),
             title: Obx(() => Text(
               controller.userName.value,
               style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 16),
