@@ -44,7 +44,7 @@ class AccountSection extends GetView<SettingsController> {
             );}
             ),
             title: Obx(() => Text(
-              controller.userName.value,
+              Get.find<AuthService>().currentUser.value?.fullName ?? " ",
               style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 16),
             )),
             subtitle: Obx(() => Text(

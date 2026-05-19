@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import '../../../core/theme/app_colors.dart';
 
 class AnalysisController extends GetxController {
-  RxString timeFilter = 'This Week'.obs;
+  RxString timeFilter = 'This Month'.obs;
 
   RxInt touchedIdx = (-1).obs;
   RxInt touchedBarIdx = (-1).obs;

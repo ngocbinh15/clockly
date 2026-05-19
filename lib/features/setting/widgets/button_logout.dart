@@ -1,4 +1,5 @@
 import 'package:clockly/core/services/auth_service.dart';
+import 'package:clockly/core/utils/dialog_helper.dart';
 import 'package:clockly/features/setting/controller/settings_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,8 +16,14 @@ class ButtonLogout extends GetView<SettingsController> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-
-      },
+        CustomDialog.confirmDialog(
+            title: "Log Out?",
+            content: "Are you sure you want to log out?",
+            cancel: "Cancel",
+            confirm: "Log Out",
+            onConfirm: () => controller.authService.logout(),
+        );
+        },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: AppSizes.p16),
         decoration: BoxDecoration(

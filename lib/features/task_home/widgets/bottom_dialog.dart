@@ -58,10 +58,10 @@ class BottomDialog {
                     GestureDetector(
                       onTap: () {
                         if (controller.nameController.text.isNotEmpty || controller.decriptionController.text.isNotEmpty || controller.dateController.text.isNotEmpty) {
-                          CustomDialog.showDeleteConfirm(
+                          CustomDialog.confirmDialog(
                             title: "Discard draft?",
                             content: "Your changes haven’t been saved yet. Are you sure you want to discard them?",
-                            cancle: "Keep editing",
+                            cancel: "Keep editing",
                             confirm: "Discard",
                             onConfirm: () {
                               Get.back();

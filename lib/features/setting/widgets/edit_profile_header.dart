@@ -9,50 +9,52 @@ class EditProfileHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        GestureDetector(
-          onTap: () => Get.back(),
-          child: Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: AppColors.secondary,
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.04),
-                  blurRadius: 12,
-                  offset: const Offset(0, 4),
-                ),
-              ],
+    return SizedBox(
+      width: double.infinity,
+      height: 48,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Text(
+            "Edit Profile",
+            style: GoogleFonts.inter(
+              fontSize: 20,
+              fontWeight: FontWeight.w800,
+              color: Colors.black87,
+              letterSpacing: -0.5,
             ),
-            child: const Padding(
-              padding: EdgeInsets.only(right: 2.0),
-              child: Icon(
-                Icons.arrow_back_ios_new_rounded,
-                color: Colors.black87,
-                size: 18,
+          ),
+
+          Positioned(
+            left: 0,
+            child: GestureDetector(
+              onTap: () => Get.back(),
+              child: Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: AppColors.secondary,
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.04),
+                      blurRadius: 12,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.only(right: 2.0),
+                  child: Icon(
+                    Icons.arrow_back_ios_new_rounded,
+                    color: Colors.black87,
+                    size: 18,
+                  ),
+                ),
               ),
             ),
           ),
-        ),
-
-        const Spacer(),
-
-        Text(
-          "Edit Profile",
-          style: GoogleFonts.inter(
-            fontSize: 20,
-            fontWeight: FontWeight.w800,
-            color: Colors.black87,
-            letterSpacing: -0.5,
-          ),
-        ),
-
-        const Spacer(),
-        const SizedBox(width: 42),
-      ],
+        ],
+      ),
     );
   }
 }
