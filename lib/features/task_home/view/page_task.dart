@@ -1,3 +1,4 @@
+import 'package:clockly/core/components/text_heading.dart';
 import 'package:clockly/core/constants/app_size.dart';
 import 'package:clockly/core/theme/app_colors.dart';
 import 'package:clockly/features/task_home/widgets/custom_app_bar.dart';
@@ -46,14 +47,7 @@ class PageTask extends GetView<TaskHomeController> {
                   CustomAppBar(),
                   const SizedBox(height: AppSizes.p24),
 
-                  Text(
-                    "My Tasks",
-                    style: GoogleFonts.inter(
-                      fontSize: 30,
-                      fontWeight: FontWeight.w700,
-                      letterSpacing: -1,
-                    ),
-                  ),
+                  TextHeading(textHeading: "My Tasks"),
                   const SizedBox(height: AppSizes.p16),
 
                   CustomChoicesChip(),

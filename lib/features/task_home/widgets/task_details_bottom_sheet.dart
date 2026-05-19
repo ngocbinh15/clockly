@@ -196,10 +196,10 @@ class TaskDetailsBottomSheet extends GetView<TaskHomeController> {
                   child: TextButton.icon(
                     onPressed: () {
                       Get.back();
-                      CustomDialog.showDeleteConfirm(
+                      CustomDialog.confirmDialog(
                         title: "Delete task?",
                         content: "This will permanently delete this task. You can’t undo this action.",
-                        cancle: "Cancel",
+                        cancel: "Cancel",
                         confirm: "Delete",
                         onConfirm: () => controller.deleteTask(task),
                       );

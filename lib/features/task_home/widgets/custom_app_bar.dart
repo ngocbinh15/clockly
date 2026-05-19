@@ -1,6 +1,8 @@
 import 'package:clockly/core/constants/app_size.dart';
+import 'package:clockly/core/services/auth_service.dart';
 import 'package:clockly/core/theme/app_colors.dart';
 import 'package:clockly/features/task_home/controllers/task_home_controller.dart';
+import 'package:clockly/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,7 +15,7 @@ class CustomAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Column(
@@ -37,7 +39,22 @@ class CustomAppBar extends StatelessWidget {
             ),
           ],
         ),
-        Avatar(avatarURL: controller.currUser!.avatarUrl,),
+
+        Obx(() {
+          final url = Get.find<AuthService>().currentUser.value?.avatarUrl;
+          return GestureDetector(
+            onTap: () => Get.toNamed(AppRoutes.setting),
+            child: CircleAvatar(
+              radius: 30,
+              backgroundColor: AppColors.grey,
+              child: CircleAvatar(
+                radius: 28,
+                backgroundImage: NetworkImage(
+                  url ?? " "
+                ),),
+            ),
+          );
+        })
       ],
     );
   }
