@@ -5,6 +5,7 @@ import 'package:clockly/features/task_home/controllers/task_home_controller.dart
 import 'package:clockly/features/task_home/widgets/list_avatar.dart';
 import 'package:clockly/features/task_home/widgets/task_details_bottom_sheet.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -94,6 +95,12 @@ class TaskList extends GetView<TaskHomeController> {
                       decoration: BoxDecoration(
                         color: isCompleted ? AppColors.background : AppColors.secondary,
                         borderRadius: BorderRadius.circular(16),
+                        // border: Border(
+                        //   right: BorderSide(
+                        //     color: controller.getPriorityColor(task.priority),
+                        //     width: 4,
+                        //   ),
+                        // ),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.black.withValues(alpha: 0.03),
@@ -105,15 +112,22 @@ class TaskList extends GetView<TaskHomeController> {
                       child: Row(
                         children: [
                           Transform.scale(
-                            scale: 1.4,
-                            child: Checkbox(
-                              side: BorderSide(color: AppColors.grey, width: 1.2),
-                              value: isCompleted,
-                              shape: const CircleBorder(),
-                              activeColor: AppColors.primary,
-                              onChanged: (bool? newValue) {
-                                controller.toggleTaskStatus(task);
-                              },
+                            scale: 1.25,
+                            child: GestureDetector(
+                              child: Checkbox(
+                                side: BorderSide(color: AppColors.grey, width: 1.2),
+                                value: isCompleted,
+                                shape: const CircleBorder(),
+                                activeColor: AppColors.primary,
+                                onChanged: (bool? newValue) {
+                                  controller.toggleTaskStatus(task);
+
+                                  if (newValue == true) {
+                                    HapticFeedback.heavyImpact();
+                                    controller.playConfetti();
+                                  }
+                                },
+                              ),
                             ),
                           ),
                           const SizedBox(width: AppSizes.p8),

@@ -13,11 +13,30 @@ class ForgotPasswordController extends GetxController{
   final authService = Get.find <AuthService>();
 
   final otpErrorText = RxnString(null);
-  final pinController = PinInputController();
+  late PinInputController pinController;
   String tempEmail = "";
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final confirmPasswordController = TextEditingController();
+  late TextEditingController emailController;
+  late TextEditingController passwordController;
+  late TextEditingController confirmPasswordController;
+
+
+  @override
+  void onInit() {
+    super.onInit();
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+    confirmPasswordController = TextEditingController();
+    pinController = PinInputController();
+  }
+
+  @override
+  void onClose() {
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    pinController.dispose();
+    super.onClose();
+  }
 
   Future<void> sendPasswordReset() async {
     final email = emailController.text.trim();
@@ -52,13 +71,5 @@ class ForgotPasswordController extends GetxController{
     } catch (e) {
       AppAlerts.error(message: "$e");
     }
-  }
-
-  @override
-  void onClose() {
-    super.dispose();
-    emailController.dispose();
-    passwordController.dispose();
-    confirmPasswordController.dispose();
   }
 }

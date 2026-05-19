@@ -7,14 +7,19 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'auth_helper.dart';
 
 class LoginController extends GetxController {
-  final supabase = Supabase.instance.client;
   final authService = Get.find<AuthService>();
 
   var obscurePassword = true.obs;
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
 
-  String tempEmail = "";
+  late TextEditingController emailController;
+  late TextEditingController passwordController;
+
+  @override
+  void onInit() {
+    super.onInit();
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+  }
 
   Future<void> signIn() async {
     final email = emailController.text.trim();
@@ -22,14 +27,11 @@ class LoginController extends GetxController {
 
     try {
       AuthHelper.showLoading();
-
       await authService.signIn(email, password);
-
       AuthHelper.hideLoading();
 
       emailController.clear();
       passwordController.clear();
-
     } on AuthException catch (e) {
       AuthHelper.hideLoading();
       AppAlerts.error(message: AppMessages.defaultError);
@@ -37,6 +39,13 @@ class LoginController extends GetxController {
       AuthHelper.hideLoading();
       AppAlerts.error(message: "$e");
     }
+  }
+
+  @override
+  void onClose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.onClose();
   }
 
   void toggleObscurePassword() {

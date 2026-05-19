@@ -2,7 +2,9 @@ import 'package:clockly/core/components/app_alerts.dart';
 import 'package:clockly/core/constants/app_message.dart';
 import 'package:clockly/core/services/auth_service.dart';
 import 'package:clockly/features/auth/controllers/auth_helper.dart';
+import 'package:confetti/confetti.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -15,6 +17,8 @@ class TaskHomeController extends GetxController{
   final String today = DateFormat('MMM dd, yyyy').format(DateTime.now());
   final currUser = Get.find<AuthService>().currentUser.value;
   RxString selected = "All Tasks".obs;
+
+  late ConfettiController confettiController;
 
   RxString selectedAddTask = "General".obs;
   RxString selectedPriority = "Low".obs;
@@ -30,19 +34,48 @@ class TaskHomeController extends GetxController{
 
   RxInt bottomNavIndex = 0.obs;
 
-  TextEditingController nameController = TextEditingController();
-  TextEditingController decriptionController = TextEditingController();
-  TextEditingController dateController = TextEditingController();
+  late TextEditingController nameController;
+  late TextEditingController decriptionController;
+  late TextEditingController dateController;
 
   GlobalKey <FormState> formStateAddTask = GlobalKey<FormState>();
 
   RxMap<String, List<String>> taskMembersMap = <String, List<String>>{}.obs;
 
-
+  late final RealtimeChannel _realtimeChannel;
+  
   @override
   void onInit() {
     super.onInit();
     fetchTasks();
+    confettiController = ConfettiController(duration: const Duration(seconds: 1));
+    nameController = TextEditingController();
+    decriptionController = TextEditingController();
+    dateController = TextEditingController();
+    _setupRealtimeTaskList();
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
+    _supabase.removeChannel(_realtimeChannel);
+    confettiController.dispose();
+    nameController.dispose();
+    dateController.dispose();
+    dateController.dispose();
+  }
+
+  void _setupRealtimeTaskList() {
+    _realtimeChannel = _supabase
+        .channel('public:tasks')
+        .onPostgresChanges(
+      event: PostgresChangeEvent.all,
+      schema: 'public',
+      table: 'tasks',
+      callback: (payload) {
+        fetchTasks();
+      },
+    ).subscribe();
   }
 
   void prepareEditData(TaskModel task) {
@@ -335,6 +368,24 @@ class TaskHomeController extends GetxController{
   String formatTime(DateTime? date) {
     if (date == null) return "No time";
     return DateFormat('MMM dd, hh:mm a').format(date);
+  }
+
+  void playConfetti() {
+    confettiController.stop();
+    confettiController.play();
+  }
+
+  Color getPriorityColor(String priority) {
+    switch (priority.toLowerCase()) {
+      case 'high':
+        return Colors.redAccent;
+      case 'medium':
+        return Colors.orangeAccent;
+      case 'low':
+        return Colors.blueAccent;
+      default:
+        return Colors.transparent;
+    }
   }
 
   // Animation
