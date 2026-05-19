@@ -22,38 +22,45 @@ class PageLogin extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
     return MainTheme(
-        body: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            HeadingAuth(
-                icon: HugeIcons.strokeRoundedTime02,
-                heading: "Welcome Back",
-                title: "Please sign in to access your timesheet"
+      body: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          HeadingAuth(
+              icon: HugeIcons.strokeRoundedTime02,
+              heading: "Welcome Back",
+              title: "Please sign in to access your timesheet"
+          ),
+
+          FormLogin(),
+
+          SizedBox(height: AppSizes.p24),
+
+          Divider(
+            color: AppColors.grey.withValues(alpha: 0.5),
+            thickness: 1,
+          ),
+
+          SizedBox(height: AppSizes.p16),
+
+          BottomButton(
+            leftText: "Don't have an account?",
+            buttonText: "Sign up",
+            onTap: () => Get.toNamed(AppRoutes.signUp),
+          ),
+
+          SizedBox(height: AppSizes.p12,),
+
+          Text(
+            "Clockly v1.0.0",
+            style: GoogleFonts.inter(
+              color: const Color(0xFF64748B),
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
             ),
-
-            FormLogin(),
-
-            SizedBox(height: AppSizes.p24),
-
-            Divider(
-              color: AppColors.grey.withValues(alpha: 0.5),
-              thickness: 1,
-            ),
-
-            SizedBox(height: AppSizes.p16),
-
-            BottomButton(
-              leftText: "Don't have an account?",
-              buttonText: "Sign up",
-              onTap: () => Get.toNamed(AppRoutes.signUp),
-            ),
-
-            SizedBox(height: AppSizes.p12,),
-
-            AppInfo()
-          ],
-        ),
+          ),
+        ],
+      ),
     );
   }
 }

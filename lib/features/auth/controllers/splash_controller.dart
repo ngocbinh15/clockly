@@ -1,6 +1,8 @@
 import 'package:clockly/core/services/auth_service.dart';
 import 'package:get/get.dart';
 
+import '../../../routes/app_routes.dart';
+
 class SplashController extends GetxController{
   final authService = Get.find<AuthService>();
 
@@ -8,6 +10,6 @@ class SplashController extends GetxController{
   void onReady() async {
     super.onReady();
     await Future.delayed(const Duration(seconds: 2));
-    authService.setupAuthListener();
+    Get.offAllNamed(AppRoutes.login);
   }
 }

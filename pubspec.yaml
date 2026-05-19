@@ -4,7 +4,7 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.11.4
+  sdk: ^3.10.7
 dependencies:
   flutter:
     sdk: flutter
@@ -28,6 +28,7 @@ dependencies:
   animated_bottom_navigation_bar: ^1.4.0
   dotted_border: ^3.1.0
   fl_chart: ^1.2.0
+
 
 dev_dependencies:
   flutter_test:
