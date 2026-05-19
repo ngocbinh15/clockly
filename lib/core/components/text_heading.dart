@@ -7,6 +7,10 @@ class TextHeading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(textHeading, style: AppTextStyles.heading,);
+    return Row(
+      children: [
+        TextHeading(textHeading: "Setting"),
+      ],
+    );
   }
 }

@@ -2,10 +2,10 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../../../core/components/custom_snackbar.dart';
+
+import '../../../core/components/app_alerts.dart';
+import '../../../core/constants/app_message.dart';
 import '../../../core/services/auth_service.dart';
-import '../../../core/theme/app_colors.dart';
-import '../../../routes/app_routes.dart';
 import '../../auth/controllers/auth_helper.dart';
 
 class SettingsController extends GetxController {
@@ -26,17 +26,13 @@ class SettingsController extends GetxController {
     final user = supabase.auth.currentUser;
     if (user != null) {
       try {
-        final data = await supabase
-            .from('profiles')
-            .select()
-            .eq('id', user.id)
-            .single();
+        final data = authService.currentUser.value;
 
-        userName.value = data['full_name'] ?? "Người dùng";
-        userEmail.value = data['email'] ?? user.email ?? "";
-        avatarUrl.value = data['avatar_url'] ?? "";
+        userName.value = data?.fullName ?? "";
+        userEmail.value = data?.email ?? "";
+        avatarUrl.value = data?.avatarUrl ?? "";
       } catch (e) {
-        print("Lỗi tải profile: $e");
+        AppAlerts.error(message: e.toString());
       }
     }
   }
@@ -52,13 +48,13 @@ class SettingsController extends GetxController {
 
       final File file = File(image.path);
       final user = supabase.auth.currentUser;
-      if (user == null) throw 'Không tìm thấy người dùng';
+      if (user == null) throw 'User not found';
+
       final fileExtension = image.path.split('.').last;
       final fileName = '${user.id}_${DateTime.now().millisecondsSinceEpoch}.$fileExtension';
 
-      await supabase.storage.from('avatars').upload(fileName, file);
-
-      final publicUrl = supabase.storage.from('avatars').getPublicUrl(fileName);
+      await supabase.storage.from('images').upload(fileName, file);
+      final publicUrl = supabase.storage.from('images').getPublicUrl(fileName);
 
       await supabase
           .from('profiles')
@@ -68,23 +64,14 @@ class SettingsController extends GetxController {
       avatarUrl.value = publicUrl;
 
       AuthHelper.hideLoading();
-      CustomSnackbar.snackbar("Thành công", "Đã cập nhật ảnh đại diện", AppColors.green);
+
+      Future.delayed(const Duration(milliseconds: 300), () {
+        AppAlerts.success(message: AppMessages.avatarUpdated);
+      });
 
     } catch (e) {
       AuthHelper.hideLoading();
-      CustomSnackbar.snackbar("Lỗi cập nhật ảnh", e.toString(), AppColors.red);
-    }
-  }
-
-  Future<void> logOut() async {
-    try {
-      AuthHelper.showLoading();
-      await authService.logout();
-      AuthHelper.hideLoading();
-      Get.offAllNamed(AppRoutes.login);
-    } catch (e) {
-      AuthHelper.hideLoading();
-      CustomSnackbar.snackbar("Lỗi", "Không thể đăng xuất", AppColors.red);
+      AppAlerts.error(message: e.toString());
     }
   }
 }

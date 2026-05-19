@@ -10,7 +10,7 @@ class CustomSnackbar {
         message,
       colorText: AppColors.background,
       backgroundColor: color,
-      duration: const Duration(seconds: 1),
+      duration: const Duration(milliseconds: 2000),
       snackPosition: SnackPosition.TOP,
       padding: EdgeInsets.symmetric(vertical: AppSizes.p12, horizontal: AppSizes.p16)
     );

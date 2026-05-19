@@ -22,4 +22,8 @@ class AppMessages {
 
   static const String loginSuccess = "Logged in successfully.";
   static const String logoutSuccess = "Logged out successfully.";
+
+  static const String avatarUpdated = "Avatar updated successfully.";
+  static const String featureComingSoon = "This feature is coming soon.";
+  static const String navigating = "Navigating to page...";
 }

@@ -63,8 +63,7 @@ class CustomTextField extends GetView<LoginController> {
                   ),
                 ),
 
-                prefixIconConstraints:
-                const BoxConstraints(
+                prefixIconConstraints: const BoxConstraints(
                   minWidth: 40,
                   minHeight: 40,
                 ),

@@ -72,7 +72,7 @@ class CustomActiomChip extends GetView <TaskHomeController> {
                             borderRadius: BorderRadius.circular(100),
                             border: Border.all(
                               color: theme["color_border"]
-                            )
+                            ),
                           ),
                           child: Center(
                             child: Row(
