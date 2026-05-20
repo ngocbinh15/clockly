@@ -30,6 +30,7 @@ dependencies:
   fl_chart: ^1.2.0
   confetti: ^0.8.0
   flutter_dotenv: ^6.0.1
+  http:
 
 dev_dependencies:
   flutter_test:
@@ -39,6 +40,7 @@ dev_dependencies:
 flutter:
   assets:
     - assets/images/
+    - .env
 
   uses-material-design: true
 
@@ -46,6 +48,7 @@ flutter_launcher_icons:
   android: "launcher_icon"
   ios: false
   image_path: "assets/icon/app_icon.png"
+
 
   # (Tùy chọn) Đổi màu nền cho icon trên Android nếu ảnh của bạn là ảnh trong suốt (trong suốt sẽ bị lỗi nền đen trên Android)
   # adaptive_icon_background: "#FFFFFF"
