@@ -95,12 +95,12 @@ class TaskList extends GetView<TaskHomeController> {
                       decoration: BoxDecoration(
                         color: isCompleted ? AppColors.background : AppColors.secondary,
                         borderRadius: BorderRadius.circular(16),
-                        // border: Border(
-                        //   right: BorderSide(
-                        //     color: controller.getPriorityColor(task.priority),
-                        //     width: 4,
-                        //   ),
-                        // ),
+                        border: Border(
+                          right: BorderSide(
+                            color: controller.getPriorityColor(task.priority),
+                            width: 4,
+                          ),
+                        ),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.black.withValues(alpha: 0.03),
