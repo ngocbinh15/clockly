@@ -1,3 +1,4 @@
+import 'package:clockly/core/services/ai_service.dart';
 import 'package:clockly/core/services/app_info_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -28,6 +29,8 @@ Future<void> main() async {
   await Get.putAsync<AppInfoService>(
         () => AppInfoService().init(),
   );
+
+  Get.put (AiService());
 
   Get.put(AuthService());
   runApp(const MyApp());
