@@ -5,6 +5,7 @@ import 'package:clockly/features/task_home/widgets/custom_actiom_chip.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 class TextFiledAddTask extends StatelessWidget {
   TextFiledAddTask({super.key});
@@ -23,13 +24,76 @@ class TextFiledAddTask extends StatelessWidget {
             fontWeight: FontWeight.w600,
             color: Colors.black87,
           ),
-          controller: controller.nameController,
-          decoration: InputDecoration(
-            hintText: "What do you need to get done?",
-            hintStyle: GoogleFonts.inter(color: Colors.grey),
-            border: InputBorder.none,
-            contentPadding: EdgeInsets.zero,
-          ),
+      onChanged: (value) {
+        controller.isTyping.value = value.trim().isNotEmpty;
+        controller.isGenerated.value = false;
+      },
+      controller: controller.nameController,
+      decoration: InputDecoration(
+        hintText: "What do you need to get done?",
+        hintStyle: GoogleFonts.inter(color: Colors.grey),
+        border: InputBorder.none,
+        contentPadding: EdgeInsets.zero,
+
+        suffixIconConstraints: const BoxConstraints(
+          minWidth: 24,
+          minHeight: 24,
+        ),
+
+        suffixIcon: Obx(() {
+          if (controller.isGenerating.value) {
+            return const Padding(
+              padding: EdgeInsets.only(right: 8.0),
+              child: SizedBox(
+                width: 24,
+                height: 24,
+                child: Padding(
+                  padding: EdgeInsets.all(4.0),
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2.5,
+                    color: Colors.blueAccent,
+                  ),
+                ),
+              ),
+            );
+          }
+          else if (controller.isGenerated.value) {
+            return const Padding(
+              padding: EdgeInsets.only(right: 8.0),
+              child: HugeIcon(
+                icon: HugeIcons.strokeRoundedTickDouble02,
+                size: 24,
+                color: Colors.green,
+              ),
+            );
+          }
+          else if (controller.isTyping.value) {
+            return GestureDetector(
+              onTap: () async {
+                await controller.generateTask();
+              },
+              child: const Padding(
+                padding: EdgeInsets.only(right: 8.0),
+                child: HugeIcon(
+                  icon: HugeIcons.strokeRoundedMagicWand01,
+                  size: 24,
+                  color: Colors.blueAccent,
+                ),
+              ),
+            );
+          }
+          else {
+            return const Padding(
+              padding: EdgeInsets.only(right: 8.0),
+              child: HugeIcon(
+                icon: HugeIcons.strokeRoundedPencilEdit01,
+                size: 24,
+                color: Colors.black54,
+              ),
+            );
+          }
+        }),
+      ),
           validator: (value) => Validate.validName(value),
         ),
 
@@ -42,7 +106,7 @@ class TextFiledAddTask extends StatelessWidget {
             color: Colors.black54,
           ),
           decoration: InputDecoration(
-            hintText: "Add description (optional)...",
+            hintText: "Add description",
             hintStyle: GoogleFonts.inter(color: Colors.grey, fontSize: 14),
             border: InputBorder.none,
             contentPadding: EdgeInsets.only(top: 8, bottom: 16),

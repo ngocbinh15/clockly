@@ -74,7 +74,7 @@ extension TaskCategoryExtension on TaskCategory {
 
 TaskCategory categoryFromDb(String? dbValue) {
   return TaskCategory.values.firstWhere(
-        (e) => e.dbValue == dbValue,
+        (e) => e.dbValue.toLowerCase() == dbValue!.toLowerCase(),
     orElse: () => TaskCategory.general,
   );
 }

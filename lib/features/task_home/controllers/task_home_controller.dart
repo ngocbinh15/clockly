@@ -1,5 +1,6 @@
 import 'package:clockly/core/components/app_alerts.dart';
 import 'package:clockly/core/constants/app_message.dart';
+import 'package:clockly/core/services/ai_service.dart';
 import 'package:clockly/core/services/auth_service.dart';
 import 'package:clockly/features/auth/controllers/auth_helper.dart';
 import 'package:confetti/confetti.dart';
@@ -18,7 +19,13 @@ class TaskHomeController extends GetxController{
   final currUser = Get.find<AuthService>().currentUser.value;
   RxString selected = "All Tasks".obs;
 
+  final aiService = Get.find<AiService>();
+
   late ConfettiController confettiController;
+
+  var isTyping = false.obs;
+  var isGenerating = false.obs;
+  var isGenerated = false.obs;
 
   RxString selectedAddTask = "General".obs;
   RxString selectedPriority = "Low".obs;
@@ -63,6 +70,32 @@ class TaskHomeController extends GetxController{
     nameController.dispose();
     dateController.dispose();
     dateController.dispose();
+  }
+
+  Future<void> generateTask() async {
+    final inputText = nameController.text.trim();
+
+    if (inputText.isEmpty || isGenerating.value || isGenerated.value) return;
+
+    isGenerating.value = true;
+
+    try {
+      final newTask = await aiService.parseTaskFromText(inputText);
+      if (newTask == null) return;
+
+      nameController.text = newTask["title"] ?? inputText;
+      decriptionController.text = newTask["description"] ?? "";
+      dateController.text = newTask["due_date"] ?? "";
+      selectedPriority.value = newTask["priority"] ?? "Low";
+      selectedAddTask.value = newTask["category"] ?? "General";
+
+      isGenerated.value = true;
+
+    } catch (e) {
+      AppAlerts.error(message: e.toString());
+    } finally {
+      isGenerating.value = false;
+    }
   }
 
   void _setupRealtimeTaskList() {
@@ -139,6 +172,8 @@ class TaskHomeController extends GetxController{
       if (dateController.text.isNotEmpty) {
         parsedDate = DateFormat('MMM dd, yyyy - hh:mm a').parse(dateController.text);
       }
+
+      isTyping.value = false;
 
       AuthHelper.showLoading();
 

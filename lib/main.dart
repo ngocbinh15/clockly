@@ -14,9 +14,13 @@ Future<void> main() async {
   await dotenv.load(fileName: ".env");
 
   await Supabase.initialize(
-    url: dotenv.env['URL_SUPABASE'] ?? " ",
-    anonKey: dotenv.env['ANON_KEY'] ?? " ",
+    url: dotenv.env['URL_SUPABASE'] ?? '',
+    anonKey: dotenv.env['ANON_KEY'] ?? '',
   );
+
+  print(dotenv.env['ANON_KEY']);
+  print(" DKJHSKHKDHKJ\n");
+  print(dotenv.env['URL_SUPABASE']);
 
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
@@ -29,9 +33,9 @@ Future<void> main() async {
   await Get.putAsync<AppInfoService>(
         () => AppInfoService().init(),
   );
+  
+  Get.put(AuthService());
 
   Get.put (AiService());
-
-  Get.put(AuthService());
   runApp(const MyApp());
 }
