@@ -31,6 +31,7 @@ dependencies:
   confetti: ^0.8.0
   flutter_dotenv: ^6.0.1
   http:
+  chat_bubbles: ^1.9.3
 
 dev_dependencies:
   flutter_test:

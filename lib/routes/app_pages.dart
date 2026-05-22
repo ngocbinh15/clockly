@@ -7,6 +7,7 @@ import 'package:clockly/features/auth/views/page_forgot_password.dart';
 import 'package:clockly/features/auth/views/page_login.dart';
 import 'package:clockly/features/auth/views/page_reset_password.dart';
 import 'package:clockly/features/auth/views/page_sign_up.dart';
+import 'package:clockly/features/page_chat/views/page_chat.dart';
 import 'package:clockly/features/page_main_home.dart';
 import 'package:clockly/features/setting/bidings/edit_bidings.dart';
 import 'package:clockly/features/setting/bidings/setting_binding.dart';
@@ -58,6 +59,10 @@ class AppPages {
         name: AppRoutes.setting,
         page: () => PageSettings(),
       binding: SettingsBinding()
+    ),
+    GetPage(
+        name: AppRoutes.chat,
+        page: () => PageChat(),
     )
   ];
 }

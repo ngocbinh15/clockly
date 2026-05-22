@@ -27,6 +27,8 @@ class TaskHomeController extends GetxController{
   var isGenerating = false.obs;
   var isGenerated = false.obs;
 
+  var isSend = false.obs;
+
   RxString selectedAddTask = "General".obs;
   RxString selectedPriority = "Low".obs;
 

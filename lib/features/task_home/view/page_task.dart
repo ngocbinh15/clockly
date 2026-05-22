@@ -3,10 +3,13 @@ import 'package:clockly/core/constants/app_size.dart';
 import 'package:clockly/core/theme/app_colors.dart';
 import 'package:clockly/features/task_home/widgets/custom_app_bar.dart';
 import 'package:clockly/features/task_home/widgets/custom_choices_chip.dart';
+import 'package:clockly/features/task_home/widgets/heading_text_task.dart';
+import 'package:clockly/routes/app_routes.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 import '../../../core/services/auth_service.dart';
 import '../controllers/task_home_controller.dart';
@@ -50,7 +53,8 @@ class PageTask extends GetView<TaskHomeController> {
                       CustomAppBar(),
                       const SizedBox(height: AppSizes.p24),
 
-                      TextHeading(textHeading: "My Tasks"),
+                      HeadingTextTask(),
+
                       const SizedBox(height: AppSizes.p16),
 
                       CustomChoicesChip(),
