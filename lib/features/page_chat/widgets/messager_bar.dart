@@ -18,7 +18,7 @@ class CustomMessagerBar extends GetView<TaskHomeController> {
         children: [
           Expanded(
             child: TextField(
-              controller: controller.nameController,
+              controller: controller.chatController,
 
               minLines: 1,
               maxLines: 5,
@@ -77,7 +77,13 @@ class CustomMessagerBar extends GetView<TaskHomeController> {
                 suffixIcon: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: AppSizes.p16),
                   child: GestureDetector(
-                    onTap: () {
+                    onTap: () async {
+                      final text = controller.chatController.text.trim();
+                      if (controller.chatController.text.isNotEmpty) {
+                        Get.focusScope?.unfocus();
+                        controller.chatController.clear();
+                        await controller.handleChatSubmission(text);
+                      }
                     },
                     child: const HugeIcon(
                       icon: HugeIcons.strokeRoundedSent,

@@ -33,7 +33,7 @@ class HeadingChat extends StatelessWidget {
             child: GestureDetector(
               onTap: () {
                 Get.back();
-                Get.find<TaskHomeController>().isSend.value = false;
+                Get.find<TaskHomeController>().resetChatState();
                 },
               child: Container(
                 padding: const EdgeInsets.all(12),

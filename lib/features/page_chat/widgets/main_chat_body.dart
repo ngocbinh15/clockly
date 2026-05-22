@@ -11,7 +11,7 @@ class MainChatBody extends GetView<TaskHomeController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      if (controller.isSend.value) {
+      if (controller.chatMessages.isNotEmpty) {
         return const ChatMessagesView();
       } else {
         return const ChatEmptyState();

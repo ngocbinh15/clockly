@@ -65,7 +65,7 @@ class ChatEmptyState extends GetView<TaskHomeController> {
   Widget _buildSuggestionChip(String text) {
     return GestureDetector(
       onTap: () {
-        controller.nameController.text = text;
+        controller.chatController.text = text;
         controller.isTyping.value = true;
       },
       child: Container(
