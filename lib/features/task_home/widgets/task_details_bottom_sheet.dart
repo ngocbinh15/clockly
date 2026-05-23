@@ -30,15 +30,14 @@ class TaskDetailsBottomSheet extends GetView<TaskHomeController> {
     return Container(
       padding: const EdgeInsets.all(AppSizes.p24),
       decoration: const BoxDecoration(
-        color: AppColors.secondary, // Màu nền trắng/sáng của app
-        borderRadius: BorderRadius.vertical(top: Radius.circular(28)), // Bo góc lớn chuẩn M3
+        color: AppColors.secondary,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
       ),
       child: SafeArea(
         child: Column(
-          mainAxisSize: MainAxisSize.min, // Tự động co giãn theo nội dung
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 1. Thanh kéo (Drag handle) ở trên cùng
             Center(
               child: Container(
                 width: 50,
@@ -51,7 +50,6 @@ class TaskDetailsBottomSheet extends GetView<TaskHomeController> {
             ),
             const SizedBox(height: AppSizes.p24),
 
-            // 2. Tên công việc
             Text(
               task.title,
               style: GoogleFonts.inter(
@@ -63,10 +61,8 @@ class TaskDetailsBottomSheet extends GetView<TaskHomeController> {
             ),
             const SizedBox(height: AppSizes.p16),
 
-            // 3. Các thẻ Tag (Category & Priority)
             Row(
               children: [
-                // Thẻ Category
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   decoration: BoxDecoration(
@@ -85,7 +81,6 @@ class TaskDetailsBottomSheet extends GetView<TaskHomeController> {
                 ),
                 const SizedBox(width: AppSizes.p12),
 
-                // Thẻ Priority
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   decoration: BoxDecoration(
@@ -113,11 +108,9 @@ class TaskDetailsBottomSheet extends GetView<TaskHomeController> {
 
             const SizedBox(height: AppSizes.p24),
 
-            // Phân cách nhẹ
             Divider(color: AppColors.grey.withValues(alpha: 0.15), height: 1),
             const SizedBox(height: AppSizes.p20),
 
-            // 4. Mô tả công việc (Description)
             TextTitleAddTask(text: "Description",),
             const SizedBox(height: AppSizes.p8),
             Text(
@@ -131,11 +124,10 @@ class TaskDetailsBottomSheet extends GetView<TaskHomeController> {
 
             const SizedBox(height: AppSizes.p24),
 
-            // 5. Thời gian và Assignees
             Container(
               padding: const EdgeInsets.all(AppSizes.p16),
               decoration: BoxDecoration(
-                color: AppColors.background, // Nền xám nhạt để tách biệt phần thông tin này
+                color: AppColors.background,
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(color: AppColors.grey.withValues(alpha: 0.1)),
               ),
@@ -188,10 +180,8 @@ class TaskDetailsBottomSheet extends GetView<TaskHomeController> {
 
             const SizedBox(height: AppSizes.p32),
 
-            // 6. Nút bấm nâng cấp (Soft UI)
             Row(
               children: [
-                // Nút Delete (Soft Red Background)
                 Expanded(
                   child: TextButton.icon(
                     onPressed: () {
@@ -206,8 +196,8 @@ class TaskDetailsBottomSheet extends GetView<TaskHomeController> {
                     },
                     style: TextButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 16),
-                      backgroundColor: AppColors.fouth.withValues(alpha: 0.1), // Nền mờ cực sang
-                      foregroundColor: AppColors.fouth, // Màu chữ đỏ
+                      backgroundColor: AppColors.fouth.withValues(alpha: 0.1),
+                      foregroundColor: AppColors.fouth,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                     ),
                     icon: HugeIcon(icon: HugeIcons.strokeRoundedDelete02, color: AppColors.fouth, size: 20),
@@ -217,7 +207,6 @@ class TaskDetailsBottomSheet extends GetView<TaskHomeController> {
 
                 const SizedBox(width: 16),
 
-                // Nút Edit Task (Solid Primary)
                 Expanded(
                   child: ElevatedButton.icon(
                     onPressed: () {
