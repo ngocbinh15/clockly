@@ -34,66 +34,66 @@ class CustomTextField extends GetView<LoginController> {
     );
 
     return Obx(
-          () {
-            bool obscure = controller.obscurePassword.value;
-            return TextFormField(
-              controller: txtController,
+            () {
+          bool obscure = controller.obscurePassword.value;
+          return TextFormField(
+            controller: txtController,
 
-              obscureText: isPassword
-                  ? obscure
-                  : false,
+            obscureText: isPassword
+                ? obscure
+                : false,
 
-              decoration: InputDecoration(
-                hintText: hintText,
+            decoration: InputDecoration(
+              hintText: hintText,
 
-                hintStyle: GoogleFonts.inter(
+              hintStyle: GoogleFonts.inter(
                   color: Colors.grey,
                   letterSpacing: 1
+              ),
+              filled: true,
+              fillColor: const Color(0xFFF1F5F9),
+
+              prefixIcon: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: AppSizes.p16,
                 ),
-                filled: true,
-                fillColor: const Color(0xFFF1F5F9),
-
-                prefixIcon: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: AppSizes.p16,
-                  ),
-                  child: HugeIcon(
-                    icon: prefixIcon,
-                    color: const Color(0xFF64748B),
-                  ),
+                child: HugeIcon(
+                  icon: prefixIcon,
+                  color: const Color(0xFF64748B),
                 ),
-
-                prefixIconConstraints:
-                const BoxConstraints(
-                  minWidth: 40,
-                  minHeight: 40,
-                ),
-
-                suffixIcon: isPassword ?
-                IconButton(
-                  onPressed: () {
-                    controller.obscurePassword.toggle();
-                  },
-
-                  icon: HugeIcon(
-                    icon: obscure
-                        ? HugeIcons
-                        .strokeRoundedViewOff
-                        : HugeIcons
-                        .strokeRoundedView,
-
-                    color: const Color(0xFF64748B),
-                  ),
-                ) : null,
-
-                border: borderStyle,
-                enabledBorder: borderStyle,
-                focusedBorder: borderStyle,
               ),
 
-              validator: validator,
-            );
-          }
+              prefixIconConstraints:
+              const BoxConstraints(
+                minWidth: 40,
+                minHeight: 40,
+              ),
+
+              suffixIcon: isPassword ?
+              IconButton(
+                onPressed: () {
+                  controller.obscurePassword.toggle();
+                },
+
+                icon: HugeIcon(
+                  icon: obscure
+                      ? HugeIcons
+                      .strokeRoundedViewOff
+                      : HugeIcons
+                      .strokeRoundedView,
+
+                  color: const Color(0xFF64748B),
+                ),
+              ) : null,
+
+              border: borderStyle,
+              enabledBorder: borderStyle,
+              focusedBorder: borderStyle,
+            ),
+
+            validator: validator,
+          );
+        }
     );
   }
 }
