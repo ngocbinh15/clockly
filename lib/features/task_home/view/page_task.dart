@@ -1,6 +1,7 @@
 import 'package:clockly/core/components/text_heading.dart';
 import 'package:clockly/core/constants/app_size.dart';
 import 'package:clockly/core/theme/app_colors.dart';
+import 'package:clockly/core/utils/theme_helper.dart';
 import 'package:clockly/features/task_home/widgets/custom_app_bar.dart';
 import 'package:clockly/features/task_home/widgets/custom_choices_chip.dart';
 import 'package:clockly/features/task_home/widgets/heading_text_task.dart';
@@ -26,6 +27,8 @@ class PageTask extends GetView<TaskHomeController> {
       body: Stack(
         children: [
           Obx(() {
+            // Đăng ký phụ thuộc reactive cho thay đổi theme
+            final isDark = ThemeHelper.isDark;
             final currUser = authService.currentUser.value;
 
             if (currUser == null) {

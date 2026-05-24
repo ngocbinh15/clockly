@@ -1,4 +1,5 @@
 import 'package:clockly/core/components/text_heading.dart';
+import 'package:clockly/core/utils/theme_helper.dart';
 import 'package:clockly/features/setting/widgets/button_logout.dart';
 import 'package:clockly/features/setting/widgets/heading_setting.dart';
 import 'package:flutter/material.dart';
@@ -20,32 +21,37 @@ class PageSettings extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(SettingsController());
 
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.symmetric(horizontal: AppSizes.p20, vertical: AppSizes.p16),
-          children: [
-            HeadingSetting(),
-            const SizedBox(height: AppSizes.p24),
+    return Obx(() {
+      // Đăng ký phụ thuộc reactive với trạng thái theme thay đổi
+      final isDark = ThemeHelper.isDark;
 
-            const SectionTitle(title: "ACCOUNT"),
-            const AccountSection(),
-            const SizedBox(height: AppSizes.p24),
+      return Scaffold(
+        backgroundColor: AppColors.background,
+        body: SafeArea(
+          child: ListView(
+            padding: const EdgeInsets.symmetric(horizontal: AppSizes.p20, vertical: AppSizes.p16),
+            children: [
+              HeadingSetting(),
+              const SizedBox(height: AppSizes.p24),
 
-            const SectionTitle(title: "PREFERENCES"),
-            PreferencesSection(),
-            const SizedBox(height: AppSizes.p24),
+              const SectionTitle(title: "ACCOUNT"),
+              const AccountSection(),
+              const SizedBox(height: AppSizes.p24),
 
-            const SectionTitle(title: "SUPPORT & ABOUT"),
-            const SupportSection(),
-            const SizedBox(height: AppSizes.p24),
+              const SectionTitle(title: "PREFERENCES"),
+              PreferencesSection(),
+              const SizedBox(height: AppSizes.p24),
 
-            ButtonLogout(),
-            const SizedBox(height: 40),
-          ],
+              const SectionTitle(title: "SUPPORT & ABOUT"),
+              const SupportSection(),
+              const SizedBox(height: AppSizes.p24),
+
+              ButtonLogout(),
+              const SizedBox(height: 40),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 }
