@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:clockly/core/utils/theme_helper.dart';
 
 class TextFiledAddTask extends StatelessWidget {
   TextFiledAddTask({super.key});
@@ -14,16 +15,18 @@ class TextFiledAddTask extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        TextFormField(
-          autofocus: true,
-          style: GoogleFonts.inter(
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-            color: Colors.black87,
-          ),
+    return Obx(() {
+      final isDark = ThemeHelper.isDark;
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TextFormField(
+            autofocus: true,
+            style: GoogleFonts.inter(
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              color: isDark ? Colors.white : Colors.black87,
+            ),
       onChanged: (value) {
         controller.isTyping.value = value.trim().isNotEmpty;
         controller.isGenerated.value = false;
@@ -83,12 +86,12 @@ class TextFiledAddTask extends StatelessWidget {
             );
           }
           else {
-            return const Padding(
-              padding: EdgeInsets.only(right: 8.0),
+            return Padding(
+              padding: const EdgeInsets.only(right: 8.0),
               child: HugeIcon(
                 icon: HugeIcons.strokeRoundedPencilEdit01,
                 size: 24,
-                color: Colors.black54,
+                color: isDark ? Colors.white54 : Colors.black54,
               ),
             );
           }
@@ -97,14 +100,14 @@ class TextFiledAddTask extends StatelessWidget {
           validator: (value) => Validate.validName(value),
         ),
 
-        TextFormField(
-          maxLines: 3,
-          minLines: 1,
-          controller: controller.decriptionController,
-          style: GoogleFonts.inter(
-            fontSize: 14,
-            color: Colors.black54,
-          ),
+          TextFormField(
+            maxLines: 3,
+            minLines: 1,
+            controller: controller.decriptionController,
+            style: GoogleFonts.inter(
+              fontSize: 14,
+              color: isDark ? Colors.white70 : Colors.black54,
+            ),
           decoration: InputDecoration(
             hintText: "Add description",
             hintStyle: GoogleFonts.inter(color: Colors.grey, fontSize: 14),
@@ -116,5 +119,6 @@ class TextFiledAddTask extends StatelessWidget {
         SizedBox(height: AppSizes.p12,),
       ],
     );
+    });
   }
 }

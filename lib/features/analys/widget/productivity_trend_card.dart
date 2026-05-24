@@ -5,42 +5,45 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:clockly/core/utils/theme_helper.dart';
 
 class ProductivityTrendCard extends GetView<AnalysisController> {
   ProductivityTrendCard({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(AppSizes.p24),
-      decoration: BoxDecoration(
-        color: AppColors.secondary,
-        borderRadius: BorderRadius.circular(AppSizes.p16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.03),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          )
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Productivity Trend",
-            style: GoogleFonts.inter(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-              color: Colors.black87,
+    return Obx(() {
+      final isDark = ThemeHelper.isDark;
+      return Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(AppSizes.p24),
+        decoration: BoxDecoration(
+          color: AppColors.secondary,
+          borderRadius: BorderRadius.circular(AppSizes.p16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.03),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            )
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Productivity Trend",
+              style: GoogleFonts.inter(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                color: isDark ? Colors.white : Colors.black87,
+              ),
             ),
-          ),
-          const SizedBox(height: AppSizes.p32),
+            const SizedBox(height: AppSizes.p32),
 
-          AspectRatio(
-            aspectRatio: 1.8,
-            child: Obx(() {
+            AspectRatio(
+              aspectRatio: 1.8,
+              child: Obx(() {
               final trendData = controller.weeklyTrend;
               double maxY = trendData.reduce((curr, next) => curr > next ? curr : next).toDouble();
               if (maxY < 5) maxY = 5;
@@ -154,5 +157,6 @@ class ProductivityTrendCard extends GetView<AnalysisController> {
         ],
       ),
     );
+    });
   }
 }

@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:intl/intl.dart';
+import 'package:clockly/core/utils/theme_helper.dart';
 
 import 'package:clockly/features/task_home/widgets/task_details_bottom_sheet.dart';
 import 'package:clockly/features/task_home/model/task.dart';
@@ -30,7 +31,7 @@ class ChatMessagesView extends GetView<TaskHomeController> {
                 padding: const EdgeInsets.only(left: 16.0, top: 8, bottom: 16),
                 child: TypingIndicatorWave(
                   showIndicator: true,
-                  bubbleColor: Colors.white,
+                  bubbleColor: ThemeHelper.isDark ? AppColors.secondary : Colors.white,
                   dotColor: Colors.grey.shade400,
                 ),
               ),
@@ -50,9 +51,9 @@ class ChatMessagesView extends GetView<TaskHomeController> {
               isSender: msg.isSender,
               color: msg.isSender
                   ? AppColors.primary.withValues(alpha: 0.9)
-                  : Colors.white,
+                  : (ThemeHelper.isDark ? AppColors.secondary : Colors.white),
               textStyle: GoogleFonts.inter(
-                color: msg.isSender ? Colors.white : Colors.black87,
+                color: msg.isSender ? Colors.white : (ThemeHelper.isDark ? Colors.white70 : Colors.black87),
                 fontSize: 15,
                 height: 1.4,
               ),
@@ -116,9 +117,9 @@ class ChatMessagesView extends GetView<TaskHomeController> {
         margin: const EdgeInsets.only(left: 16, right: 48, bottom: 16),
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.secondary,
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: Colors.grey.shade200, width: 1),
+          border: Border.all(color: AppColors.grey.withValues(alpha: ThemeHelper.isDark ? 0.15 : 0.3), width: 1),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withValues(alpha: 0.04),
@@ -141,7 +142,7 @@ class ChatMessagesView extends GetView<TaskHomeController> {
                     style: GoogleFonts.inter(
                       fontWeight: FontWeight.w700,
                       fontSize: 16,
-                      color: Colors.black87,
+                      color: ThemeHelper.isDark ? Colors.white : Colors.black87,
                       height: 1.2,
                     ),
                   ),
@@ -158,7 +159,7 @@ class ChatMessagesView extends GetView<TaskHomeController> {
                   overflow: TextOverflow.ellipsis,
                   style: GoogleFonts.inter(
                     fontSize: 13,
-                    color: Colors.black54,
+                    color: ThemeHelper.isDark ? Colors.white70 : Colors.black54,
                     fontWeight: FontWeight.w400,
                   ),
                 ),
@@ -168,10 +169,10 @@ class ChatMessagesView extends GetView<TaskHomeController> {
 
             Row(
               children: [
-                const HugeIcon(
+                HugeIcon(
                   icon: HugeIcons.strokeRoundedCalendar01,
                   size: 16,
-                  color: Colors.black54,
+                  color: ThemeHelper.isDark ? Colors.white54 : Colors.black54,
                 ),
                 const SizedBox(width: 6),
                 Expanded(
@@ -181,7 +182,7 @@ class ChatMessagesView extends GetView<TaskHomeController> {
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.inter(
                       fontSize: 13,
-                      color: Colors.black54,
+                      color: ThemeHelper.isDark ? Colors.white70 : Colors.black54,
                       fontWeight: FontWeight.w500,
                     ),
                   ),

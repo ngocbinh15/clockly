@@ -3,6 +3,7 @@ import 'package:clockly/features/leader_board/controller/team_controller.dart';
 import 'package:clockly/features/leader_board/widget/leader_board.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:clockly/core/utils/theme_helper.dart';
 
 import '../../../core/constants/app_size.dart';
 import '../widget/leaderboard_header.dart';
@@ -13,8 +14,10 @@ class PageLeaderBoard extends GetView<TeamController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.background,
+    return Obx(() {
+      final isDark = ThemeHelper.isDark;
+      return Scaffold(
+        backgroundColor: AppColors.background,
       body: SafeArea(
         bottom: false,
         child: RefreshIndicator(
@@ -50,5 +53,6 @@ class PageLeaderBoard extends GetView<TeamController> {
         ),
       ),
     );
+    });
   }
 }

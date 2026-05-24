@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:clockly/core/utils/theme_helper.dart';
 
 import '../../../core/utils/dialog_helper.dart';
 
@@ -74,7 +75,8 @@ class LeaderBoard extends GetView<TeamController> {
                       children: [
                         Text("You", style: GoogleFonts.inter(
                             fontSize: 20,
-                            fontWeight: FontWeight.w700
+                            fontWeight: FontWeight.w700,
+                            color: ThemeHelper.isDark ? Colors.white : Colors.black87,
                         ),),
                         Text("${currUser.totalPoints} Task Points",
                           style: GoogleFonts.inter(
@@ -177,7 +179,7 @@ class LeaderBoard extends GetView<TeamController> {
                                 style: GoogleFonts.inter(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
-                                  color: Colors.black87,
+                                  color: ThemeHelper.isDark ? Colors.white : Colors.black87,
                                 ),
                               ),
                               const SizedBox(height: 4),

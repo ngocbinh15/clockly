@@ -6,6 +6,7 @@ import 'package:clockly/features/task_home/widgets/text_title_add_task.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:clockly/core/utils/theme_helper.dart';
 
 import '../../leader_board/controller/team_controller.dart';
 
@@ -93,7 +94,7 @@ class PickedFriends extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: GoogleFonts.inter(
                             fontSize: 12,
-                            color: isSelected ? AppColors.primary : Colors.black87,
+                            color: isSelected ? AppColors.primary : (ThemeHelper.isDark ? Colors.white70 : Colors.black87),
                             fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
                           ),
                         ),

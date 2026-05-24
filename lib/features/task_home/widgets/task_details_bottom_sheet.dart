@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:clockly/core/utils/theme_helper.dart';
 
 import '../../../core/constants/app_size.dart';
 import '../../../core/theme/app_colors.dart';
@@ -27,13 +28,15 @@ class TaskDetailsBottomSheet extends GetView<TaskHomeController> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(AppSizes.p24),
-      decoration: BoxDecoration(
-        color: AppColors.secondary,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
-      ),
-      child: SafeArea(
+    return Obx(() {
+      final isDark = ThemeHelper.isDark;
+      return Container(
+        padding: const EdgeInsets.all(AppSizes.p24),
+        decoration: BoxDecoration(
+          color: AppColors.secondary,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
+        ),
+        child: SafeArea(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,7 +58,7 @@ class TaskDetailsBottomSheet extends GetView<TaskHomeController> {
               style: GoogleFonts.inter(
                 fontSize: 24,
                 fontWeight: FontWeight.w800,
-                color: Colors.black87,
+                color: isDark ? Colors.white : Colors.black87,
                 height: 1.3,
               ),
             ),
@@ -117,7 +120,7 @@ class TaskDetailsBottomSheet extends GetView<TaskHomeController> {
               (task.description ?? '').isEmpty ? "No description provided." : task.description!,
               style: GoogleFonts.inter(
                 fontSize: 15,
-                color: (task.description ?? '').isEmpty ? AppColors.grey : Colors.black87,
+                color: (task.description ?? '').isEmpty ? AppColors.grey : (isDark ? Colors.white70 : Colors.black87),
                 height: 1.6,
               ),
             ),
@@ -149,7 +152,7 @@ class TaskDetailsBottomSheet extends GetView<TaskHomeController> {
                             const SizedBox(width: 8),
                             Text(
                               controller.formatTime(task.dueDate),
-                              style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.black87),
+                              style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.w600, color: isDark ? Colors.white70 : Colors.black87),
                             ),
                           ],
                         ),
@@ -239,6 +242,7 @@ class TaskDetailsBottomSheet extends GetView<TaskHomeController> {
         ),
       ),
     );
+    });
   }
 
   Color _getPriorityColor(String priority) {

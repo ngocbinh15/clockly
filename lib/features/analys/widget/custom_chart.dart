@@ -4,6 +4,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:clockly/core/utils/theme_helper.dart';
 
 class CustomChart extends GetView<AnalysisController> {
   const CustomChart({super.key});
@@ -61,7 +62,7 @@ class CustomChart extends GetView<AnalysisController> {
                   Text(
                     controller.chartCenterValue,
                     style: GoogleFonts.inter(
-                      color: Colors.black87,
+                      color: ThemeHelper.isDark ? Colors.white : Colors.black87,
                       fontSize: 26,
                       fontWeight: FontWeight.w800,
                       height: 1.2,
@@ -109,7 +110,7 @@ class CustomChart extends GetView<AnalysisController> {
           titleStyle: GoogleFonts.inter(
             fontSize: fontSize,
             fontWeight: FontWeight.w700,
-            color: AppColors.secondary,
+            color: Colors.white,
           ),
         ),
         1 => PieChartSectionData(
@@ -121,7 +122,7 @@ class CustomChart extends GetView<AnalysisController> {
           titleStyle: GoogleFonts.inter(
             fontSize: fontSize,
             fontWeight: FontWeight.w800,
-            color: AppColors.secondary,
+            color: Colors.white,
           ),
         ),
         2 => PieChartSectionData(
@@ -133,7 +134,7 @@ class CustomChart extends GetView<AnalysisController> {
           titleStyle: GoogleFonts.inter(
             fontSize: fontSize,
             fontWeight: FontWeight.w800,
-            color: AppColors.secondary,
+            color: Colors.white,
           ),
         ),
         _ => throw StateError('Invalid'),
