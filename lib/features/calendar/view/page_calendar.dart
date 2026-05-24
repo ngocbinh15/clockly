@@ -1,3 +1,4 @@
+import 'package:clockly/core/utils/theme_helper.dart';
 import 'package:clockly/features/calendar/controller/calendar_controller.dart';
 import 'package:clockly/features/calendar/widget/custom_table_calendar.dart';
 import 'package:clockly/features/calendar/widget/today_task.dart';
@@ -13,48 +14,53 @@ class PageCalendar extends GetView<CalendarController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      body: SafeArea(
-        bottom: false,
-        child: RefreshIndicator(
-          onRefresh: () async {
-            await controller.fetchTaskDates();
-          },
-          color: AppColors.secondary,
-          backgroundColor: AppColors.primary,
-          child: SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            child: Padding(
-              padding: const EdgeInsets.only(
-                top: AppSizes.p12,
-                left: AppSizes.p24,
-                right: AppSizes.p24,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Calendar", style: GoogleFonts.inter(
-                    fontSize: 30,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: -1,
-                  )),
-                  const SizedBox(height: AppSizes.p24),
+    return Obx(() {
+      // Đăng ký phụ thuộc reactive cho thay đổi theme
+      final isDark = ThemeHelper.isDark;
 
-                  CustomTableCalendar(),
-                  SizedBox(height: AppSizes.p16,),
+      return Scaffold(
+        backgroundColor: AppColors.background,
+        body: SafeArea(
+          bottom: false,
+          child: RefreshIndicator(
+            onRefresh: () async {
+              await controller.fetchTaskDates();
+            },
+            color: AppColors.secondary,
+            backgroundColor: AppColors.primary,
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  top: AppSizes.p12,
+                  left: AppSizes.p24,
+                  right: AppSizes.p24,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Calendar", style: GoogleFonts.inter(
+                      fontSize: 30,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: -1,
+                    )),
+                    const SizedBox(height: AppSizes.p24),
 
-                  Divider(color: AppColors.grey.withValues(alpha: 0.3),),
+                    CustomTableCalendar(),
+                    SizedBox(height: AppSizes.p16,),
 
-                  SizedBox(height: AppSizes.p16,),
+                    Divider(color: AppColors.grey.withValues(alpha: 0.3),),
 
-                  TodayTask(),
-                ],
+                    SizedBox(height: AppSizes.p16,),
+
+                    TodayTask(),
+                  ],
+                ),
               ),
             ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

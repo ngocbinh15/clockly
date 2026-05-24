@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+import 'package:clockly/core/utils/theme_helper.dart';
 import '../../../core/theme/app_colors.dart';
 
 class CustomTableCalendar extends GetView<CalendarController> {
@@ -16,7 +17,7 @@ class CustomTableCalendar extends GetView<CalendarController> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.secondary,
         borderRadius: BorderRadius.circular(AppSizes.p16),
         boxShadow: [
           BoxShadow(
@@ -63,19 +64,19 @@ class CustomTableCalendar extends GetView<CalendarController> {
           titleTextStyle: GoogleFonts.inter(
             fontSize: 18,
             fontWeight: FontWeight.w700,
-            color: Colors.black87,
+            color: ThemeHelper.isDark ? Colors.white70 : Colors.black87,
           ),
-          leftChevronIcon: const Icon(Icons.chevron_left, color: Colors.black54),
-          rightChevronIcon: const Icon(Icons.chevron_right, color: Colors.black54),
+          leftChevronIcon: Icon(Icons.chevron_left, color: ThemeHelper.isDark ? Colors.white70 : Colors.black54),
+          rightChevronIcon: Icon(Icons.chevron_right, color: ThemeHelper.isDark ? Colors.white70 : Colors.black54),
         ),
         daysOfWeekStyle: DaysOfWeekStyle(
           weekdayStyle: GoogleFonts.inter(color: Colors.grey, fontWeight: FontWeight.w600),
           weekendStyle: GoogleFonts.inter(color: Colors.grey, fontWeight: FontWeight.w600),
         ),
-        calendarStyle: const CalendarStyle(
+        calendarStyle: CalendarStyle(
           outsideDaysVisible: false,
-          defaultTextStyle: TextStyle(fontWeight: FontWeight.w500),
-          weekendTextStyle: TextStyle(fontWeight: FontWeight.w500),
+          defaultTextStyle: TextStyle(color: ThemeHelper.isDark ? Colors.white70 : Colors.black87, fontWeight: FontWeight.w500),
+          weekendTextStyle: TextStyle(color: ThemeHelper.isDark ? Colors.white70 : Colors.black87, fontWeight: FontWeight.w500),
         ),
 
         calendarBuilders: CalendarBuilders(

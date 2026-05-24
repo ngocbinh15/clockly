@@ -1,5 +1,6 @@
 import 'package:clockly/core/constants/app_size.dart';
 import 'package:clockly/core/theme/app_colors.dart';
+import 'package:clockly/core/utils/theme_helper.dart';
 import 'package:clockly/features/calendar/controller/calendar_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,7 +23,7 @@ class TodayTask extends GetView<CalendarController> {
             Text(
               "Tasks for Selected Day",
               style: GoogleFonts.inter(
-                  color: Colors.black87,
+                  color: ThemeHelper.isDark ? Colors.white70 : Colors.black87,
                   fontSize: 20,
                   fontWeight: FontWeight.w700
               ),
