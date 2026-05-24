@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import '../../../core/components/app_alerts.dart';
 import '../../../core/constants/app_message.dart';
 import '../../../core/services/auth_service.dart';
+import '../../../core/utils/theme_helper.dart';
 import '../../auth/controllers/auth_helper.dart';
 
 class SettingsController extends GetxController {
@@ -132,12 +133,15 @@ class SettingsController extends GetxController {
       if (mode.toLowerCase() == 'dark') {
         Get.changeThemeMode(ThemeMode.dark);
         await prefs.setString('theme_mode', 'dark');
+        ThemeHelper.isDark = true;
       } else if (mode.toLowerCase() == 'light') {
         Get.changeThemeMode(ThemeMode.light);
         await prefs.setString('theme_mode', 'light');
+        ThemeHelper.isDark = false;
       } else {
         Get.changeThemeMode(ThemeMode.system);
         await prefs.remove('theme_mode');
+        ThemeHelper.isDark = (WidgetsBinding.instance.platformDispatcher.platformBrightness == Brightness.dark);
       }
     } catch (e) {
       AppAlerts.error(message: "Failed to save theme preference: $e");

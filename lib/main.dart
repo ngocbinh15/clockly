@@ -33,6 +33,15 @@ Future<void> main() async {
   final savedThemeStr = prefs.getString('theme_mode');
   final initialThemeMode = ThemeHelper.stringToThemeMode(savedThemeStr);
 
+  // Set static isDark variable for global non-context colors
+  if (initialThemeMode == ThemeMode.dark) {
+    ThemeHelper.isDark = true;
+  } else if (initialThemeMode == ThemeMode.light) {
+    ThemeHelper.isDark = false;
+  } else {
+    ThemeHelper.isDark = (WidgetsBinding.instance.platformDispatcher.platformBrightness == Brightness.dark);
+  }
+
   await Get.putAsync<AppInfoService>(
         () => AppInfoService().init(),
   );
