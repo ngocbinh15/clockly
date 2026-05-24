@@ -1,9 +1,11 @@
 import 'package:clockly/core/services/ai_service.dart';
 import 'package:clockly/core/services/app_info_service.dart';
+import 'package:clockly/core/utils/theme_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'app.dart';
@@ -18,10 +20,6 @@ Future<void> main() async {
     anonKey: dotenv.env['ANON_KEY'] ?? '',
   );
 
-  print(dotenv.env['ANON_KEY']);
-  print(" DKJHSKHKDHKJ\n");
-  print(dotenv.env['URL_SUPABASE']);
-
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
@@ -30,6 +28,11 @@ Future<void> main() async {
     ),
   );
 
+  // Load saved theme preference
+  final prefs = await SharedPreferences.getInstance();
+  final savedThemeStr = prefs.getString('theme_mode');
+  final initialThemeMode = ThemeHelper.stringToThemeMode(savedThemeStr);
+
   await Get.putAsync<AppInfoService>(
         () => AppInfoService().init(),
   );
@@ -37,5 +40,5 @@ Future<void> main() async {
   Get.put(AuthService());
 
   Get.put (AiService());
-  runApp(const MyApp());
+  runApp(MyApp(initialThemeMode: initialThemeMode));
 }
