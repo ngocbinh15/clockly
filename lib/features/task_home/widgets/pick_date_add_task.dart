@@ -51,8 +51,8 @@ class PickDateAddTask extends StatelessWidget {
               borderSide: BorderSide.none,
             ),
             contentPadding: const EdgeInsets.symmetric(horizontal: AppSizes.p16, vertical: 14),
-            suffixIcon: const Padding(
-              padding: EdgeInsets.only(right: AppSizes.p12),
+            suffixIcon: Padding(
+              padding: const EdgeInsets.only(right: AppSizes.p12),
               child: HugeIcon(
                 icon: HugeIcons.strokeRoundedCalendar04,
                 color: AppColors.primary,

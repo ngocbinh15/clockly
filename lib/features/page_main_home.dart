@@ -36,7 +36,7 @@ class PageMainHome extends GetView<TaskHomeController> {
           backgroundColor: AppColors.primary,
           elevation: 8,
           shape: const CircleBorder(),
-          child: const HugeIcon(
+          child: HugeIcon(
             icon: HugeIcons.strokeRoundedAdd01,
             color: AppColors.secondary,
             strokeWidth: 1.5,

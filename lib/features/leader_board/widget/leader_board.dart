@@ -53,7 +53,7 @@ class LeaderBoard extends GetView<TeamController> {
                             alignment: Alignment.bottomRight,
                             child: Container(
                                 padding: const EdgeInsets.all(4),
-                                decoration: const BoxDecoration(
+                                decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     color: AppColors.secondary
                                 ),

@@ -29,9 +29,9 @@ class TaskDetailsBottomSheet extends GetView<TaskHomeController> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(AppSizes.p24),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: AppColors.secondary,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
       ),
       child: SafeArea(
         child: Column(
@@ -145,7 +145,7 @@ class TaskDetailsBottomSheet extends GetView<TaskHomeController> {
                         const SizedBox(height: AppSizes.p8),
                         Row(
                           children: [
-                            const Icon(Icons.calendar_today_rounded, size: 16, color: AppColors.primary),
+                            Icon(Icons.calendar_today_rounded, size: 16, color: AppColors.primary),
                             const SizedBox(width: 8),
                             Text(
                               controller.formatTime(task.dueDate),

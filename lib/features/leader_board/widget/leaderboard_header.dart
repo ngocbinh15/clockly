@@ -73,7 +73,7 @@ class LeaderboardHeader extends GetView<TeamController> {
                     backgroundColor: Colors.transparent,
                   );
                 },
-                icon: const HugeIcon(icon: HugeIcons.strokeRoundedUserAdd01, color: AppColors.primary, size: 24),
+                icon: HugeIcon(icon: HugeIcons.strokeRoundedUserAdd01, color: AppColors.primary, size: 24),
               ),
             ),
           ],

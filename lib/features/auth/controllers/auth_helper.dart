@@ -34,7 +34,7 @@ class AuthHelper {
                   ),
                 ],
               ),
-              child: const CircularProgressIndicator(
+              child: CircularProgressIndicator(
                 color: AppColors.primary,
               ),
             ),
@@ -198,7 +198,7 @@ class AuthHelper {
                     onTap: () {
                       // TODO: Gọi lại hàm gửi OTP
                     },
-                    child: const Text(
+                    child: Text(
                       "Resend",
                       style: TextStyle(
                         color: AppColors.primary,

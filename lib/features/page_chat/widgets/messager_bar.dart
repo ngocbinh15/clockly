@@ -19,7 +19,7 @@ class CustomMessagerBar extends GetView<TaskHomeController> {
           Expanded(
             child: TextField(
               controller: controller.chatController,
-
+              autofocus: true,
               minLines: 1,
               maxLines: 5,
               keyboardType: TextInputType.multiline,
@@ -85,7 +85,7 @@ class CustomMessagerBar extends GetView<TaskHomeController> {
                         await controller.handleChatSubmission(text);
                       }
                     },
-                    child: const HugeIcon(
+                    child: HugeIcon(
                       icon: HugeIcons.strokeRoundedSent,
                       color: AppColors.primary,
                     ),

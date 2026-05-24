@@ -27,7 +27,7 @@ class CustomButtonDropdown extends GetView <AnalysisController> {
         child: DropdownButtonHideUnderline(
           child: DropdownButton<String>(
             value: controller.timeFilter.value,
-            icon: const Icon(
+            icon: Icon(
               Icons.keyboard_arrow_down_rounded,
               color: AppColors.primary,
               size: 20,
