@@ -35,7 +35,7 @@ class PageSettings extends StatelessWidget {
               const SizedBox(height: AppSizes.p24),
 
               const SectionTitle(title: "ACCOUNT"),
-              const AccountSection(),
+              AccountSection(),
               const SizedBox(height: AppSizes.p24),
 
               const SectionTitle(title: "PREFERENCES"),
@@ -43,7 +43,7 @@ class PageSettings extends StatelessWidget {
               const SizedBox(height: AppSizes.p24),
 
               const SectionTitle(title: "SUPPORT & ABOUT"),
-              const SupportSection(),
+              SupportSection(),
               const SizedBox(height: AppSizes.p24),
 
               ButtonLogout(),
