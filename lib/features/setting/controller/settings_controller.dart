@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,7 @@ class SettingsController extends GetxController {
   void onInit() {
     super.onInit();
     loadUserData();
+    loadThemeSettings();
   }
 
   @override
@@ -107,15 +109,38 @@ class SettingsController extends GetxController {
     await checkNotificationStatus();
   }
 
-  void changeAppearance(String mode) {
-    selectedAppearance.value = mode;
+  Future<void> loadThemeSettings() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final mode = prefs.getString('theme_mode');
+      if (mode == 'dark') {
+        selectedAppearance.value = 'Dark';
+      } else if (mode == 'light') {
+        selectedAppearance.value = 'Light';
+      } else {
+        selectedAppearance.value = 'System';
+      }
+    } catch (e) {
+      debugPrint("Error loading theme settings: $e");
+    }
+  }
 
-    if (mode.toLowerCase() == 'dark') {
-      Get.changeThemeMode(ThemeMode.dark);
-    } else if (mode.toLowerCase() == 'light') {
-      Get.changeThemeMode(ThemeMode.light);
-    } else {
-      Get.changeThemeMode(ThemeMode.system);
+  Future<void> changeAppearance(String mode) async {
+    selectedAppearance.value = mode;
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      if (mode.toLowerCase() == 'dark') {
+        Get.changeThemeMode(ThemeMode.dark);
+        await prefs.setString('theme_mode', 'dark');
+      } else if (mode.toLowerCase() == 'light') {
+        Get.changeThemeMode(ThemeMode.light);
+        await prefs.setString('theme_mode', 'light');
+      } else {
+        Get.changeThemeMode(ThemeMode.system);
+        await prefs.remove('theme_mode');
+      }
+    } catch (e) {
+      AppAlerts.error(message: "Failed to save theme preference: $e");
     }
   }
 
