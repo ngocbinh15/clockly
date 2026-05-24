@@ -63,7 +63,7 @@ class PageTask extends GetView<TaskHomeController> {
                       CustomChoicesChip(),
                       const SizedBox(height: AppSizes.p32),
 
-                      const CategorizedTaskList(),
+                      CategorizedTaskList(),
                     ],
                   ),
                 ),
