@@ -11,7 +11,7 @@ import 'package:hugeicons/hugeicons.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/constants/app_size.dart';
-import '../controller/EditProfileController.dart';
+import '../controller/edit_profile_controller.dart';
 
 class FormChangeName extends GetView <EditProfileController> {
   FormChangeName({super.key});

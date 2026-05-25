@@ -3,13 +3,13 @@ import 'package:get/get.dart';
 
 import '../../../core/constants/app_size.dart';
 import '../../../core/theme/app_colors.dart';
-import '../controller/EditProfileController.dart';
+import '../controller/edit_profile_controller.dart';
 import '../widgets/editable_avatar.dart';
 import '../widgets/heading_setting.dart';
 import '../widgets/form_change_name.dart';
 
-class EditProfilePage extends GetView<EditProfileController> {
-  const EditProfilePage({super.key});
+class PageEditProfile extends GetView<EditProfileController> {
+  const PageEditProfile({super.key});
 
   @override
   Widget build(BuildContext context) {

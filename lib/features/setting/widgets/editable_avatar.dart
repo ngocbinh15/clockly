@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 import '../../../core/constants/app_size.dart';
 import '../../../core/theme/app_colors.dart';
-import '../controller/EditProfileController.dart';
+import '../controller/edit_profile_controller.dart';
 
 class EditableAvatar extends GetView<EditProfileController> {
   const EditableAvatar({super.key});

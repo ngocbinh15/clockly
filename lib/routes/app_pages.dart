@@ -10,9 +10,8 @@ import 'package:clockly/features/auth/views/page_sign_up.dart';
 import 'package:clockly/features/page_chat/views/page_chat.dart';
 import 'package:clockly/features/page_main_home.dart';
 import 'package:clockly/features/setting/bidings/edit_bidings.dart';
-import 'package:clockly/features/setting/bidings/option_plan_biding.dart';
 import 'package:clockly/features/setting/bidings/setting_binding.dart';
-import 'package:clockly/features/setting/views/edit_profile_page.dart';
+import 'package:clockly/features/setting/views/page_edit_profile.dart';
 import 'package:clockly/features/setting/views/page_settings.dart';
 import 'package:clockly/features/setting/views/page_subcription.dart';
 import 'package:clockly/routes/app_routes.dart';
@@ -54,7 +53,7 @@ class AppPages {
     ),
     GetPage(
         name: AppRoutes.editProfile,
-        page: () => EditProfilePage(),
+        page: () => PageEditProfile(),
       binding: EditBidings()
     ),
     GetPage(
@@ -69,7 +68,6 @@ class AppPages {
     GetPage(
       name: AppRoutes.subcription,
        page: () => PageSubcription(),
-       binding: OptionPlanBiding()
        )
   ];
 }

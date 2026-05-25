@@ -5,7 +5,7 @@ class Validate {
     if (value == null || value.trim().isEmpty) {
       return "Email cannot be empty";
     }
-    if (!EmailValidator.validate(value)) {
+    if (!EmailValidator.validate(value.trim())) {
       return "Invalid email format";
     }
     return null;
