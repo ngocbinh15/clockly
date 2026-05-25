@@ -9,6 +9,9 @@ import 'package:clockly/features/leader_board/widget/leaderboard_search_bar.dart
 import 'package:clockly/features/task_home/widgets/text_title_add_task.dart';
 import 'package:clockly/features/task_home/widgets/pick_date_add_task.dart';
 import 'package:clockly/features/task_home/controllers/task_home_controller.dart';
+import 'package:clockly/core/utils/dialog_helper.dart';
+import 'package:clockly/features/setting/widgets/preferences_section.dart';
+import 'package:clockly/features/setting/controller/settings_controller.dart';
 import 'package:get/get.dart';
 
 void main() {
@@ -192,6 +195,155 @@ void main() {
     // Clean up
     Get.delete<TaskHomeController>();
   });
+
+  testWidgets('CustomDialog.confirmDialog renders correct colors in Light and Dark Mode', (WidgetTester tester) async {
+    // 1. Light Mode
+    ThemeHelper.isDark = false;
+    await tester.pumpWidget(
+      GetMaterialApp(
+        home: Scaffold(
+          body: Builder(
+            builder: (context) {
+              return ElevatedButton(
+                onPressed: () {
+                  CustomDialog.confirmDialog(
+                    title: "Discard draft?",
+                    content: "Your changes haven't been saved yet.",
+                    cancel: "Keep editing",
+                    confirm: "Discard",
+                    onConfirm: () {},
+                  );
+                },
+                child: const Text("Show Dialog"),
+              );
+            },
+          ),
+        ),
+      ),
+    );
+
+    // Open dialog
+    await tester.tap(find.text("Show Dialog"));
+    await tester.pumpAndSettle();
+
+    // Verify title text color in Light Mode
+    final titleFinder = find.text("Discard draft?");
+    expect(titleFinder, findsOneWidget);
+    final Text titleWidget = tester.widget(titleFinder);
+    expect(titleWidget.style?.color, Colors.black87);
+
+    // Verify container background color in Light Mode
+    final containerFinder = find.byWidgetPredicate(
+      (widget) => widget is Container && widget.decoration is BoxDecoration && (widget.decoration as BoxDecoration).borderRadius != null,
+    );
+    final Container dialogContainer = tester.widget(containerFinder.first);
+    final decoration = dialogContainer.decoration as BoxDecoration;
+    expect(decoration.color, const Color(0xFFF7F7FA));
+
+    // Close Dialog
+    Get.back();
+    await tester.pumpAndSettle();
+
+    // 2. Switch to Dark Mode
+    ThemeHelper.isDark = true;
+    await tester.pumpWidget(
+      GetMaterialApp(
+        home: Scaffold(
+          body: Builder(
+            builder: (context) {
+              return ElevatedButton(
+                onPressed: () {
+                  CustomDialog.confirmDialog(
+                    title: "Discard draft?",
+                    content: "Your changes haven't been saved yet.",
+                    cancel: "Keep editing",
+                    confirm: "Discard",
+                    onConfirm: () {},
+                  );
+                },
+                child: const Text("Show Dialog"),
+              );
+            },
+          ),
+        ),
+      ),
+    );
+
+    // Open dialog
+    await tester.tap(find.text("Show Dialog"));
+    await tester.pumpAndSettle();
+
+    // Verify title text color in Dark Mode
+    final titleFinderDark = find.text("Discard draft?");
+    expect(titleFinderDark, findsOneWidget);
+    final Text titleWidgetDark = tester.widget(titleFinderDark);
+    expect(titleWidgetDark.style?.color, Colors.white);
+
+    // Verify container background color in Dark Mode
+    final Container dialogContainerDark = tester.widget(containerFinder.first);
+    final decorationDark = dialogContainerDark.decoration as BoxDecoration;
+    expect(decorationDark.color, const Color(0xFF1E1E1E));
+
+    // Clean up
+    Get.back();
+    await tester.pumpAndSettle();
+  });
+
+  testWidgets('PreferencesSection renders correctly and adapts to light and dark theme mode', (WidgetTester tester) async {
+    // Register MockSettingsController
+    final mockController = MockSettingsController();
+    Get.put<SettingsController>(mockController);
+
+    // 1. Light Mode
+    ThemeHelper.isDark = false;
+    await tester.pumpWidget(
+      const GetMaterialApp(
+        home: Scaffold(
+          body: PreferencesSection(),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    // Verify background color is AppColors.secondary in Light Mode
+    final containerFinder = find.byWidgetPredicate(
+      (widget) => widget is Container && widget.decoration is BoxDecoration && (widget.decoration as BoxDecoration).borderRadius == BorderRadius.circular(16),
+    );
+    expect(containerFinder, findsOneWidget);
+    final Container containerWidget = tester.widget(containerFinder);
+    final decoration = containerWidget.decoration as BoxDecoration;
+    expect(decoration.color, const Color(0xFFFFFFFF)); // AppColors.secondary in light mode
+
+    // 2. Switch to Dark Mode
+    ThemeHelper.isDark = true;
+    await tester.pumpAndSettle();
+
+    final Container containerWidgetDark = tester.widget(containerFinder);
+    final decorationDark = containerWidgetDark.decoration as BoxDecoration;
+    expect(decorationDark.color, const Color(0xFF1E1E1E)); // AppColors.secondary in dark mode
+
+    // Clean up
+    Get.delete<SettingsController>();
+  });
+}
+
+class MockSettingsController extends GetxController implements SettingsController {
+  @override
+  final isNotiEnabled = false.obs;
+
+  @override
+  final selectedAppearance = "System".obs;
+
+  @override
+  Future<void> handleNotificationTap() async {}
+
+  @override
+  Future<void> changeAppearance(String mode) async {
+    selectedAppearance.value = mode;
+  }
+
+  @override
+  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
 class MockTaskHomeController extends GetxController implements TaskHomeController {
