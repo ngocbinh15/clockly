@@ -28,6 +28,7 @@ class LoginController extends GetxController {
     try {
       AuthHelper.showLoading();
       await authService.signIn(email, password);
+      AuthHelper.hideLoading();
     } on AuthException catch (e) {
       AuthHelper.hideLoading();
       CustomSnackbar.snackbar("Login Failed", e.message, AppColors.red);

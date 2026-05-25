@@ -349,7 +349,11 @@ class PageSettings extends StatelessWidget {
                           color: AppColors.secondary,
                         ),
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.of(context).push(
+                                MaterialPageRoute(builder: (context) => const PageIntegrations(),)
+                            );
+                          },
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
                             child: Row(
@@ -461,6 +465,10 @@ class PageSettings extends StatelessWidget {
 
                         GestureDetector(
                           onTap: () {
+                            // Chuyển sang trang Điều khoản giống hệt các mục trước
+                            Navigator.of(context).push(
+                                MaterialPageRoute(builder: (context) => const PagePrivacyTerms(),)
+                            );
                           },
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
@@ -559,7 +567,6 @@ class PageEditProfile extends StatefulWidget {
 
 class _PageEditProfileState extends State<PageEditProfile> {
   final SettingsController controller = Get.find<SettingsController>();
-
   XFile? _xFile;
   final TextEditingController txtTen = TextEditingController();
 
@@ -574,15 +581,15 @@ class _PageEditProfileState extends State<PageEditProfile> {
     return GetBuilder<SettingsController>(
         id: "settings",
         builder: (controller) {
-          Color mauNenPage = controller.selectedAppearance == "dark" ? const Color(0xFF1A1A1A) : AppColors.background;
-          Color mauChuChinh = controller.selectedAppearance == "dark" ? Colors.white : Colors.black87;
+          Color colorBgr = controller.selectedAppearance == "dark" ? const Color(0xFF1A1A1A) : AppColors.background;
+          Color colorText = controller.selectedAppearance == "dark" ? Colors.white : Colors.black87;
 
           return Scaffold(
-            backgroundColor: mauNenPage,
+            backgroundColor: colorBgr,
             appBar: AppBar(
-              title: Text("Chỉnh sửa tài khoản", style: TextStyle(color: mauChuChinh)),
-              backgroundColor: mauNenPage,
-              iconTheme: IconThemeData(color: mauChuChinh),
+              title: Text("Chỉnh sửa tài khoản", style: TextStyle(color: colorText)),
+              backgroundColor: colorBgr,
+              iconTheme: IconThemeData(color: colorText),
               elevation: 0,
             ),
             body: SafeArea(
@@ -608,12 +615,12 @@ class _PageEditProfileState extends State<PageEditProfile> {
                       const SizedBox(height: 16),
 
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 160.0),
                         child: SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.primary,
+                                backgroundColor: AppColors.grey,
                                 foregroundColor: Colors.white,
                               ),
                               onPressed: () async {
@@ -631,10 +638,10 @@ class _PageEditProfileState extends State<PageEditProfile> {
 
                       TextField(
                         controller: txtTen,
-                        style: TextStyle(color: mauChuChinh),
+                        style: TextStyle(color: colorText, fontSize: 17, fontWeight: FontWeight.bold),
                         decoration: InputDecoration(
                           labelText: "Tên hiển thị",
-                          labelStyle: TextStyle(color: mauChuChinh.withOpacity(0.7)),
+                          labelStyle: TextStyle(color: colorText),
                         ),
                       ),
 
@@ -644,13 +651,20 @@ class _PageEditProfileState extends State<PageEditProfile> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.red,
+                                foregroundColor: Colors.white,
+                              ),
                               onPressed: () {
                                 Navigator.of(context).pop();
                               },
-                              child: const Text("close")
+                              child: const Text("close", style: TextStyle(fontWeight: FontWeight.bold),)
                           ),
                           const SizedBox(width: 8),
                           ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.save,
+                            ),
                               onPressed: () async {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
@@ -696,13 +710,208 @@ class _PageEditProfileState extends State<PageEditProfile> {
                                   );
                                 }
                               },
-                              child: const Text("Save")
+                              child: const Text("save", style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black
+                              ),)
                           ),
                         ],
                       )
                     ],
                   ),
                 )),
+          );
+        }
+    );
+  }
+}
+
+class PageIntegrations extends StatelessWidget {
+  const PageIntegrations({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<SettingsController>(
+        id: "settings",
+        builder: (controller) {
+          Color colorBgr = controller.selectedAppearance == "dark" ? const Color(0xFF1A1A1A) : AppColors.background;
+          Color colorText = controller.selectedAppearance == "dark" ? Colors.white : Colors.black87;
+          Color colorCard = controller.selectedAppearance == "dark" ? const Color(0xFF2C2C2C) : Colors.white;
+
+          return Scaffold(
+            backgroundColor: colorBgr,
+            appBar: AppBar(
+              title: Text("Integrations", style: TextStyle(color: colorText)),
+              backgroundColor: colorBgr,
+              iconTheme: IconThemeData(color: colorText),
+              elevation: 0,
+            ),
+            body: SafeArea(
+              child: ListView(
+                padding: const EdgeInsets.all(16.0),
+                children: [
+                  Card(
+                    color: colorCard,
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 36,
+                                height: 36,
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                ),
+                                clipBehavior: Clip.antiAlias,
+                                child: Image.network(
+                                  "https://ymkcbkaovbltevxozawe.supabase.co/storage/v1/object/public/images/download-1.jpg",
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              const SizedBox(width: 16),
+                              Expanded(
+                                child: Text(
+                                  "Messenger",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    color: colorText,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        const Divider(
+                          height: 1,
+                          indent: 16,
+                          endIndent: 16,
+                          color: Colors.grey,
+                        ),
+
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 36,
+                                height: 36,
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                ),
+                                clipBehavior: Clip.antiAlias,
+                                child: Image.network(
+                                  "https://ymkcbkaovbltevxozawe.supabase.co/storage/v1/object/public/images/1200x630wa.png",
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              const SizedBox(width: 16),
+                              Expanded(
+                                child: Text(
+                                  "Zalo",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    color: colorText,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );
+        }
+    );
+  }
+}
+
+class PagePrivacyTerms extends StatelessWidget {
+  const PagePrivacyTerms({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<SettingsController>(
+        id: "settings",
+        builder: (controller) {
+
+          Color mauNenPage = controller.selectedAppearance == "dark" ? const Color(0xFF1A1A1A) : AppColors.background;
+          Color mauChuChinh = controller.selectedAppearance == "dark" ? Colors.white : Colors.black87;
+          Color mauChuPhu = controller.selectedAppearance == "dark" ? Colors.white70 : Colors.black54;
+
+          return Scaffold(
+            backgroundColor: mauNenPage,
+            appBar: AppBar(
+              title: Text("Privacy & Terms", style: TextStyle(color: mauChuChinh)),
+              backgroundColor: mauNenPage,
+              iconTheme: IconThemeData(color: mauChuChinh),
+              elevation: 0,
+            ),
+            body: SafeArea(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "1. Điều khoản sử dụng ứng dụng",
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: mauChuChinh),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "Chào mừng bạn đến với ứng dụng của chúng tôi. Bằng việc cài đặt và sử dụng ứng dụng, bạn đồng ý tuân thủ toàn bộ các điều khoản, điều kiện và chính sách bảo mật được quy định tại đây.",
+                      style: TextStyle(fontSize: 14, color: mauChuPhu),
+                    ),
+                    const SizedBox(height: 20),
+
+                    Text(
+                      "2. Chính sách tích hợp trí tuệ nhân tạo (AI)",
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: mauChuChinh),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "Ứng dụng của chúng tôi có tích hợp các dịch vụ và tính năng xử lý dữ liệu bằng Trí tuệ nhân tạo (AI). Khi bạn gửi dữ liệu, câu lệnh hoặc hình ảnh vào các tính năng này, hệ thống sẽ xử lý thông tin để trả về kết quả tối ưu nhất cho trải nghiệm của bạn. Chúng tôi cam kết bảo mật nội dung và dữ liệu cá nhân, không chia sẻ hoặc sử dụng cho các mục đích thương mại bên ngoài.",
+                      style: TextStyle(fontSize: 14, color: mauChuPhu),
+                    ),
+                    const SizedBox(height: 20),
+
+                    Text(
+                      "3. Bảo mật thông tin người dùng",
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: mauChuChinh),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "Dữ liệu tài khoản, hồ sơ cá nhân, email và ảnh đại diện của bạn được lưu trữ an toàn thông qua hệ thống cơ sở dữ liệu mã hóa của nhà phát triển. Bạn có toàn quyền chỉnh sửa dữ liệu, bật/tắt thông báo hệ thống hoặc yêu cầu hủy bỏ thông tin tài khoản của mình bất kỳ lúc nào.",
+                      style: TextStyle(fontSize: 14, color: mauChuPhu),
+                    ),
+                    const SizedBox(height: 20),
+
+                    Text(
+                      "4. Thay đổi điều khoản",
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: mauChuChinh),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "Chúng tôi có quyền cập nhật và sửa đổi các nội dung điều khoản này để phù hợp với các tính năng công nghệ mới hoặc quy định pháp luật. Việc tiếp tục sử dụng ứng dụng đồng nghĩa với việc bạn chấp nhận các sửa đổi mới nhất.",
+                      style: TextStyle(fontSize: 14, color: mauChuPhu),
+                    ),
+                    const SizedBox(height: 30),
+                  ],
+                ),
+              ),
+            ),
           );
         }
     );
