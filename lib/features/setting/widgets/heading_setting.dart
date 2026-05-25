@@ -6,7 +6,9 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/theme_helper.dart';
 
 class HeadingSetting extends StatelessWidget {
-  const HeadingSetting({super.key});
+ HeadingSetting({super.key, required this.text});
+
+ String text;
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +21,9 @@ class HeadingSetting extends StatelessWidget {
           alignment: Alignment.center,
           children: [
             Text(
-              "Settings",
+              text,
               style: GoogleFonts.inter(
-                fontSize: 28,
+                fontSize: 25,
                 fontWeight: FontWeight.w800,
                 color: isDark ? Colors.white : Colors.black87,
                 letterSpacing: -0.5,

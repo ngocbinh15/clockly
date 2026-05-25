@@ -79,7 +79,7 @@ class AccountSection extends GetView<SettingsController> {
                 ),
               ),
             ),
-            onTap: () => AppAlerts.warning(message: AppMessages.featureComingSoon),
+            onTap: () => Get.toNamed(AppRoutes.subcription),
           ),
         ],
       ),

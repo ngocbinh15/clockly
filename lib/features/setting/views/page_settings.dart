@@ -22,16 +22,18 @@ class PageSettings extends StatelessWidget {
     final controller = Get.put(SettingsController());
 
     return Obx(() {
-      // Đăng ký phụ thuộc reactive với trạng thái theme thay đổi
       final isDark = ThemeHelper.isDark;
 
       return Scaffold(
         backgroundColor: AppColors.background,
         body: SafeArea(
           child: ListView(
-            padding: const EdgeInsets.symmetric(horizontal: AppSizes.p20, vertical: AppSizes.p16),
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSizes.p20,
+              vertical: AppSizes.p16,
+            ),
             children: [
-              HeadingSetting(),
+              HeadingSetting(text: "Settings",),
               const SizedBox(height: AppSizes.p24),
 
               const SectionTitle(title: "ACCOUNT"),

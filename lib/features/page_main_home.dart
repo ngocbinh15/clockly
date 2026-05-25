@@ -18,7 +18,6 @@ class PageMainHome extends GetView<TaskHomeController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      // Đăng ký phụ thuộc reactive cho thay đổi theme
       final isDark = ThemeHelper.isDark;
 
       return Scaffold(
@@ -34,22 +33,23 @@ class PageMainHome extends GetView<TaskHomeController> {
         ),
 
         floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              controller.resetStateController();
+          onPressed: () {
+            controller.resetStateController();
 
-              BottomDialog.showAddTaskBottomSheet();
-            },
-            backgroundColor: AppColors.primary,
-            elevation: 8,
-            shape: const CircleBorder(),
-            child: HugeIcon(
-              icon: HugeIcons.strokeRoundedAdd01,
-              color: AppColors.secondary,
-              strokeWidth: 1.5,
-              size: 24,
-            )
+            BottomDialog.showAddTaskBottomSheet();
+          },
+          backgroundColor: AppColors.primary,
+          elevation: 8,
+          shape: const CircleBorder(),
+          child: HugeIcon(
+            icon: HugeIcons.strokeRoundedAdd01,
+            color: AppColors.secondary,
+            strokeWidth: 1.5,
+            size: 24,
+          ),
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterDocked,
+        floatingActionButtonLocation:
+            FloatingActionButtonLocation.miniCenterDocked,
         bottomNavigationBar: CustomBottomNav(),
       );
     });
