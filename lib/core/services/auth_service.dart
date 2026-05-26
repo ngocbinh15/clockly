@@ -1,11 +1,9 @@
 import 'package:clockly/core/components/custom_snackbar.dart';
 import 'package:clockly/core/theme/app_colors.dart';
+import 'package:clockly/features/auth/controllers/auth_helper.dart';
 import 'package:clockly/features/auth/model/user_model.dart';
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
-import '../../features/auth/controllers/auth_helper.dart';
 import '../../routes/app_routes.dart';
 
 class AuthService extends GetxService {

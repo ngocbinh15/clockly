@@ -1,5 +1,3 @@
-import 'package:clockly/core/components/app_alerts.dart';
-import 'package:clockly/core/constants/app_message.dart';
 import 'package:clockly/core/services/auth_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -7,6 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/components/custom_snackbar.dart';
 import '../../../core/theme/app_colors.dart';
 import 'auth_helper.dart';
+import 'package:flutter/material.dart';
 
 class LoginController extends GetxController {
   final supabase = Supabase.instance.client;

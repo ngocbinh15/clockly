@@ -28,6 +28,10 @@ dependencies:
   animated_bottom_navigation_bar: ^1.4.0
   dotted_border: ^3.1.0
   fl_chart: ^1.2.0
+  url_launcher: ^6.3.1
+  flutter_local_notifications:
+  timezone:
+  mailer: ^7.1.0
 
 
 dev_dependencies:

@@ -69,13 +69,13 @@ class _PageAnalysState extends State<PageAnalys> {
 
           if (touchedIndex == 0) {
             centerTitle = "Completed";
-            centerValue = total - completed;
+            centerValue = completed;
           } else if (touchedIndex == 1) {
             centerTitle = "Pending";
-            centerValue = total - pending;
+            centerValue = pending;
           } else if (touchedIndex == 2) {
             centerTitle = "Late";
-            centerValue = total - overdue;
+            centerValue = overdue;
           }
 
           return SingleChildScrollView(

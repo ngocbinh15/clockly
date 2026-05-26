@@ -32,7 +32,6 @@ class CustomChoicesChip extends GetView<TaskHomeController> {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 45,
-        child: Expanded(
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: TaskCategory.values.length,
@@ -66,7 +65,6 @@ class CustomChoicesChip extends GetView<TaskHomeController> {
               });
             },
           ),
-        )
-    );
+        );
   }
 }

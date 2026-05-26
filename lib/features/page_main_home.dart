@@ -1,3 +1,4 @@
+import 'package:clockly/features/setiing/view/page_settings.dart';
 import 'package:clockly/features/task_home/widgets/bottom_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

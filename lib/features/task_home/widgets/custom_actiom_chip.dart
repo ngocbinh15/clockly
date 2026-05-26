@@ -45,7 +45,6 @@ class CustomActiomChip extends GetView <TaskHomeController> {
 
         SizedBox(
             height: 45,
-            child: Expanded(
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: TaskCategory.values.length - 1,
@@ -90,7 +89,6 @@ class CustomActiomChip extends GetView <TaskHomeController> {
                 },
               ),
             )
-        ),
       ],
     );
   }

@@ -4,12 +4,13 @@ import 'package:clockly/core/components/primary_button.dart';
 import 'package:clockly/core/constants/app_size.dart';
 import 'package:clockly/core/theme/app_colors.dart';
 import 'package:clockly/core/theme/app_text_styles.dart';
-import 'package:clockly/features/auth/controllers/login_controller.dart';
+
 import 'package:clockly/features/auth/validators/validate.dart';
 import 'package:clockly/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:clockly/features/auth/controllers/login_controller.dart';
 
 class FormLogin extends GetView<LoginController> {
   FormLogin({super.key});

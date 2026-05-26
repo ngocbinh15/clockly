@@ -166,7 +166,7 @@ class AuthHelper {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         HugeIcon(
-                        icon: HugeIcons.strokeRoundedSettingError03,
+                          icon: HugeIcons.strokeRoundedSettingError03,
                           color: AppColors.red,
                           size: 18,
                         ),

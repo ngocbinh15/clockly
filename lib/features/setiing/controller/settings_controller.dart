@@ -56,9 +56,9 @@ class SettingsController extends GetxController {
       final fileExtension = image.path.split('.').last;
       final fileName = '${user.id}_${DateTime.now().millisecondsSinceEpoch}.$fileExtension';
 
-      await supabase.storage.from('avatars').upload(fileName, file);
+      await supabase.storage.from('images').upload(fileName, file);
 
-      final publicUrl = supabase.storage.from('avatars').getPublicUrl(fileName);
+      final publicUrl = supabase.storage.from('images').getPublicUrl(fileName);
 
       await supabase
           .from('profiles')
@@ -75,6 +75,7 @@ class SettingsController extends GetxController {
       CustomSnackbar.snackbar("Lỗi cập nhật ảnh", e.toString(), AppColors.red);
     }
   }
+
 
   Future<void> logOut() async {
     try {

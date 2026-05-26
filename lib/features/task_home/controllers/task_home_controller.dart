@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/utils/date_helper.dart';
+import '../../notifications/notification_service.dart';
 import '../model/task.dart';
 import '../model/task_category.dart';
 
@@ -74,18 +75,33 @@ class TaskHomeController extends GetxController{
         'category': selectedAddTask.value.toLowerCase()
       }).eq('id', taskId);
 
-      await fetchTasks();
-
+      if (parsedDate != null) {
+        final String taskTitle = nameController.text.trim();
+        final DateTime notifyBefore = parsedDate.subtract(const Duration(minutes: 5));
+        await NotificationService.scheduleNotification(
+          id: taskId.hashCode + 1,
+          title: "Sắp đến giờ làm việc: $taskTitle",
+          scheduledDate: notifyBefore,
+        );
+        await NotificationService.scheduleNotification(
+          id: taskId.hashCode,
+          title: "ĐẾN GIỜ RỒI: $taskTitle",
+          scheduledDate: parsedDate,
+        );
+      }
       AuthHelper.hideLoading();
-      Get.back();
-      AppAlerts.success(message: "Task updated successfully!");
+      Future.delayed(const Duration(milliseconds: 300), () async {
+        Get.back();
+        AppAlerts.success(message: "Task updated successfully!");
 
-      nameController.clear();
-      decriptionController.clear();
-      dateController.clear();
-      selectedAddTask.value = "General";
-      selectedPriority.value = "Low";
+        nameController.clear();
+        decriptionController.clear();
+        dateController.clear();
+        selectedAddTask.value = "General";
+        selectedPriority.value = "Low";
 
+        await fetchTasks();
+      });
     } catch (e) {
       AuthHelper.hideLoading();
       AppAlerts.error(message: "Lỗi cập nhật: $e");
@@ -132,12 +148,28 @@ class TaskHomeController extends GetxController{
         await _supabase.from('task_members').insert(membersToInsert);
       }
 
-      fetchTasks();
-      AuthHelper.hideLoading();
-      Get.back();
-      AppAlerts.success(message: "Task created successfully!");
+      if (parsedDate != null) {
+        final String taskTitle = nameController.text.trim();
+        final DateTime notifyBefore = parsedDate.subtract(const Duration(minutes: 5));
+        await NotificationService.scheduleNotification(
+          id: newTaskId.hashCode + 1,
+          title: "Sắp đến giờ làm việc: $taskTitle",
+          scheduledDate: notifyBefore,
+        );
+        await NotificationService.scheduleNotification(
+          id: newTaskId.hashCode,
+          title: "ĐẾN GIỜ RỒI: $taskTitle",
+          scheduledDate: parsedDate,
+        );
+      }
 
-      resetStateController();
+      AuthHelper.hideLoading();
+      Future.delayed(const Duration(milliseconds: 300), () async {
+        Get.back();
+        AppAlerts.success(message: "Task created successfully!");
+        resetStateController();
+        await fetchTasks();
+      });
     } catch (e) {
       AuthHelper.hideLoading();
       AppAlerts.error(message: "$e");
