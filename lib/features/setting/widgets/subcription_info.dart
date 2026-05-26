@@ -14,7 +14,7 @@ class SubcriptionInfo extends GetView<OptionPlanController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      bool isChoose = controller.IsChoose.value == index;
+      bool isChoose = controller.isChoose.value == index;
 
       return Padding(
         padding: const EdgeInsets.only(bottom: 14.0), 

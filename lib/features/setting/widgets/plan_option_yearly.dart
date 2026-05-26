@@ -22,13 +22,13 @@ class PlanOptionYearly extends GetView<OptionPlanController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-        bool isChoose = controller.IsChoose.value == index;
+        bool isChoose = controller.isChoose.value == index;
         Color colorText = ThemeHelper.isDark ? Colors.white : Colors.black87;
         Color subTextColor = ThemeHelper.isDark ? Colors.white54 : Colors.black54;
         
         return GestureDetector(
             onTap: () {
-              controller.IsChoose.value = index;
+              controller.isChoose.value = index;
             },
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 100), 

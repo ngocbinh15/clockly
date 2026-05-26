@@ -1,17 +1,13 @@
 import 'package:clockly/core/services/auth_service.dart';
 import 'package:clockly/features/setting/controller/option_plan_controller.dart';
-import 'package:clockly/routes/app_pages.dart';
 import 'package:clockly/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../core/components/app_alerts.dart';
-import '../../../core/constants/app_message.dart';
 import '../../../core/constants/app_size.dart';
 import '../../../core/theme/app_colors.dart';
 import '../controller/settings_controller.dart';
-import '../views/page_edit_profile.dart';
 import 'settings_list_tile.dart';
 
 class AccountSection extends GetView<SettingsController> {
@@ -61,7 +57,6 @@ class AccountSection extends GetView<SettingsController> {
             color: AppColors.grey.withValues(alpha: 0.2),
           ),
             Obx(() {
-            // Lấy trạng thái Pro từ controller
             bool isPro = Get.find<OptionPlanController>().isPro.value; 
 
             return SettingsListTile(

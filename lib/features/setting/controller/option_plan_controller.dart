@@ -1,12 +1,11 @@
 import 'package:clockly/features/setting/widgets/payment_processing_dialog.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:hugeicons/hugeicons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../core/theme/app_colors.dart';
 
 class OptionPlanController extends GetxController {
-	var IsChoose = 1.obs;
+	var isChoose = 1.obs;
 
 	var isPro = false.obs;
 
@@ -48,7 +47,7 @@ class OptionPlanController extends GetxController {
 		Get.back();
 
 
-		String planName = IsChoose.value == 1 ? "Yearly Pro" : "Monthly Pro";
+		String planName = isChoose.value == 1 ? "Yearly Pro" : "Monthly Pro";
 		Get.snackbar(
 			"Welcome to $planName!",
 			"All premium features are now unlocked.",
