@@ -16,9 +16,9 @@ class SearchFriendBottomSheet extends GetView<TeamController> {
     return SingleChildScrollView(
       child: Container(
         padding: const EdgeInsets.all(AppSizes.p24),
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           color: AppColors.secondary,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -108,7 +108,7 @@ class SearchFriendBottomSheet extends GetView<TeamController> {
                             style: IconButton.styleFrom(
                               backgroundColor: AppColors.primary.withValues(alpha: 0.1),
                             ),
-                            icon: const HugeIcon(icon: HugeIcons.strokeRoundedUserAdd01, color: AppColors.primary, size: 20),
+                            icon: HugeIcon(icon: HugeIcons.strokeRoundedUserAdd01, color: AppColors.primary, size: 20),
                           )
                         ],
                       ),

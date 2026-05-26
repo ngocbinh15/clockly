@@ -1,22 +1,18 @@
 import 'package:clockly/core/components/primary_button.dart';
-import 'package:clockly/core/services/auth_service.dart';
 import 'package:clockly/core/theme/app_colors.dart';
-import 'package:clockly/core/theme/app_text_styles.dart';
 import 'package:clockly/features/auth/validators/validate.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hugeicons/hugeicons.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/constants/app_size.dart';
-import '../controller/EditProfileController.dart';
+import '../controller/edit_profile_controller.dart';
 
 class FormChangeName extends GetView <EditProfileController> {
   FormChangeName({super.key});
 
-  GlobalKey <FormState> _formState = GlobalKey<FormState>();
+  final GlobalKey <FormState> _formState = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {

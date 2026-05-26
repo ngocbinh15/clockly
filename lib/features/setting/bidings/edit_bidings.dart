@@ -1,4 +1,4 @@
-import 'package:clockly/features/setting/controller/EditProfileController.dart';
+import 'package:clockly/features/setting/controller/edit_profile_controller.dart';
 import 'package:get/get.dart';
 
 class EditBidings extends Bindings{

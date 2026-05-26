@@ -30,7 +30,7 @@ class EmptyTaskWidget extends StatelessWidget {
                   ),
                 ],
               ),
-              child: const HugeIcon(
+              child: HugeIcon(
                 icon: HugeIcons.strokeRoundedTask01,
                 color: AppColors.primary,
                 size: 64,

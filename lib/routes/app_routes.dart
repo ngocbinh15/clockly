@@ -10,4 +10,6 @@ class AppRoutes {
   static const analys = "/analys";
   static const editProfile = "/edit";
   static const setting = "/setting";
+  static const chat = "/chat";
+  static const subcription = "/subcription";
 }

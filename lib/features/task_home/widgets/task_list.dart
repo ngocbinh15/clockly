@@ -1,6 +1,7 @@
 import 'package:clockly/core/theme/app_colors.dart';
 import 'package:clockly/core/constants/app_size.dart';
 import 'package:clockly/core/utils/dialog_helper.dart';
+import 'package:clockly/core/utils/theme_helper.dart';
 import 'package:clockly/features/task_home/controllers/task_home_controller.dart';
 import 'package:clockly/features/task_home/widgets/list_avatar.dart';
 import 'package:clockly/features/task_home/widgets/task_details_bottom_sheet.dart';
@@ -139,7 +140,7 @@ class TaskList extends GetView<TaskHomeController> {
                                 Text(
                                   task.title,
                                   style: GoogleFonts.inter(
-                                    color: isCompleted ? AppColors.grey : Colors.black87,
+                                    color: isCompleted ? AppColors.grey : (ThemeHelper.isDark ? Colors.white70 : Colors.black87),
                                     fontWeight: FontWeight.w700,
                                     fontSize: 17,
                                     letterSpacing: 0,

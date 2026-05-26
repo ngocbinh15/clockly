@@ -1,4 +1,3 @@
-import 'package:clockly/core/services/auth_service.dart';
 import 'package:clockly/core/utils/dialog_helper.dart';
 import 'package:clockly/features/setting/controller/settings_controller.dart';
 import 'package:flutter/material.dart';

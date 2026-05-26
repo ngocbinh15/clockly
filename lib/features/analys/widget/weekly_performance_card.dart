@@ -1,9 +1,10 @@
 import 'package:clockly/core/constants/app_size.dart';
 import 'package:clockly/core/theme/app_colors.dart';
-import 'package:clockly/features/analys/controller/analysis_controller.dart'; // Chú ý sửa tên import nếu cần
+import 'package:clockly/features/analys/controller/analysis_controller.dart'; 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:clockly/core/utils/theme_helper.dart';
 
 class WeeklyPerformanceCard extends GetView<AnalysisController> {
   const WeeklyPerformanceCard({super.key});
@@ -50,7 +51,7 @@ class WeeklyPerformanceCard extends GetView<AnalysisController> {
                   style: GoogleFonts.inter(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
-                    color: Colors.black87,
+                    color: ThemeHelper.isDark ? Colors.white : Colors.black87,
                   ),
                 ),
                 Text(

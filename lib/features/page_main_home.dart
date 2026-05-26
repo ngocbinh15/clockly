@@ -1,3 +1,4 @@
+import 'package:clockly/core/utils/theme_helper.dart';
 import 'package:clockly/features/task_home/widgets/bottom_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,18 +17,22 @@ class PageMainHome extends GetView<TaskHomeController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Obx(() => IndexedStack(
-        index: controller.bottomNavIndex.value,
-        children: [
-          PageTask(),
-          PageCalendar(),
-          PageAnalys(),
-          PageLeaderBoard(),
-        ],
-      )),
+    return Obx(() {
+      final isDark = ThemeHelper.isDark;
 
-      floatingActionButton: FloatingActionButton(
+      return Scaffold(
+        backgroundColor: AppColors.background,
+        body: IndexedStack(
+          index: controller.bottomNavIndex.value,
+          children: [
+            PageTask(),
+            PageCalendar(),
+            PageAnalys(),
+            PageLeaderBoard(),
+          ],
+        ),
+
+        floatingActionButton: FloatingActionButton(
           onPressed: () {
             controller.resetStateController();
 
@@ -36,14 +41,17 @@ class PageMainHome extends GetView<TaskHomeController> {
           backgroundColor: AppColors.primary,
           elevation: 8,
           shape: const CircleBorder(),
-          child: const HugeIcon(
+          child: HugeIcon(
             icon: HugeIcons.strokeRoundedAdd01,
             color: AppColors.secondary,
             strokeWidth: 1.5,
             size: 24,
-          )
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterDocked,bottomNavigationBar: CustomBottomNav(),
-    );
+          ),
+        ),
+        floatingActionButtonLocation:
+            FloatingActionButtonLocation.miniCenterDocked,
+        bottomNavigationBar: CustomBottomNav(),
+      );
+    });
   }
 }

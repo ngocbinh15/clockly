@@ -1,4 +1,5 @@
 import 'package:clockly/core/theme/app_colors.dart';
+import 'package:clockly/core/utils/theme_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,141 +14,144 @@ class CustomDialog {
     required VoidCallback onConfirm,
   }) {
     Get.dialog(
-      Dialog(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        insetPadding: const EdgeInsets.symmetric(horizontal: 24),
+      Obx(() {
+        final isDark = ThemeHelper.isDark;
+        return Dialog(
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          insetPadding: const EdgeInsets.symmetric(horizontal: 24),
 
-        child: Container(
-          padding: const EdgeInsets.all(28),
+          child: Container(
+            padding: const EdgeInsets.all(28),
 
-          decoration: BoxDecoration(
-            color: const Color(0xFFF7F7FA),
-            borderRadius: BorderRadius.circular(32),
+            decoration: BoxDecoration(
+              color: isDark ? const Color(0xFF1E1E1E) : const Color(0xFFF7F7FA),
+              borderRadius: BorderRadius.circular(32),
 
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 32,
-                spreadRadius: -8,
-                offset: const Offset(0, 16),
-                color: Colors.black.withValues(alpha: 0.12),
-              ),
-            ],
-          ),
-
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                width: 84,
-                height: 84,
-
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Color(0xFFFFE9E9),
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 32,
+                  spreadRadius: -8,
+                  offset: const Offset(0, 16),
+                  color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.12),
                 ),
+              ],
+            ),
 
-                child: Center(
-                  child: HugeIcon(
-                    icon: HugeIcons.strokeRoundedDelete02,
-                    color: AppColors.fouth,
-                    size: 38,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 84,
+                  height: 84,
+
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: isDark ? AppColors.fouth.withValues(alpha: 0.2) : const Color(0xFFFFE9E9),
+                  ),
+
+                  child: Center(
+                    child: HugeIcon(
+                      icon: HugeIcons.strokeRoundedDelete02,
+                      color: AppColors.fouth,
+                      size: 38,
+                    ),
                   ),
                 ),
-              ),
 
-              const SizedBox(height: 28),
+                const SizedBox(height: 28),
 
-              Text(
-                title,
-                textAlign: TextAlign.center,
+                Text(
+                  title,
+                  textAlign: TextAlign.center,
 
-                style: GoogleFonts.inter(
-                  fontSize: 30,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.black87,
-                  letterSpacing: -1,
+                  style: GoogleFonts.inter(
+                    fontSize: 30,
+                    fontWeight: FontWeight.w700,
+                    color: isDark ? Colors.white : Colors.black87,
+                    letterSpacing: -1,
+                  ),
                 ),
-              ),
 
-              const SizedBox(height: 14),
+                const SizedBox(height: 14),
 
-              Text(
-                content,
-                textAlign: TextAlign.center,
+                Text(
+                  content,
+                  textAlign: TextAlign.center,
 
-                style: GoogleFonts.inter(
-                  fontSize: 16,
-                  height: 1.6,
-                  color: Colors.black54,
-                  fontWeight: FontWeight.w400,
+                  style: GoogleFonts.inter(
+                    fontSize: 16,
+                    height: 1.6,
+                    color: isDark ? Colors.white70 : Colors.black54,
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
-              ),
 
-              const SizedBox(height: 32),
+                const SizedBox(height: 32),
 
-              Row(
-                children: [
-                  Expanded(
-                    child: FilledButton(
-                      onPressed: () => Get.back(),
+                Row(
+                  children: [
+                    Expanded(
+                      child: FilledButton(
+                        onPressed: () => Get.back(),
 
-                      style: FilledButton.styleFrom(
-                        backgroundColor: const Color(0xFFEDEDF3),
-                        foregroundColor: Colors.black87,
-                        elevation: 0,
-                        minimumSize: const Size.fromHeight(56),
+                        style: FilledButton.styleFrom(
+                          backgroundColor: isDark ? const Color(0xFF2C2C2E) : const Color(0xFFEDEDF3),
+                          foregroundColor: isDark ? Colors.white70 : Colors.black87,
+                          elevation: 0,
+                          minimumSize: const Size.fromHeight(56),
 
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
                         ),
-                      ),
 
-                      child: Text(
-                        cancel,
-                        style: GoogleFonts.inter(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600,
+                        child: Text(
+                          cancel,
+                          style: GoogleFonts.inter(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
                     ),
-                  ),
 
-                  const SizedBox(width: 14),
+                    const SizedBox(width: 14),
 
-                  Expanded(
-                    child: FilledButton(
-                      onPressed: () {
-                        onConfirm();
-                        Get.back();
-                      },
+                    Expanded(
+                      child: FilledButton(
+                        onPressed: () {
+                          onConfirm();
+                          Get.back();
+                        },
 
-                      style: FilledButton.styleFrom(
-                        backgroundColor: AppColors.fouth,
-                        foregroundColor: Colors.white,
-                        elevation: 0,
-                        minimumSize: const Size.fromHeight(56),
+                        style: FilledButton.styleFrom(
+                          backgroundColor: AppColors.fouth,
+                          foregroundColor: Colors.white,
+                          elevation: 0,
+                          minimumSize: const Size.fromHeight(56),
 
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
                         ),
-                      ),
 
-                      child: Text(
-                        confirm,
-                        style: GoogleFonts.inter(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w700,
+                        child: Text(
+                          confirm,
+                          style: GoogleFonts.inter(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
-      ),
+        );
+      }),
 
       barrierColor: Colors.black.withValues(alpha: 0.22),
     );

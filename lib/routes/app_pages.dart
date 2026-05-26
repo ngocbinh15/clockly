@@ -7,11 +7,13 @@ import 'package:clockly/features/auth/views/page_forgot_password.dart';
 import 'package:clockly/features/auth/views/page_login.dart';
 import 'package:clockly/features/auth/views/page_reset_password.dart';
 import 'package:clockly/features/auth/views/page_sign_up.dart';
+import 'package:clockly/features/page_chat/views/page_chat.dart';
 import 'package:clockly/features/page_main_home.dart';
 import 'package:clockly/features/setting/bidings/edit_bidings.dart';
 import 'package:clockly/features/setting/bidings/setting_binding.dart';
-import 'package:clockly/features/setting/views/edit_profile_page.dart';
+import 'package:clockly/features/setting/views/page_edit_profile.dart';
 import 'package:clockly/features/setting/views/page_settings.dart';
+import 'package:clockly/features/setting/views/page_subcription.dart';
 import 'package:clockly/routes/app_routes.dart';
 import 'package:get/get.dart';
 
@@ -51,13 +53,21 @@ class AppPages {
     ),
     GetPage(
         name: AppRoutes.editProfile,
-        page: () => EditProfilePage(),
+        page: () => PageEditProfile(),
       binding: EditBidings()
     ),
     GetPage(
         name: AppRoutes.setting,
         page: () => PageSettings(),
       binding: SettingsBinding()
-    )
+    ),
+    GetPage(
+        name: AppRoutes.chat,
+        page: () => PageChat(),
+    ),
+    GetPage(
+      name: AppRoutes.subcription,
+       page: () => PageSubcription(),
+       )
   ];
 }

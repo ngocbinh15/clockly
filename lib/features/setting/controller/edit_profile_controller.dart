@@ -7,7 +7,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/components/app_alerts.dart';
 import '../../../core/constants/app_message.dart';
 import '../../../core/services/auth_service.dart';
-import '../../../core/theme/app_colors.dart';
 import '../../auth/controllers/auth_helper.dart';
 import '../controller/settings_controller.dart';
 

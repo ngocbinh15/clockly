@@ -1,7 +1,9 @@
 import 'package:clockly/core/components/app_alerts.dart';
 import 'package:clockly/core/constants/app_message.dart';
+import 'package:clockly/core/services/ai_service.dart';
 import 'package:clockly/core/services/auth_service.dart';
 import 'package:clockly/features/auth/controllers/auth_helper.dart';
+import 'package:clockly/features/page_chat/model/local_chat_message.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,12 +15,22 @@ import '../../../core/utils/date_helper.dart';
 import '../model/task.dart';
 import '../model/task_category.dart';
 
-class TaskHomeController extends GetxController{
+class TaskHomeController extends GetxController {
   final String today = DateFormat('MMM dd, yyyy').format(DateTime.now());
   final currUser = Get.find<AuthService>().currentUser.value;
   RxString selected = "All Tasks".obs;
 
+  final aiService = Get.find<AiService>();
+
   late ConfettiController confettiController;
+
+  var isTyping = false.obs;
+  var isGenerating = false.obs;
+  var isGenerated = false.obs;
+  String taskPrompt = "";
+  var chatMessages = <LocalChatMessage> [].obs;
+
+  var isSend = false.obs;
 
   RxString selectedAddTask = "General".obs;
   RxString selectedPriority = "Low".obs;
@@ -29,7 +41,7 @@ class TaskHomeController extends GetxController{
   RxList<String> selectedMemberIds = <String>[].obs;
 
   var isLoading = true.obs;
-  var allTasks = <TaskModel>[].obs;
+  final allTasks = <TaskModel>[].obs;
   var selectedCategory = TaskCategory.all.obs;
 
   RxInt bottomNavIndex = 0.obs;
@@ -37,13 +49,14 @@ class TaskHomeController extends GetxController{
   late TextEditingController nameController;
   late TextEditingController decriptionController;
   late TextEditingController dateController;
+  late TextEditingController chatController;
 
-  GlobalKey <FormState> formStateAddTask = GlobalKey<FormState>();
+  GlobalKey<FormState> formStateAddTask = GlobalKey<FormState>();
 
   RxMap<String, List<String>> taskMembersMap = <String, List<String>>{}.obs;
 
   late final RealtimeChannel _realtimeChannel;
-  
+
   @override
   void onInit() {
     super.onInit();
@@ -52,17 +65,125 @@ class TaskHomeController extends GetxController{
     nameController = TextEditingController();
     decriptionController = TextEditingController();
     dateController = TextEditingController();
+    chatController = TextEditingController();
     _setupRealtimeTaskList();
   }
 
   @override
   void onClose() {
-    super.onClose();
     _supabase.removeChannel(_realtimeChannel);
     confettiController.dispose();
     nameController.dispose();
+    decriptionController.dispose();
     dateController.dispose();
-    dateController.dispose();
+    chatController.dispose();
+    super.onClose();
+  }
+
+  void resetChatState() {
+    chatController.clear();
+    nameController.clear();
+    decriptionController.clear();
+    isTyping.value = false;
+    isGenerating.value = false;
+    isGenerated.value = false;
+    isSend.value = false;
+  }
+
+  Future<void> generateTask() async {
+    final inputText = nameController.text.trim();
+
+    if (inputText.isEmpty || isGenerating.value || isGenerated.value) return;
+
+    isGenerating.value = true;
+
+    try {
+      final newTask = await aiService.parseTaskFromText(inputText);
+      if (newTask == null) return;
+
+      nameController.text = newTask["title"] ?? inputText;
+      decriptionController.text = newTask["description"] ?? "";
+      dateController.text = newTask["due_date"] ?? "";
+      selectedPriority.value = newTask["priority"] ?? "Low";
+      selectedAddTask.value = newTask["category"] ?? "General";
+
+      isGenerated.value = true;
+
+    } catch (e) {
+      AppAlerts.error(message: e.toString());
+    } finally {
+      isGenerating.value = false;
+    }
+  }
+
+  Future<void> handleChatSubmission(String text) async {
+    taskPrompt = text;
+
+    chatMessages.add(LocalChatMessage(text: text, isSender: true));
+    isGenerating.value = true;
+
+    try {
+      final result = await Future.wait([
+        aiService.parseTaskFromText(text),
+        Future.delayed(const Duration(milliseconds: 1500))
+      ]);
+
+      final newTask = result[0] as Map<String, dynamic>?;
+
+      if (newTask != null) {
+        nameController.text = newTask["title"] ?? text;
+        decriptionController.text = newTask["description"] ?? "";
+        dateController.text = newTask["due_date"] ?? "";
+        selectedPriority.value = newTask["priority"] ?? "Low";
+        selectedAddTask.value = newTask["category"] ?? "General";
+
+        chatMessages.add(LocalChatMessage(
+            text: "Task added successfully! Here are the details ✨",
+            isSender: false
+        ));
+
+        chatMessages.add(LocalChatMessage(
+            text: "",
+            isSender: false,
+            isTaskCard: true,
+            taskData: newTask,
+        ));
+
+        await saveTaskFromChatSilent();
+      }
+    } catch (e) {
+      AppAlerts.error(message: e.toString());
+    } finally {
+      isGenerating.value = false;
+    }
+  }
+
+  Future<void> saveTaskFromChatSilent() async {
+    try {
+      DateTime? parsedDate;
+      if (dateController.text.isNotEmpty) {
+        try {
+          parsedDate = DateFormat('MMM dd, yyyy - hh:mm a').parse(dateController.text);
+        } catch (_) {
+          parsedDate = DateTime.tryParse(dateController.text);
+        }
+      }
+
+      await _supabase.from('tasks').insert({
+        'profile_id': currUser!.id,
+        'title': nameController.text.trim(),
+        'description': decriptionController.text.trim(),
+        'status': 'pending',
+        'priority': selectedPriority.value.toLowerCase(),
+        'due_date': parsedDate?.toIso8601String(),
+        'category': selectedAddTask.value.toLowerCase()
+      });
+
+      await fetchTasks();
+
+    } catch (e) {
+      AppAlerts.error(message: e.toString());
+    }
   }
 
   void _setupRealtimeTaskList() {
@@ -140,6 +261,7 @@ class TaskHomeController extends GetxController{
         parsedDate = DateFormat('MMM dd, yyyy - hh:mm a').parse(dateController.text);
       }
 
+      isTyping.value = false;
       AuthHelper.showLoading();
 
       final taskResponse = await _supabase.from('tasks').insert({
@@ -165,7 +287,7 @@ class TaskHomeController extends GetxController{
         await _supabase.from('task_members').insert(membersToInsert);
       }
 
-      fetchTasks();
+      await fetchTasks();
       AuthHelper.hideLoading();
       Get.back();
       AppAlerts.success(message: "Task created successfully!");
@@ -177,7 +299,7 @@ class TaskHomeController extends GetxController{
     }
   }
 
-  void resetStateController () {
+  void resetStateController() {
     nameController.clear();
     decriptionController.clear();
     dateController.clear();
@@ -268,13 +390,12 @@ class TaskHomeController extends GetxController{
       allTasks.value = uniqueTasks;
 
       if (uniqueTasks.isNotEmpty) {
-        // Gom tất cả ID của các task hiện tại thành một mảng
         final List<String> taskIds = uniqueTasks.map((t) => t.id).toList();
 
         final membersResponse = await _supabase
             .from('task_members')
             .select('task_id, profiles(avatar_url)')
-            .inFilter('task_id', taskIds); // Lọc những bản ghi nằm trong danh sách taskIds
+            .inFilter('task_id', taskIds);
 
         Map<String, List<String>> tempMembersMap = {};
 
@@ -285,7 +406,6 @@ class TaskHomeController extends GetxController{
           if (profile != null && profile['avatar_url'] != null) {
             final String avatarUrl = profile['avatar_url'];
 
-            // Nếu Map chưa có taskId này thì khởi tạo mảng rỗng
             if (!tempMembersMap.containsKey(taskId)) {
               tempMembersMap[taskId] = [];
             }
@@ -301,8 +421,8 @@ class TaskHomeController extends GetxController{
     } catch (e) {
       AppAlerts.error(message: "Lỗi tải Task: $e");
     } finally {
-      isLoading.value = false;
-    }
+    isLoading.value = false;
+  }
   }
 
   Future<void> toggleTaskStatus(TaskModel task) async {
@@ -335,19 +455,12 @@ class TaskHomeController extends GetxController{
     }
   }
 
-  Future<void> deleteTask (TaskModel task) async {
-    allTasks.removeWhere(
-          (element) => element.id == task.id,
-    );
+  Future<void> deleteTask(TaskModel task) async {
+    allTasks.removeWhere((element) => element.id == task.id);
 
     try {
-      await _supabase
-          .from('tasks')
-          .delete()
-          .eq('id', task.id);
-
+      await _supabase.from('tasks').delete().eq('id', task.id);
       AppAlerts.success(message: AppMessages.deleteSuccess);
-
     } catch (e) {
       AppAlerts.error(message: "$e");
     }
@@ -355,7 +468,6 @@ class TaskHomeController extends GetxController{
 
   String getGreetingText() {
     final hour = DateTime.now().hour;
-
     if (hour >= 18) return "Good Evening";
     if (hour >= 12) return "Good Afternoon";
     return "Good Morning";
@@ -388,7 +500,6 @@ class TaskHomeController extends GetxController{
     }
   }
 
-  // Animation
   RxInt currentCategoryIndex = 0.obs;
   RxDouble slideDirection = 1.0.obs;
 

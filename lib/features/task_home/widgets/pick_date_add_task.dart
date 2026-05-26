@@ -10,6 +10,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 import '../../../core/utils/date_helper.dart';
+import '../../../core/utils/theme_helper.dart';
 
 class PickDateAddTask extends StatelessWidget {
   PickDateAddTask({super.key});
@@ -25,45 +26,47 @@ class PickDateAddTask extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        TextTitleAddTask(text: "Due Date"),
-        const SizedBox(height: AppSizes.p8),
+    return Obx(() {
+      final isDark = ThemeHelper.isDark;
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TextTitleAddTask(text: "Due Date"),
+          const SizedBox(height: AppSizes.p8),
 
-        TextFormField(
-          controller: controller.dateController,
-          readOnly: true,
-          onTap: () => _handleSelectDate(context),
-          validator: (value) => Validate.validDate(value),
-          style: GoogleFonts.inter(
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-            color: Colors.black87,
-          ),
-          decoration: InputDecoration(
-            hintText: "Select a date",
-            hintStyle: GoogleFonts.inter(color: AppColors.grey),
-            filled: true,
-            fillColor: AppColors.grey.withValues(alpha: 0.1),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(AppSizes.p12),
-              borderSide: BorderSide.none,
+          TextFormField(
+            controller: controller.dateController,
+            readOnly: true,
+            onTap: () => _handleSelectDate(context),
+            validator: (value) => Validate.validDate(value),
+            style: GoogleFonts.inter(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: isDark ? Colors.white : Colors.black87,
             ),
-            contentPadding: const EdgeInsets.symmetric(horizontal: AppSizes.p16, vertical: 14),
-            suffixIcon: const Padding(
-              padding: EdgeInsets.only(right: AppSizes.p12),
-              child: HugeIcon(
-                icon: HugeIcons.strokeRoundedCalendar04,
-                color: AppColors.primary,
-                size: 20,
+            decoration: InputDecoration(
+              hintText: "Select a date",
+              hintStyle: GoogleFonts.inter(color: AppColors.grey),
+              filled: true,
+              fillColor: AppColors.grey.withValues(alpha: 0.1),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(AppSizes.p12),
+                borderSide: BorderSide.none,
               ),
+              contentPadding: const EdgeInsets.symmetric(horizontal: AppSizes.p16, vertical: 14),
+              suffixIcon: Padding(
+                padding: const EdgeInsets.only(right: AppSizes.p12),
+                child: HugeIcon(
+                  icon: HugeIcons.strokeRoundedCalendar04,
+                  color: AppColors.primary,
+                  size: 20,
+                ),
+              ),
+              suffixIconConstraints: const BoxConstraints(minWidth: AppSizes.p24, minHeight: AppSizes.p24),
             ),
-            suffixIconConstraints: const BoxConstraints(minWidth: AppSizes.p24, minHeight: AppSizes.p24),
           ),
-        ),
 
-        const SizedBox(height: AppSizes.p12),
+          const SizedBox(height: AppSizes.p12),
 
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
@@ -80,5 +83,6 @@ class PickDateAddTask extends StatelessWidget {
         const SizedBox(height: AppSizes.p12),
       ],
     );
+    });
   }
 }

@@ -16,9 +16,9 @@ class FriendRequestsBottomSheet extends GetView<TeamController> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(AppSizes.p24),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: AppColors.secondary,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -78,7 +78,6 @@ class FriendRequestsBottomSheet extends GetView<TeamController> {
                           ),
                         ),
 
-                        // Nút TỪ CHỐI
                         IconButton(
                           onPressed: () => controller.declineRequest(friendshipId),
                           style: IconButton.styleFrom(backgroundColor: Colors.red.withValues(alpha: 0.1)),
@@ -86,7 +85,6 @@ class FriendRequestsBottomSheet extends GetView<TeamController> {
                         ),
                         const SizedBox(width: 8),
 
-                        // Nút CHẤP NHẬN
                         IconButton(
                           onPressed: () => controller.acceptRequest(friendshipId),
                           style: IconButton.styleFrom(backgroundColor: Colors.green.withValues(alpha: 0.1)),

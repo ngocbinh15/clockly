@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:clockly/core/utils/theme_helper.dart';
 
 import 'custom_actiom_chip.dart';
 
@@ -19,19 +20,21 @@ class BottomDialog {
     final controller = Get.find <TaskHomeController>();
 
     Get.bottomSheet(
-      GestureDetector(
-        onTap: () {
-          Get.focusScope?.unfocus();
-        },
-        child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
-          child: Container(
-            padding: EdgeInsets.symmetric(
-                horizontal: AppSizes.p24, vertical: AppSizes.p8),
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-            ),
+      Obx(() {
+        final isDark = ThemeHelper.isDark;
+        return GestureDetector(
+          onTap: () {
+            Get.focusScope?.unfocus();
+          },
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: Container(
+              padding: EdgeInsets.symmetric(
+                  horizontal: AppSizes.p24, vertical: AppSizes.p8),
+              decoration: BoxDecoration(
+                color: AppColors.secondary,
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+              ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -84,7 +87,7 @@ class BottomDialog {
                         child: HugeIcon(
                           icon: HugeIcons.strokeRoundedCancel01,
                           size: 20,
-                          color: Colors.black.withValues(alpha: 0.6),
+                          color: (isDark ? Colors.white : Colors.black).withValues(alpha: 0.6),
                           strokeWidth: 2,
                         ),
                       ),
@@ -137,7 +140,8 @@ class BottomDialog {
             ),
           ),
         ),
-      ),
+      );
+      }),
 
       isScrollControlled: true,
       backgroundColor: Colors.transparent,

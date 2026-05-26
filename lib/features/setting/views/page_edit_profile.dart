@@ -3,13 +3,13 @@ import 'package:get/get.dart';
 
 import '../../../core/constants/app_size.dart';
 import '../../../core/theme/app_colors.dart';
-import '../controller/EditProfileController.dart';
-import '../widgets/edit_profile_header.dart';
+import '../controller/edit_profile_controller.dart';
 import '../widgets/editable_avatar.dart';
-import '../widgets/form_change_name.dart'; // Import Form của bạn
+import '../widgets/heading_setting.dart';
+import '../widgets/form_change_name.dart';
 
-class EditProfilePage extends GetView<EditProfileController> {
-  const EditProfilePage({super.key});
+class PageEditProfile extends GetView<EditProfileController> {
+  const PageEditProfile({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,11 +17,11 @@ class EditProfilePage extends GetView<EditProfileController> {
       backgroundColor: AppColors.background,
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(AppSizes.p24),
+          padding: const EdgeInsets.all(AppSizes.p16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const EditProfileHeader(),
+              HeadingSetting(text: "Edit Profile"),
 
               const SizedBox(height: 40),
 
