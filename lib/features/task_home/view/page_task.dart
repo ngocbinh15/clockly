@@ -17,82 +17,81 @@ import '../controllers/task_home_controller.dart';
 import '../widgets/categorized_task_list.dart';
 
 class PageTask extends GetView<TaskHomeController> {
-  PageTask({super.key});
+	PageTask({super.key});
 
-  final authService = Get.find<AuthService>();
+	final authService = Get.find<AuthService>();
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          Obx(() {
-            // Đăng ký phụ thuộc reactive cho thay đổi theme
-            final isDark = ThemeHelper.isDark;
-            final currUser = authService.currentUser.value;
+	@override
+	Widget build(BuildContext context) {
+		return Scaffold(
+			body: Stack(
+				children: [
+					Obx(() {
+						final isDark = ThemeHelper.isDark;
+						final currUser = authService.currentUser.value;
 
-            if (currUser == null) {
-              return const Center(child: CircularProgressIndicator());
-            }
+						if (currUser == null) {
+							return const Center(child: CircularProgressIndicator());
+						}
 
-            return RefreshIndicator(
-              backgroundColor: AppColors.primary,
-              color: AppColors.secondary,
-              onRefresh: () async {
-                await controller.fetchTasks();
-              },
-              child: SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).padding.top + AppSizes.p12,
-                    left: AppSizes.p24,
-                    right: AppSizes.p24,
-                    bottom: AppSizes.p24,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CustomAppBar(),
-                      const SizedBox(height: AppSizes.p24),
+						return RefreshIndicator(
+							backgroundColor: AppColors.primary,
+							color: AppColors.secondary,
+							onRefresh: () async {
+								await controller.fetchTasks();
+							},
+							child: SingleChildScrollView(
+								physics: const AlwaysScrollableScrollPhysics(),
+								child: Padding(
+									padding: EdgeInsets.only(
+										top: MediaQuery.of(context).padding.top + AppSizes.p12,
+										left: AppSizes.p24,
+										right: AppSizes.p24,
+										bottom: AppSizes.p24,
+									),
+									child: Column(
+										crossAxisAlignment: CrossAxisAlignment.start,
+										children: [
+											CustomAppBar(),
+											const SizedBox(height: AppSizes.p24),
 
-                      HeadingTextTask(),
+											HeadingTextTask(),
 
-                      const SizedBox(height: AppSizes.p16),
+											const SizedBox(height: AppSizes.p16),
 
-                      CustomChoicesChip(),
-                      const SizedBox(height: AppSizes.p32),
+											CustomChoicesChip(),
+											const SizedBox(height: AppSizes.p32),
 
-                      CategorizedTaskList(),
-                    ],
-                  ),
-                ),
-              ),
-            );
-          }),
+											CategorizedTaskList(),
+										],
+									),
+								),
+							),
+						);
+					}),
 
 
-          Align(
-            alignment: Alignment.topCenter,
-            child: ConfettiWidget(
-              confettiController: controller.confettiController,
-              blastDirectionality: BlastDirectionality.explosive,
-              shouldLoop: false,
-              gravity: 0.3,
-              numberOfParticles: 17,
-              colors: [
-                Colors.green,
-                Colors.blue,
-                Colors.pink,
-                Colors.orange,
-                Colors.purple,
-                AppColors.orange,
-                AppColors.primary
-              ],
-            ),
-          )
-        ],
-      ),
-    );
-  }
+					Align(
+						alignment: Alignment.topCenter,
+						child: ConfettiWidget(
+							confettiController: controller.confettiController,
+							blastDirectionality: BlastDirectionality.explosive,
+							shouldLoop: false,
+							gravity: 0.3,
+							numberOfParticles: 17,
+							colors: [
+								Colors.green,
+								Colors.blue,
+								Colors.pink,
+								Colors.orange,
+								Colors.purple,
+								AppColors.orange,
+								AppColors.primary
+							],
+						),
+					)
+				],
+			),
+		);
+	}
 }

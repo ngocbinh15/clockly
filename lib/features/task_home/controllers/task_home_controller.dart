@@ -2,10 +2,10 @@ import 'package:clockly/core/components/app_alerts.dart';
 import 'package:clockly/core/constants/app_message.dart';
 import 'package:clockly/core/services/ai_service.dart';
 import 'package:clockly/core/services/auth_service.dart';
+import 'package:clockly/core/theme/app_colors.dart';
 import 'package:clockly/features/auth/controllers/auth_helper.dart';
 import 'package:clockly/features/page_chat/model/local_chat_message.dart';
 import 'package:confetti/confetti.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -14,6 +14,9 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/utils/date_helper.dart';
 import '../model/task.dart';
 import '../model/task_category.dart';
+
+import 'package:app_links/app_links.dart';
+import 'package:clockly/features/page_chat/widgets/quick_task_dialog.dart';
 
 class TaskHomeController extends GetxController {
   final String today = DateFormat('MMM dd, yyyy').format(DateTime.now());
@@ -50,12 +53,15 @@ class TaskHomeController extends GetxController {
   late TextEditingController decriptionController;
   late TextEditingController dateController;
   late TextEditingController chatController;
+  late TextEditingController quickTaskController;
 
   GlobalKey<FormState> formStateAddTask = GlobalKey<FormState>();
 
   RxMap<String, List<String>> taskMembersMap = <String, List<String>>{}.obs;
 
   late final RealtimeChannel _realtimeChannel;
+
+  final _appLinks = AppLinks();
 
   @override
   void onInit() {
@@ -66,7 +72,9 @@ class TaskHomeController extends GetxController {
     decriptionController = TextEditingController();
     dateController = TextEditingController();
     chatController = TextEditingController();
+    quickTaskController = TextEditingController();
     _setupRealtimeTaskList();
+    _initDeepLinkListener();
   }
 
   @override
@@ -77,6 +85,7 @@ class TaskHomeController extends GetxController {
     decriptionController.dispose();
     dateController.dispose();
     chatController.dispose();
+    quickTaskController.dispose();
     super.onClose();
   }
 
@@ -88,6 +97,21 @@ class TaskHomeController extends GetxController {
     isGenerating.value = false;
     isGenerated.value = false;
     isSend.value = false;
+  }
+
+  void _initDeepLinkListener() {
+    _appLinks.uriLinkStream.listen((uri) {
+      if (uri.scheme == 'clockly' && uri.host == 'addtask') {
+        
+        Future.delayed(const Duration(milliseconds: 300), () {
+          Get.dialog(
+            const QuickTaskDialog(),
+            barrierDismissible: true,   
+          );
+          
+        });
+      }
+    });
   }
 
   Future<void> generateTask() async {
@@ -169,8 +193,14 @@ class TaskHomeController extends GetxController {
         }
       }
 
+      final userId = _authService.currentUser.value?.id;
+      if (userId == null) {
+        AppAlerts.error(message: "Your login session has expired.");
+        return;
+      }
+
       await _supabase.from('tasks').insert({
-        'profile_id': currUser!.id,
+        'profile_id': userId,
         'title': nameController.text.trim(),
         'description': decriptionController.text.trim(),
         'status': 'pending',
@@ -512,5 +542,27 @@ class TaskHomeController extends GetxController {
 
     selected.value = categoryName;
     currentCategoryIndex.value = newIndex;
+  }
+
+  Future<void> processQuickTask() async {
+    final text = quickTaskController.text.trim();
+    if (text.isEmpty) return;
+
+    Get.back();
+    
+    nameController.text = text;
+    quickTaskController.clear();
+
+    AppAlerts.success(
+        message: "AI is analyzing your task",
+        title: "Processing...",
+        color: AppColors.primary.withValues(alpha: 0.5)
+    );
+
+    await handleChatSubmission(text);
+    
+    AppAlerts.success(message: "Task added to your list.");
+    
+    resetStateController();
   }
 }

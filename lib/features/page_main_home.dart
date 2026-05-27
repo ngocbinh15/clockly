@@ -13,45 +13,45 @@ import 'analys/view/page_analys.dart';
 import 'task_home/widgets/custom_bottom_nav.dart';
 
 class PageMainHome extends GetView<TaskHomeController> {
-  const PageMainHome({super.key});
+	const PageMainHome({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Obx(() {
-      final isDark = ThemeHelper.isDark;
+	@override
+	Widget build(BuildContext context) {
+		return Obx(() {
+			final isDark = ThemeHelper.isDark;
 
-      return Scaffold(
-        backgroundColor: AppColors.background,
-        body: IndexedStack(
-          index: controller.bottomNavIndex.value,
-          children: [
-            PageTask(),
-            PageCalendar(),
-            PageAnalys(),
-            PageLeaderBoard(),
-          ],
-        ),
+			return Scaffold(
+				backgroundColor: AppColors.background,
+				body: IndexedStack(
+					index: controller.bottomNavIndex.value,
+					children: [
+						PageTask(),
+						PageCalendar(),
+						PageAnalys(),
+						PageLeaderBoard(),
+					],
+				),
 
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            controller.resetStateController();
+				floatingActionButton: FloatingActionButton(
+					onPressed: () {
+						controller.resetStateController();
 
-            BottomDialog.showAddTaskBottomSheet();
-          },
-          backgroundColor: AppColors.primary,
-          elevation: 8,
-          shape: const CircleBorder(),
-          child: HugeIcon(
-            icon: HugeIcons.strokeRoundedAdd01,
-            color: AppColors.secondary,
-            strokeWidth: 1.5,
-            size: 24,
-          ),
-        ),
-        floatingActionButtonLocation:
-            FloatingActionButtonLocation.miniCenterDocked,
-        bottomNavigationBar: CustomBottomNav(),
-      );
-    });
-  }
+						BottomDialog.showAddTaskBottomSheet();
+					},
+					backgroundColor: AppColors.primary,
+					elevation: 8,
+					shape: const CircleBorder(),
+					child: HugeIcon(
+						icon: HugeIcons.strokeRoundedAdd01,
+						color: AppColors.secondary,
+						strokeWidth: 1.5,
+						size: 24,
+					),
+				),
+				floatingActionButtonLocation:
+						FloatingActionButtonLocation.miniCenterDocked,
+				bottomNavigationBar: CustomBottomNav(),
+			);
+		});
+	}
 }
