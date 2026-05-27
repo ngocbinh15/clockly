@@ -26,13 +26,20 @@ class FriendRequestsBottomSheet extends GetView<TeamController> {
         children: [
           Center(
             child: Container(
-              width: 50, height: 5,
-              decoration: BoxDecoration(color: AppColors.grey.withValues(alpha: 0.3), borderRadius: BorderRadius.circular(10)),
+              width: 50,
+              height: 5,
+              decoration: BoxDecoration(
+                color: AppColors.grey.withValues(alpha: 0.3),
+                borderRadius: BorderRadius.circular(10),
+              ),
             ),
           ),
           const SizedBox(height: AppSizes.p24),
 
-          Text("Friend Requests", style: GoogleFonts.inter(fontSize: 20, fontWeight: FontWeight.bold)),
+          Text(
+            "Friend Requests",
+            style: GoogleFonts.inter(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
           const SizedBox(height: AppSizes.p16),
 
           Obx(() {
@@ -40,13 +47,21 @@ class FriendRequestsBottomSheet extends GetView<TeamController> {
               return Padding(
                 padding: const EdgeInsets.all(32.0),
                 child: Center(
-                  child: Text("No pending requests.", style: GoogleFonts.inter(color: AppColors.grey, fontSize: 15)),
+                  child: Text(
+                    "No pending requests.",
+                    style: GoogleFonts.inter(
+                      color: AppColors.grey,
+                      fontSize: 15,
+                    ),
+                  ),
                 ),
               );
             }
 
             return ConstrainedBox(
-              constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.5),
+              constraints: BoxConstraints(
+                maxHeight: MediaQuery.of(context).size.height * 0.5,
+              ),
               child: ListView.builder(
                 shrinkWrap: true,
                 physics: const BouncingScrollPhysics(),
@@ -62,7 +77,9 @@ class FriendRequestsBottomSheet extends GetView<TeamController> {
                     decoration: BoxDecoration(
                       color: AppColors.background,
                       borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: AppColors.grey.withValues(alpha: 0.1)),
+                      border: Border.all(
+                        color: AppColors.grey.withValues(alpha: 0.1),
+                      ),
                     ),
                     child: Row(
                       children: [
@@ -72,23 +89,51 @@ class FriendRequestsBottomSheet extends GetView<TeamController> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(user.fullName, style: GoogleFonts.inter(fontWeight: FontWeight.w600, fontSize: 15)),
-                              Text(user.email, style: GoogleFonts.inter(color: AppColors.third, fontSize: 13)),
+                              Text(
+                                user.fullName,
+                                style: GoogleFonts.inter(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 15,
+                                ),
+                              ),
+                              Text(
+                                user.email,
+                                style: GoogleFonts.inter(
+                                  color: AppColors.third,
+                                  fontSize: 13,
+                                ),
+                              ),
                             ],
                           ),
                         ),
 
                         IconButton(
-                          onPressed: () => controller.declineRequest(friendshipId),
-                          style: IconButton.styleFrom(backgroundColor: Colors.red.withValues(alpha: 0.1)),
-                          icon: const HugeIcon(icon: HugeIcons.strokeRoundedCancel01, color: Colors.red, size: 20),
+                          onPressed: () =>
+                              controller.declineRequest(friendshipId),
+                          style: IconButton.styleFrom(
+                            backgroundColor: Colors.red.withValues(alpha: 0.1),
+                          ),
+                          icon: const HugeIcon(
+                            icon: HugeIcons.strokeRoundedCancel01,
+                            color: Colors.red,
+                            size: 20,
+                          ),
                         ),
                         const SizedBox(width: 8),
 
                         IconButton(
-                          onPressed: () => controller.acceptRequest(friendshipId),
-                          style: IconButton.styleFrom(backgroundColor: Colors.green.withValues(alpha: 0.1)),
-                          icon: const HugeIcon(icon: HugeIcons.strokeRoundedTick01, color: Colors.green, size: 20),
+                          onPressed: () =>
+                              controller.acceptRequest(friendshipId),
+                          style: IconButton.styleFrom(
+                            backgroundColor: Colors.green.withValues(
+                              alpha: 0.1,
+                            ),
+                          ),
+                          icon: const HugeIcon(
+                            icon: HugeIcons.strokeRoundedTick01,
+                            color: Colors.green,
+                            size: 20,
+                          ),
                         ),
                       ],
                     ),

@@ -7,7 +7,7 @@ import '../../../core/constants/app_size.dart';
 import '../../../core/theme/app_colors.dart';
 import 'information_card.dart';
 
-class ListInfomation extends GetView <AnalysisController> {
+class ListInfomation extends GetView<AnalysisController> {
   const ListInfomation({super.key});
 
   @override
@@ -17,32 +17,32 @@ class ListInfomation extends GetView <AnalysisController> {
         children: [
           Expanded(
             child: CustomInformationCard(
-                icon: HugeIcons.strokeRoundedCheckmarkCircle02,
-                taskCount: controller.doneCount.value,
-                label: "Completed",
-                color: AppColors.contentDone
+              icon: HugeIcons.strokeRoundedCheckmarkCircle02,
+              taskCount: controller.doneCount.value,
+              label: "Completed",
+              color: AppColors.contentDone,
             ),
           ),
 
-          SizedBox(width: AppSizes.p16,),
+          SizedBox(width: AppSizes.p16),
 
           Expanded(
             child: CustomInformationCard(
-                icon: HugeIcons.strokeRoundedClock01,
-                taskCount: controller.pendingCount.value,
-                label: "Pending",
-                color: AppColors.contentPending
+              icon: HugeIcons.strokeRoundedClock01,
+              taskCount: controller.pendingCount.value,
+              label: "Pending",
+              color: AppColors.contentPending,
             ),
           ),
 
-          SizedBox(width: AppSizes.p16,),
+          SizedBox(width: AppSizes.p16),
 
           Expanded(
             child: CustomInformationCard(
-                icon: HugeIcons.strokeRoundedAlert01,
-                taskCount: controller.lateCount.value,
-                label: "Late",
-                color: AppColors.contentLate
+              icon: HugeIcons.strokeRoundedAlert01,
+              taskCount: controller.lateCount.value,
+              label: "Late",
+              color: AppColors.contentLate,
             ),
           ),
         ],

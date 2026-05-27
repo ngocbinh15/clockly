@@ -15,44 +15,44 @@ class PageLeaderBoard extends GetView<TeamController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      final isDark = ThemeHelper.isDark;
+      final _ = ThemeHelper.isDark;
       return Scaffold(
         backgroundColor: AppColors.background,
-      body: SafeArea(
-        bottom: false,
-        child: RefreshIndicator(
-          onRefresh: () async {
-            await controller.fetchFriendList();
-          },
-          color: AppColors.secondary,
-          backgroundColor: AppColors.primary,
-          child: SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            child: Padding(
-              padding: const EdgeInsets.only(
-                top: AppSizes.p12,
-                left: AppSizes.p24,
-                right: AppSizes.p24,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  LeaderboardHeader(),
+        body: SafeArea(
+          bottom: false,
+          child: RefreshIndicator(
+            onRefresh: () async {
+              await controller.fetchFriendList();
+            },
+            color: AppColors.secondary,
+            backgroundColor: AppColors.primary,
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  top: AppSizes.p12,
+                  left: AppSizes.p24,
+                  right: AppSizes.p24,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    LeaderboardHeader(),
 
-                  const SizedBox(height: AppSizes.p24),
+                    const SizedBox(height: AppSizes.p24),
 
-                  const LeaderboardSearchBar(),
+                    const LeaderboardSearchBar(),
 
-                  const SizedBox(height: AppSizes.p24),
+                    const SizedBox(height: AppSizes.p24),
 
-                  LeaderBoard()
-                ],
+                    LeaderBoard(),
+                  ],
+                ),
               ),
             ),
           ),
         ),
-      ),
-    );
+      );
     });
   }
 }

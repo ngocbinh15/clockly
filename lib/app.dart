@@ -5,20 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class MyApp extends StatelessWidget {
-	final ThemeMode initialThemeMode;
-	const MyApp({super.key, required this.initialThemeMode});
+  final ThemeMode initialThemeMode;
+  const MyApp({super.key, required this.initialThemeMode});
 
-	@override
-	Widget build(BuildContext context) {
-		return GetMaterialApp(
-			title: 'Clockly',
-			theme: AppTheme.light,
+  @override
+  Widget build(BuildContext context) {
+    return GetMaterialApp(
+      title: 'Clockly',
+      theme: AppTheme.light,
 
-			initialRoute: AppRoutes.splash,
-			getPages: AppPages.routes,
-			debugShowCheckedModeBanner: false,
-			darkTheme: AppTheme.dark,
-			themeMode: initialThemeMode,
-		);
-	}
+      initialRoute: AppRoutes.splash,
+      getPages: AppPages.routes,
+      debugShowCheckedModeBanner: false,
+      darkTheme: AppTheme.dark,
+      themeMode: initialThemeMode,
+    );
+  }
 }

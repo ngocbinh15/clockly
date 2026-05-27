@@ -6,6 +6,6 @@ class SettingsBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() => SettingsController());
-    Get.lazyPut(() => OptionPlanController(),);
+    Get.lazyPut(() => OptionPlanController());
   }
 }

@@ -6,10 +6,15 @@ import '../../../core/constants/app_size.dart';
 import 'main_icon.dart';
 
 class HeadingAuth extends StatelessWidget {
-  HeadingAuth({super.key, required this.icon, required this.heading, required this.title});
+  const HeadingAuth({
+    super.key,
+    required this.icon,
+    required this.heading,
+    required this.title,
+  });
 
-  String heading, title;
-  final icon;
+  final String heading, title;
+  final dynamic icon;
 
   @override
   Widget build(BuildContext context) {

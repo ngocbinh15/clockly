@@ -47,7 +47,9 @@ class AppearanceOption extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: isSelected
                         ? AppColors.primary
-                        : (isDark ? Colors.grey.shade800 : Colors.grey.shade100),
+                        : (isDark
+                              ? Colors.grey.shade800
+                              : Colors.grey.shade100),
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
@@ -64,7 +66,9 @@ class AppearanceOption extends StatelessWidget {
                     title,
                     style: GoogleFonts.inter(
                       fontSize: 16,
-                      fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+                      fontWeight: isSelected
+                          ? FontWeight.w700
+                          : FontWeight.w500,
                       color: isDark ? Colors.white : Colors.black87,
                     ),
                   ),
@@ -82,7 +86,9 @@ class AppearanceOption extends StatelessWidget {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: isDark ? Colors.grey.shade700 : Colors.grey.shade300,
+                        color: isDark
+                            ? Colors.grey.shade700
+                            : Colors.grey.shade300,
                         width: 2,
                       ),
                     ),

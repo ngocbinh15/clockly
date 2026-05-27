@@ -4,7 +4,7 @@ import 'package:clockly/core/constants/app_size.dart';
 import 'package:clockly/core/theme/app_colors.dart';
 import 'package:clockly/core/utils/theme_helper.dart';
 
-import 'quick_task_header.dart'; 
+import 'quick_task_header.dart';
 import 'quick_task_input.dart';
 
 class QuickTaskDialog extends StatelessWidget {
@@ -17,9 +17,7 @@ class QuickTaskDialog extends StatelessWidget {
       final bgColor = isDark ? AppColors.secondary : Colors.white;
 
       return Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(24),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
         elevation: 10,
         shadowColor: Colors.black.withValues(alpha: 0.1),
         backgroundColor: bgColor,

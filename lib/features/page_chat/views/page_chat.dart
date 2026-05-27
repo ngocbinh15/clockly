@@ -14,7 +14,7 @@ class PageChat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      final isDark = ThemeHelper.isDark;
+      final _ = ThemeHelper.isDark;
       return Scaffold(
         backgroundColor: AppColors.background,
         body: SafeArea(
@@ -36,17 +36,17 @@ class PageChat extends StatelessWidget {
 
                 Expanded(
                   child: SingleChildScrollView(
-                    padding: const EdgeInsets.symmetric(horizontal: AppSizes.p24),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppSizes.p24,
+                    ),
                     child: const MainChatBody(),
                   ),
                 ),
 
                 Padding(
-                  padding: const EdgeInsets.only(
-                    bottom: AppSizes.p12,
-                  ),
+                  padding: const EdgeInsets.only(bottom: AppSizes.p12),
                   child: const CustomMessagerBar(),
-                )
+                ),
               ],
             ),
           ),

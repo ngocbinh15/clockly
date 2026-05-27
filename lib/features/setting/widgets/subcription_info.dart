@@ -17,18 +17,20 @@ class SubcriptionInfo extends GetView<OptionPlanController> {
       bool isChoose = controller.isChoose.value == index;
 
       return Padding(
-        padding: const EdgeInsets.only(bottom: 14.0), 
+        padding: const EdgeInsets.only(bottom: 14.0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Icon(
-              isChoose ? Icons.check_box_rounded : Icons.check_box_outline_blank_rounded,
+              isChoose
+                  ? Icons.check_box_rounded
+                  : Icons.check_box_outline_blank_rounded,
               color: isChoose ? AppColors.primary : Colors.grey.shade400,
               size: 22,
             ),
-            
-            const SizedBox(width: 12), 
-            
+
+            const SizedBox(width: 12),
+
             Expanded(
               child: Text(
                 name,

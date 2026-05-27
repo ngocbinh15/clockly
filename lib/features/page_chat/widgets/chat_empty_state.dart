@@ -52,13 +52,19 @@ class ChatEmptyState extends GetView<TaskHomeController> {
                   height: 1.5,
                 ),
               ),
-              const SizedBox(height: 5,),
+              const SizedBox(height: 5),
               const SizedBox(height: AppSizes.p32),
               _buildSuggestionChip("📅 Meeting next Monday at 9 AM", isDark),
               const SizedBox(height: AppSizes.p12),
-              _buildSuggestionChip("🏋️‍♂️ Hit the gym tomorrow evening", isDark),
+              _buildSuggestionChip(
+                "🏋️‍♂️ Hit the gym tomorrow evening",
+                isDark,
+              ),
               const SizedBox(height: AppSizes.p12),
-              _buildSuggestionChip("📖 Read 2 chapters of Flutter book", isDark),
+              _buildSuggestionChip(
+                "📖 Read 2 chapters of Flutter book",
+                isDark,
+              ),
             ],
           ),
         ),
@@ -75,17 +81,18 @@ class ChatEmptyState extends GetView<TaskHomeController> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: BoxDecoration(
-            color: AppColors.secondary,
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: AppColors.grey.withValues(alpha: isDark ? 0.15 : 0.3)),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.03),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
-              )
-            ],
-
+          color: AppColors.secondary,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: AppColors.grey.withValues(alpha: isDark ? 0.15 : 0.3),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.03),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
         ),
         child: Text(
           text,

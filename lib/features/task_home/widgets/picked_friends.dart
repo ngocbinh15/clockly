@@ -11,102 +11,111 @@ import 'package:clockly/core/utils/theme_helper.dart';
 import '../../leader_board/controller/team_controller.dart';
 
 class PickedFriends extends StatelessWidget {
-	PickedFriends({super.key});
+  PickedFriends({super.key});
 
-	final teamLogic = Get.find<TeamController>();
-	final taskLogic = Get.find<TaskHomeController>();
+  final teamLogic = Get.find<TeamController>();
+  final taskLogic = Get.find<TaskHomeController>();
 
-	@override
-	Widget build(BuildContext context) {
-		return Column(
-			crossAxisAlignment: CrossAxisAlignment.start,
-			children: [
-				TextTitleAddTask(text: "Assign to"),
-				const SizedBox(height: AppSizes.p12),
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        TextTitleAddTask(text: "Assign to"),
+        const SizedBox(height: AppSizes.p12),
 
-				SingleChildScrollView(
-					scrollDirection: Axis.horizontal,
-					child: Obx(() {
-						if (teamLogic.friendList.isEmpty) {
-							return Text(
-								"No friends found.",
-								style: GoogleFonts.inter(color: AppColors.grey),
-							);
-						}
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Obx(() {
+            if (teamLogic.friendList.isEmpty) {
+              return Text(
+                "No friends found.",
+                style: GoogleFonts.inter(color: AppColors.grey),
+              );
+            }
 
-						return Row(
-							crossAxisAlignment: CrossAxisAlignment.start,
-							children: teamLogic.friendList.map((user) {
+            return Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: teamLogic.friendList.map((user) {
+                final isSelected = taskLogic.selectedMemberIds.contains(
+                  user.id,
+                );
 
-								final isSelected = taskLogic.selectedMemberIds.contains(user.id);
+                final shortName = user.fullName.split(' ').last;
 
-								final shortName = user.fullName.split(' ').last;
+                return GestureDetector(
+                  onTap: () {
+                    taskLogic.toggleMemberSelection(user.id);
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.only(right: AppSizes.p16),
+                    width: 60,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(3),
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                              ),
+                              child: Avatar(avatarURL: user.avatarUrl),
+                            ),
 
-								return GestureDetector(
-									onTap: () {
-										taskLogic.toggleMemberSelection(user.id);
-									},
-									child: Container(
-										margin: const EdgeInsets.only(right: AppSizes.p16),
-										width: 60,
-										child: Column(
-											mainAxisSize: MainAxisSize.min,
-											children: [
-												Stack(
-													alignment: Alignment.center,
-													children: [
-														Container(
-															padding: const EdgeInsets.all(3),
-															decoration: const BoxDecoration(
-																shape: BoxShape.circle,
-															),
-															child: Avatar(avatarURL: user.avatarUrl),
-														),
+                            if (isSelected)
+                              Positioned.fill(
+                                child: Container(
+                                  margin: const EdgeInsets.all(3),
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: AppColors.primary.withValues(
+                                      alpha: 0.4,
+                                    ),
+                                  ),
+                                  child: const Center(
+                                    child: Icon(
+                                      Icons.check,
+                                      color: Colors.white,
+                                      size: 30,
+                                      weight: 4,
+                                      fontWeight: FontWeight.w800,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
 
-														if (isSelected)
-															Positioned.fill(
-																child: Container(
-																	margin: const EdgeInsets.all(3),
-																	decoration: BoxDecoration(
-																		shape: BoxShape.circle,
-																		color: AppColors.primary.withValues(alpha: 0.4),
-																	),
-																	child: const Center(
-																		child: Icon(
-																			Icons.check,
-																			color: Colors.white,
-																			size: 30,
-																			weight: 4,
-																			fontWeight: FontWeight.w800,
-																		),
-																	),
-																),
-															),
-													],
-												),
+                        const SizedBox(height: AppSizes.p4),
 
-												const SizedBox(height: AppSizes.p4),
-
-												Text(
-													shortName,
-													textAlign: TextAlign.center,
-													maxLines: 1,
-													overflow: TextOverflow.ellipsis,
-													style: GoogleFonts.inter(
-														fontSize: 12,
-														color: isSelected ? AppColors.primary : (ThemeHelper.isDark ? Colors.white70 : Colors.black87),
-														fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-													),
-												),
-											],
-										),
-									),
-								);
-							}).toList(),
-						);
-					}),
-				),
-			],
-		);
-	}
+                        Text(
+                          shortName,
+                          textAlign: TextAlign.center,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: GoogleFonts.inter(
+                            fontSize: 12,
+                            color: isSelected
+                                ? AppColors.primary
+                                : (ThemeHelper.isDark
+                                      ? Colors.white70
+                                      : Colors.black87),
+                            fontWeight: isSelected
+                                ? FontWeight.w600
+                                : FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }).toList(),
+            );
+          }),
+        ),
+      ],
+    );
+  }
 }

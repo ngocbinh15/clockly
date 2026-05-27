@@ -16,13 +16,13 @@ class ButtonLogout extends GetView<SettingsController> {
     return GestureDetector(
       onTap: () {
         CustomDialog.confirmDialog(
-            title: "Log Out?",
-            content: "Are you sure you want to log out?",
-            cancel: "Cancel",
-            confirm: "Log Out",
-            onConfirm: () => controller.authService.logout(),
+          title: "Log Out?",
+          content: "Are you sure you want to log out?",
+          cancel: "Cancel",
+          confirm: "Log Out",
+          onConfirm: () => controller.authService.logout(),
         );
-        },
+      },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: AppSizes.p16),
         decoration: BoxDecoration(
@@ -37,7 +37,7 @@ class ButtonLogout extends GetView<SettingsController> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             HugeIcon(
-                icon: HugeIcons.strokeRoundedLogout02,
+              icon: HugeIcons.strokeRoundedLogout02,
               color: AppColors.fouth,
             ),
             const SizedBox(width: AppSizes.p8),

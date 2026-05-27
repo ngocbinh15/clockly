@@ -13,39 +13,39 @@ import 'package:hugeicons/hugeicons.dart';
 class FormSignUp extends StatelessWidget {
   FormSignUp({super.key});
 
-  final GlobalKey <FormState> _formState = GlobalKey <FormState>();
-  final controller = Get.find <SignUpController>();
+  final GlobalKey<FormState> _formState = GlobalKey<FormState>();
+  final controller = Get.find<SignUpController>();
 
   @override
   Widget build(BuildContext context) {
-    return Form (
+    return Form(
       key: _formState,
       autovalidateMode: AutovalidateMode.disabled,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text ("Full Name", style: AppTextStyles.title,),
-          SizedBox(height: AppSizes.p12,),
+          Text("Full Name", style: AppTextStyles.title),
+          SizedBox(height: AppSizes.p12),
           CustomTextField(
-              txtController: controller.nameController,
-              hintText: "John Doe",
-              prefixIcon: HugeIcons.strokeRoundedUserSquare,
-            validator: (p0) =>  Validate.validName(p0),
+            txtController: controller.nameController,
+            hintText: "John Doe",
+            prefixIcon: HugeIcons.strokeRoundedUserSquare,
+            validator: (p0) => Validate.validName(p0),
           ),
 
-          SizedBox(height: AppSizes.p24,),
-          Text ("Email", style: AppTextStyles.title,),
-          SizedBox(height: AppSizes.p12,),
+          SizedBox(height: AppSizes.p24),
+          Text("Email", style: AppTextStyles.title),
+          SizedBox(height: AppSizes.p12),
           CustomTextField(
-              txtController: controller.emailController,
-              hintText: "john@gmail.com",
-              prefixIcon: HugeIcons.strokeRoundedMail01,
+            txtController: controller.emailController,
+            hintText: "john@gmail.com",
+            prefixIcon: HugeIcons.strokeRoundedMail01,
             validator: (p0) => Validate.validEmail(p0),
           ),
 
-          SizedBox(height: AppSizes.p24,),
-          Text ("Password", style: AppTextStyles.title,),
-          SizedBox(height: AppSizes.p12,),
+          SizedBox(height: AppSizes.p24),
+          Text("Password", style: AppTextStyles.title),
+          SizedBox(height: AppSizes.p12),
           CustomTextField(
             txtController: controller.passwordController,
             hintText: "••••••••",
@@ -54,18 +54,21 @@ class FormSignUp extends StatelessWidget {
             validator: (p0) => Validate.validPassword(p0),
           ),
 
-          SizedBox(height: AppSizes.p24,),
-          Text ("Confirm Password", style: AppTextStyles.title,),
-          SizedBox(height: AppSizes.p12,),
+          SizedBox(height: AppSizes.p24),
+          Text("Confirm Password", style: AppTextStyles.title),
+          SizedBox(height: AppSizes.p12),
           CustomTextField(
             txtController: controller.confirmController,
             hintText: "••••••••",
             prefixIcon: HugeIcons.strokeRoundedLockPassword,
             isPassword: true,
-            validator: (p0) => Validate.confirmPassword(p0, controller.passwordController.text),
+            validator: (p0) => Validate.confirmPassword(
+              p0,
+              controller.passwordController.text,
+            ),
           ),
 
-          SizedBox(height: AppSizes.p24,),
+          SizedBox(height: AppSizes.p24),
           PrimaryButton(
             text: "Sign Up",
             suffixIcon: HugeIcons.strokeRoundedArrowRight01,
@@ -76,12 +79,12 @@ class FormSignUp extends StatelessWidget {
               }
             },
           ),
-          SizedBox(height: AppSizes.p24,),
+          SizedBox(height: AppSizes.p24),
           BottomButton(
-              leftText: "Already have an account?",
-              buttonText: "Log In",
-              onTap: () => Get.offAllNamed(AppRoutes.login),
-          )
+            leftText: "Already have an account?",
+            buttonText: "Log In",
+            onTap: () => Get.offAllNamed(AppRoutes.login),
+          ),
         ],
       ),
     );

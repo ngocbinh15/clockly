@@ -46,7 +46,6 @@ class EditProfileController extends GetxController {
       if (image != null) {
         selectedImagePath.value = image.path;
       }
-
     } catch (e) {
       AuthHelper.hideLoading();
 
@@ -65,7 +64,8 @@ class EditProfileController extends GetxController {
       if (selectedImagePath.value.isNotEmpty) {
         final File file = File(selectedImagePath.value);
         final fileExtension = selectedImagePath.value.split('.').last;
-        final fileName = '${user.id}_${DateTime.now().millisecondsSinceEpoch}.$fileExtension';
+        final fileName =
+            '${user.id}_${DateTime.now().millisecondsSinceEpoch}.$fileExtension';
 
         await supabase.storage.from('images').upload(fileName, file);
         finalAvatarUrl = supabase.storage.from('images').getPublicUrl(fileName);
@@ -74,9 +74,9 @@ class EditProfileController extends GetxController {
       await supabase
           .from('profiles')
           .update({
-        'full_name': nameController.text.trim(),
-        'avatar_url': finalAvatarUrl,
-      })
+            'full_name': nameController.text.trim(),
+            'avatar_url': finalAvatarUrl,
+          })
           .eq('id', user.id);
 
       if (Get.isRegistered<SettingsController>()) {
@@ -87,7 +87,6 @@ class EditProfileController extends GetxController {
       AuthHelper.hideLoading();
       Get.back();
       AppAlerts.success(message: AppMessages.updateSuccess);
-
     } catch (e) {
       AuthHelper.hideLoading();
       AppAlerts.error(message: e.toString());

@@ -1,8 +1,6 @@
 import 'package:clockly/features/task_home/controllers/task_home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:clockly/core/utils/theme_helper.dart';
 
@@ -33,11 +31,11 @@ class HeadingChat extends StatelessWidget {
 
             Positioned(
               left: 0,
-               child: GestureDetector(
+              child: GestureDetector(
                 onTap: () {
                   Get.back();
                   Get.find<TaskHomeController>().resetChatState();
-                  },
+                },
                 child: Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(

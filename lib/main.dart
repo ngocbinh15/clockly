@@ -14,83 +14,79 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'app.dart';
 import 'core/services/auth_service.dart';
 
-
 @pragma('vm:entry-point')
 Tile onTileClicked(Tile tile) {
-	const intent = AndroidIntent(
-		action: 'action_view', 
-		data: 'clockly://addtask',
-		package: 'vn.edu.ntu.clockly.clockly', 
-		flags: <int>[Flag.FLAG_ACTIVITY_NEW_TASK], 
-	);
-	
-	intent.launch();
+  const intent = AndroidIntent(
+    action: 'action_view',
+    data: 'clockly://addtask',
+    package: 'vn.edu.ntu.clockly.clockly',
+    flags: <int>[Flag.FLAG_ACTIVITY_NEW_TASK],
+  );
 
-	tile.tileStatus = TileStatus.inactive; 
-	tile.label = "New Task";
-	
-	return tile;
+  intent.launch();
+
+  tile.tileStatus = TileStatus.inactive;
+  tile.label = "New Task";
+
+  return tile;
 }
-
 
 @pragma('vm:entry-point')
 Tile onTileAdded(Tile tile) {
-	tile.label = "New Task";
-	tile.tileStatus = TileStatus.inactive; 
-	return tile;
+  tile.label = "New Task";
+  tile.tileStatus = TileStatus.inactive;
+  return tile;
 }
 
 @pragma('vm:entry-point')
 void onTileRemoved() {
-	debugPrint("Người dùng đã gỡ Tile Clockly");
+  debugPrint("Người dùng đã gỡ Tile Clockly");
 }
 
-
 Future<void> main() async {
-	WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
 
-	QuickSettings.setup(
-		onTileClicked: onTileClicked,
-		onTileAdded: onTileAdded,
-		onTileRemoved: onTileRemoved,
-	);
+  QuickSettings.setup(
+    onTileClicked: onTileClicked,
+    onTileAdded: onTileAdded,
+    onTileRemoved: onTileRemoved,
+  );
 
+  await dotenv.load(fileName: ".env");
 
-	await dotenv.load(fileName: ".env");
+  await Supabase.initialize(
+    url: dotenv.env['URL_SUPABASE'] ?? '',
+    anonKey: dotenv.env['ANON_KEY'] ?? '',
+  );
 
-	await Supabase.initialize(
-	url: dotenv.env['URL_SUPABASE'] ?? '',
-	anonKey: dotenv.env['ANON_KEY'] ?? '',
-	);
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.light,
+      statusBarBrightness: Brightness.dark,
+    ),
+  );
 
-	SystemChrome.setSystemUIOverlayStyle(
-	const SystemUiOverlayStyle(
-		statusBarColor: Colors.transparent,
-		statusBarIconBrightness: Brightness.light,
-		statusBarBrightness: Brightness.dark,
-	),
-	);
+  // Load saved theme preference
+  final prefs = await SharedPreferences.getInstance();
+  final savedThemeStr = prefs.getString('theme_mode');
+  final initialThemeMode = ThemeHelper.stringToThemeMode(savedThemeStr);
 
-	// Load saved theme preference
-	final prefs = await SharedPreferences.getInstance();
-	final savedThemeStr = prefs.getString('theme_mode');
-	final initialThemeMode = ThemeHelper.stringToThemeMode(savedThemeStr);
+  // Set static isDark variable for global non-context colors
+  if (initialThemeMode == ThemeMode.dark) {
+    ThemeHelper.isDark = true;
+  } else if (initialThemeMode == ThemeMode.light) {
+    ThemeHelper.isDark = false;
+  } else {
+    ThemeHelper.isDark =
+        (WidgetsBinding.instance.platformDispatcher.platformBrightness ==
+        Brightness.dark);
+  }
 
-	// Set static isDark variable for global non-context colors
-	if (initialThemeMode == ThemeMode.dark) {
-	ThemeHelper.isDark = true;
-	} else if (initialThemeMode == ThemeMode.light) {
-	ThemeHelper.isDark = false;
-	} else {
-	ThemeHelper.isDark = (WidgetsBinding.instance.platformDispatcher.platformBrightness == Brightness.dark);
-	}
+  await Get.putAsync<AppInfoService>(() => AppInfoService().init());
 
-	await Get.putAsync<AppInfoService>(
-		() => AppInfoService().init(),
-	);
-	
-	Get.put(AuthService());
+  Get.put(AuthService());
 
-	Get.put (AiService());
-	runApp(MyApp(initialThemeMode: initialThemeMode));
+  Get.put(AiService());
+  runApp(MyApp(initialThemeMode: initialThemeMode));
 }

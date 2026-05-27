@@ -4,10 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:clockly/core/theme/app_colors.dart';
 import 'package:clockly/core/utils/theme_helper.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'settings_list_tile.dart';
 
-class SupportSection extends GetView <SettingsController> {
+class SupportSection extends GetView<SettingsController> {
   const SupportSection({super.key});
 
   @override
@@ -27,16 +26,20 @@ class SupportSection extends GetView <SettingsController> {
             isExternalLink: true,
             onTap: () => controller.launchSupportEmail(),
           ),
-          Divider(height: 1, indent: 16, endIndent: 16, color: ThemeHelper.isDark ? Colors.grey.withValues(alpha: 0.15) : const Color(0xFFEEEEEE)),
+          Divider(
+            height: 1,
+            indent: 16,
+            endIndent: 16,
+            color: ThemeHelper.isDark
+                ? Colors.grey.withValues(alpha: 0.15)
+                : const Color(0xFFEEEEEE),
+          ),
           SettingsListTile(
             icon: Icons.lock_outline,
             iconColor: Colors.blueGrey,
             iconBgColor: Colors.blueGrey.withValues(alpha: 0.1),
             title: "Privacy & Terms",
-            onTap: () => Get.dialog(
-                QuickTaskDialog()
-            ),
-
+            onTap: () => Get.dialog(QuickTaskDialog()),
           ),
         ],
       ),

@@ -1,5 +1,4 @@
 import 'package:clockly/core/services/auth_service.dart';
-import 'package:clockly/features/auth/controllers/forgot_password_controller.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -9,7 +8,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../../routes/app_routes.dart';
 import 'auth_helper.dart';
 
-class OtpController extends GetxController{
+class OtpController extends GetxController {
   final otpErrorText = RxnString(null);
   final pinController = PinInputController();
   final supabase = Supabase.instance.client;
@@ -20,11 +19,7 @@ class OtpController extends GetxController{
       AuthHelper.showLoading();
 
       // TEST submit OTP
-      await authService.verifyOTP(
-        email.trim(),
-        otp,
-        type,
-      );
+      await authService.verifyOTP(email.trim(), otp, type);
       //
       // await Future.delayed(const Duration(seconds: 2));
       AuthHelper.hideLoading();
@@ -34,8 +29,7 @@ class OtpController extends GetxController{
       }
 
       _handleSuccess(type);
-
-    } on AuthException catch (e) {
+    } on AuthException catch (_) {
       AuthHelper.hideLoading();
       _handleOtpError("Invalid or expired code.");
     } catch (e) {
@@ -58,7 +52,11 @@ class OtpController extends GetxController{
     switch (type) {
       case OtpType.signup:
         await Get.find<AuthService>().logout();
-        CustomSnackbar.snackbar("Welcome!", "Your account is ready. You can now log in.", AppColors.green);
+        CustomSnackbar.snackbar(
+          "Welcome!",
+          "Your account is ready. You can now log in.",
+          AppColors.green,
+        );
         break;
 
       case OtpType.recovery:

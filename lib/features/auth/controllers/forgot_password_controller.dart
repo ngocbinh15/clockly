@@ -9,8 +9,8 @@ import '../../../core/services/auth_service.dart';
 import '../../../core/theme/app_colors.dart';
 import 'auth_helper.dart';
 
-class ForgotPasswordController extends GetxController{
-  final authService = Get.find <AuthService>();
+class ForgotPasswordController extends GetxController {
+  final authService = Get.find<AuthService>();
 
   final otpErrorText = RxnString(null);
   late PinInputController pinController;
@@ -18,7 +18,6 @@ class ForgotPasswordController extends GetxController{
   late TextEditingController emailController;
   late TextEditingController passwordController;
   late TextEditingController confirmPasswordController;
-
 
   @override
   void onInit() {
@@ -45,7 +44,7 @@ class ForgotPasswordController extends GetxController{
       AuthHelper.showLoading();
 
       //  TEST test submit OTP
-      await authService.sendPasswordReset (email);
+      await authService.sendPasswordReset(email);
       // await Future.delayed(const Duration(seconds: 2));
       tempEmail = email;
 
@@ -53,7 +52,6 @@ class ForgotPasswordController extends GetxController{
 
       AppAlerts.success(message: "OTP has been sent to your email");
       AuthHelper.dialogOTP(OtpType.recovery, email);
-
     } on AuthException catch (e) {
       AuthHelper.hideLoading();
       AppAlerts.error(message: "$e");
@@ -63,11 +61,15 @@ class ForgotPasswordController extends GetxController{
     }
   }
 
-  Future <void> resetPassword () async {
+  Future<void> resetPassword() async {
     try {
       await authService.resetPassword(passwordController.text.trim());
       authService.logout();
-      CustomSnackbar.snackbar("Welcome!", "Your account is ready.", AppColors.green);
+      CustomSnackbar.snackbar(
+        "Welcome!",
+        "Your account is ready.",
+        AppColors.green,
+      );
     } catch (e) {
       AppAlerts.error(message: "$e");
     }

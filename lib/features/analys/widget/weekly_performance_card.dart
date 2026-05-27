@@ -1,6 +1,6 @@
 import 'package:clockly/core/constants/app_size.dart';
 import 'package:clockly/core/theme/app_colors.dart';
-import 'package:clockly/features/analys/controller/analysis_controller.dart'; 
+import 'package:clockly/features/analys/controller/analysis_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,15 +15,20 @@ class WeeklyPerformanceCard extends GetView<AnalysisController> {
       final percent = controller.weeklyPercent.value;
       final filterText = controller.timeFilter.value;
 
-      String timeStr = filterText == 'Today' ? 'today' : (filterText == 'This Week' ? 'this week' : 'this month');
+      String timeStr = filterText == 'Today'
+          ? 'today'
+          : (filterText == 'This Week' ? 'this week' : 'this month');
 
-      String message = "You completed $percent% of your tasks $timeStr. Keep it up!";
+      String message =
+          "You completed $percent% of your tasks $timeStr. Keep it up!";
       if (percent == 100) {
         message = "Perfect! You completed all your tasks $timeStr. 🎉";
       } else if (percent < 50 && percent > 0) {
-        message = "You completed $percent% of your tasks. Let's push a bit harder! 💪";
+        message =
+            "You completed $percent% of your tasks. Let's push a bit harder! 💪";
       } else if (percent == 0) {
-        message = "You haven't completed any tasks $timeStr yet. Let's get started!";
+        message =
+            "You haven't completed any tasks $timeStr yet. Let's get started!";
       }
 
       return Container(

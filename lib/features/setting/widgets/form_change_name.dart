@@ -9,86 +9,83 @@ import 'package:hugeicons/hugeicons.dart';
 import '../../../core/constants/app_size.dart';
 import '../controller/edit_profile_controller.dart';
 
-class FormChangeName extends GetView <EditProfileController> {
+class FormChangeName extends GetView<EditProfileController> {
   FormChangeName({super.key});
 
-  final GlobalKey <FormState> _formState = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formState = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Form (
+        Form(
           key: _formState,
           autovalidateMode: AutovalidateMode.disabled,
           child: Column(
             children: [
-            TextFormField(
-            controller: controller.nameController,
-            decoration: InputDecoration(
-              hintText: "Full Name",
+              TextFormField(
+                controller: controller.nameController,
+                decoration: InputDecoration(
+                  hintText: "Full Name",
 
-              hintStyle: GoogleFonts.inter(
-                  color: Colors.grey,
-                  letterSpacing: 1
-              ),
-              filled: true,
-              fillColor: AppColors.secondary,
+                  hintStyle: GoogleFonts.inter(
+                    color: Colors.grey,
+                    letterSpacing: 1,
+                  ),
+                  filled: true,
+                  fillColor: AppColors.secondary,
 
-              prefixIcon: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: AppSizes.p16,
+                  prefixIcon: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: AppSizes.p16),
+                    child: HugeIcon(
+                      icon: HugeIcons.strokeRoundedUserSquare,
+                      color: const Color(0xFF64748B),
+                    ),
+                  ),
+
+                  prefixIconConstraints: const BoxConstraints(
+                    minWidth: 40,
+                    minHeight: 40,
+                  ),
+
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: const BorderSide(
+                      color: Color(0xFFCBD5E1),
+                      width: 1.5,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: const BorderSide(
+                      color: Color(0xFFCBD5E1),
+                      width: 1.5,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: const BorderSide(
+                      color: Color(0xFFCBD5E1),
+                      width: 1.5,
+                    ),
+                  ),
                 ),
-                child: HugeIcon(
-                  icon: HugeIcons.strokeRoundedUserSquare,
-                  color: const Color(0xFF64748B),
-                ),
+
+                validator: (value) => Validate.validName(value),
               ),
 
-              prefixIconConstraints:
-              const BoxConstraints(
-                minWidth: 40,
-                minHeight: 40,
-              ),
+              SizedBox(height: AppSizes.p32),
 
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(
-                  color: Color(0xFFCBD5E1),
-                  width: 1.5,
-                ),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(
-                  color: Color(0xFFCBD5E1),
-                  width: 1.5,
-                ),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(
-                  color: Color(0xFFCBD5E1),
-                  width: 1.5,
-                ),
-              ),
-            ),
-
-            validator: (value) =>  Validate.validName(value),
-          ),
-
-              SizedBox(height: AppSizes.p32,),
-
-              PrimaryButton (
+              PrimaryButton(
                 text: "Save Change",
-                onPressed: () async{
+                onPressed: () async {
                   if (_formState.currentState!.validate()) {
                     controller.saveProfile();
                     Get.focusScope?.unfocus();
                   }
                 },
-              )
+              ),
             ],
           ),
         ),

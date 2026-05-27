@@ -15,8 +15,7 @@ class PageCalendar extends GetView<CalendarController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      // Đăng ký phụ thuộc reactive cho thay đổi theme
-      final isDark = ThemeHelper.isDark;
+      final _ = ThemeHelper.isDark;
 
       return Scaffold(
         backgroundColor: AppColors.background,
@@ -39,19 +38,22 @@ class PageCalendar extends GetView<CalendarController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Calendar", style: GoogleFonts.inter(
-                      fontSize: 30,
-                      fontWeight: FontWeight.w700,
-                      letterSpacing: -1,
-                    )),
+                    Text(
+                      "Calendar",
+                      style: GoogleFonts.inter(
+                        fontSize: 30,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: -1,
+                      ),
+                    ),
                     const SizedBox(height: AppSizes.p24),
 
                     CustomTableCalendar(),
-                    SizedBox(height: AppSizes.p16,),
+                    SizedBox(height: AppSizes.p16),
 
-                    Divider(color: AppColors.grey.withValues(alpha: 0.3),),
+                    Divider(color: AppColors.grey.withValues(alpha: 0.3)),
 
-                    SizedBox(height: AppSizes.p16,),
+                    SizedBox(height: AppSizes.p16),
 
                     TodayTask(),
                   ],

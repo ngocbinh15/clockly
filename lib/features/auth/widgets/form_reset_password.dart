@@ -12,18 +12,18 @@ import '../validators/validate.dart';
 class FormResetPassword extends StatelessWidget {
   FormResetPassword({super.key});
 
-  final GlobalKey <FormState> _formState = GlobalKey <FormState>();
+  final GlobalKey<FormState> _formState = GlobalKey<FormState>();
   final controller = Get.find<ForgotPasswordController>();
 
   @override
   Widget build(BuildContext context) {
-    return Form (
+    return Form(
       key: _formState,
       autovalidateMode: AutovalidateMode.disabled,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Password", style: AppTextStyles.title,),
+          Text("Password", style: AppTextStyles.title),
           SizedBox(height: AppSizes.p12),
           CustomTextField(
             txtController: controller.passwordController,
@@ -34,14 +34,17 @@ class FormResetPassword extends StatelessWidget {
           ),
 
           SizedBox(height: AppSizes.p32),
-          Text("Confirm Password", style: AppTextStyles.title,),
+          Text("Confirm Password", style: AppTextStyles.title),
           SizedBox(height: AppSizes.p12),
           CustomTextField(
             txtController: controller.confirmPasswordController,
             hintText: "••••••••",
             prefixIcon: HugeIcons.strokeRoundedLockPassword,
             isPassword: true,
-            validator: (value) => Validate.confirmPassword(value, controller.passwordController.text),
+            validator: (value) => Validate.confirmPassword(
+              value,
+              controller.passwordController.text,
+            ),
           ),
           SizedBox(height: AppSizes.p32),
 

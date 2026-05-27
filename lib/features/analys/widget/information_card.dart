@@ -7,13 +7,19 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:clockly/core/utils/theme_helper.dart';
 
-class CustomInformationCard extends GetView <AnalysisController> {
-  CustomInformationCard({super.key, required this.icon, required this.taskCount, required this.label, required this.color});
+class CustomInformationCard extends GetView<AnalysisController> {
+  const CustomInformationCard({
+    super.key,
+    required this.icon,
+    required this.taskCount,
+    required this.label,
+    required this.color,
+  });
 
-  int taskCount;
-  String label;
-  dynamic icon;
-  Color color;
+  final int taskCount;
+  final String label;
+  final dynamic icon;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +35,7 @@ class CustomInformationCard extends GetView <AnalysisController> {
               color: Colors.black.withValues(alpha: 0.03),
               blurRadius: 10,
               offset: const Offset(0, 4),
-            )
+            ),
           ],
         ),
         child: Column(
@@ -40,29 +46,34 @@ class CustomInformationCard extends GetView <AnalysisController> {
               width: 45,
               decoration: BoxDecoration(
                 color: color.withValues(alpha: 0.3),
-                shape: BoxShape.circle
+                shape: BoxShape.circle,
               ),
               child: Center(
-                child: HugeIcon(
-                    icon: icon,
-                  color: color,
-                ),
+                child: HugeIcon(icon: icon, color: color),
               ),
             ),
 
-            SizedBox(height: AppSizes.p8,),
+            SizedBox(height: AppSizes.p8),
 
-            Text ("$taskCount", style: GoogleFonts.inter(
-              fontSize: 20,
-              fontWeight: FontWeight.w600,
-              color: isDark ? Colors.white : Colors.black87,
-            ),),
+            Text(
+              "$taskCount",
+              style: GoogleFonts.inter(
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+                color: isDark ? Colors.white : Colors.black87,
+              ),
+            ),
 
-            SizedBox(height: AppSizes.p8,),
+            SizedBox(height: AppSizes.p8),
 
-            Text(label, style: GoogleFonts.inter (
-              color: isDark ? Colors.white54 : Colors.black87.withValues(alpha: 0.5)
-            ),)
+            Text(
+              label,
+              style: GoogleFonts.inter(
+                color: isDark
+                    ? Colors.white54
+                    : Colors.black87.withValues(alpha: 0.5),
+              ),
+            ),
           ],
         ),
       );

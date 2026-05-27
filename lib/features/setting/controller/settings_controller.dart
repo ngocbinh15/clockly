@@ -7,7 +7,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 
-
 import '../../../core/components/app_alerts.dart';
 import '../../../core/constants/app_message.dart';
 import '../../../core/services/auth_service.dart';
@@ -67,7 +66,8 @@ class SettingsController extends GetxController {
       if (user == null) throw 'User not found';
 
       final fileExtension = image.path.split('.').last;
-      final fileName = '${user.id}_${DateTime.now().millisecondsSinceEpoch}.$fileExtension';
+      final fileName =
+          '${user.id}_${DateTime.now().millisecondsSinceEpoch}.$fileExtension';
 
       await supabase.storage.from('images').upload(fileName, file);
       final publicUrl = supabase.storage.from('images').getPublicUrl(fileName);
@@ -84,13 +84,11 @@ class SettingsController extends GetxController {
       Future.delayed(const Duration(milliseconds: 300), () {
         AppAlerts.success(message: AppMessages.avatarUpdated);
       });
-
     } catch (e) {
       AuthHelper.hideLoading();
       AppAlerts.error(message: e.toString());
     }
   }
-
 
   Future<void> checkNotificationStatus() async {
     isNotiEnabled.value = await Permission.notification.isGranted;
@@ -141,7 +139,9 @@ class SettingsController extends GetxController {
       } else {
         Get.changeThemeMode(ThemeMode.system);
         await prefs.remove('theme_mode');
-        ThemeHelper.isDark = (WidgetsBinding.instance.platformDispatcher.platformBrightness == Brightness.dark);
+        ThemeHelper.isDark =
+            (WidgetsBinding.instance.platformDispatcher.platformBrightness ==
+            Brightness.dark);
       }
     } catch (e) {
       AppAlerts.error(message: "Failed to save theme preference: $e");
@@ -150,8 +150,10 @@ class SettingsController extends GetxController {
 
   String? encodeQueryParameters(Map<String, String> params) {
     return params.entries
-        .map((MapEntry<String, String> e) =>
-    '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+        .map(
+          (MapEntry<String, String> e) =>
+              '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}',
+        )
         .join('&');
   }
 
@@ -169,13 +171,15 @@ class SettingsController extends GetxController {
       await launchUrl(emailLaunchUri, mode: LaunchMode.externalApplication);
     } catch (e) {
       final Uri webGmail = Uri.parse(
-          "https://mail.google.com/mail/?view=cm&fs=1&to=binhnguyenngoc.it@gmail.com&su=Support%20request"
+        "https://mail.google.com/mail/?view=cm&fs=1&to=binhnguyenngoc.it@gmail.com&su=Support%20request",
       );
 
       try {
         await launchUrl(webGmail, mode: LaunchMode.externalApplication);
       } catch (webError) {
-        AppAlerts.error(message: "Cannot open Email. Please check your internet or mail app.");
+        AppAlerts.error(
+          message: "Cannot open Email. Please check your internet or mail app.",
+        );
       }
     }
   }

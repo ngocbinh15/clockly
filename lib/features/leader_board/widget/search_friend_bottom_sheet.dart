@@ -26,7 +26,8 @@ class SearchFriendBottomSheet extends GetView<TeamController> {
           children: [
             Center(
               child: Container(
-                width: 50, height: 5,
+                width: 50,
+                height: 5,
                 decoration: BoxDecoration(
                   color: AppColors.grey.withValues(alpha: 0.3),
                   borderRadius: BorderRadius.circular(10),
@@ -34,30 +35,45 @@ class SearchFriendBottomSheet extends GetView<TeamController> {
               ),
             ),
             const SizedBox(height: AppSizes.p24),
-      
-            Text("Add New Friend", style: GoogleFonts.inter(fontSize: 20, fontWeight: FontWeight.bold)),
+
+            Text(
+              "Add New Friend",
+              style: GoogleFonts.inter(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             const SizedBox(height: AppSizes.p16),
-      
+
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
               decoration: BoxDecoration(
                 color: AppColors.background,
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: AppColors.grey.withValues(alpha: 0.1)),
+                border: Border.all(
+                  color: AppColors.grey.withValues(alpha: 0.1),
+                ),
               ),
               child: TextField(
                 autofocus: true,
                 decoration: InputDecoration(
                   hintText: "Enter name or email...",
-                  hintStyle: GoogleFonts.inter(color: AppColors.grey, fontSize: 14),
+                  hintStyle: GoogleFonts.inter(
+                    color: AppColors.grey,
+                    fontSize: 14,
+                  ),
                   border: InputBorder.none,
-                  icon: HugeIcon(icon: HugeIcons.strokeRoundedSearch01, color: AppColors.grey, size: 20),
+                  icon: HugeIcon(
+                    icon: HugeIcons.strokeRoundedSearch01,
+                    color: AppColors.grey,
+                    size: 20,
+                  ),
                 ),
                 onChanged: (value) => controller.searchGlobalUsers(value),
               ),
             ),
             const SizedBox(height: AppSizes.p16),
-      
+
             Obx(() {
               if (controller.isSearching.value) {
                 return const Padding(
@@ -65,21 +81,26 @@ class SearchFriendBottomSheet extends GetView<TeamController> {
                   child: Center(child: CircularProgressIndicator()),
                 );
               }
-      
+
               if (controller.searchResults.isEmpty) {
                 return Padding(
                   padding: const EdgeInsets.all(32.0),
                   child: Center(
                     child: Text(
                       "Find someone to compete with!",
-                      style: GoogleFonts.inter(color: AppColors.grey, fontSize: 14),
+                      style: GoogleFonts.inter(
+                        color: AppColors.grey,
+                        fontSize: 14,
+                      ),
                     ),
                   ),
                 );
               }
-      
+
               return ConstrainedBox(
-                constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.4),
+                constraints: BoxConstraints(
+                  maxHeight: MediaQuery.of(context).size.height * 0.4,
+                ),
                 child: ListView.builder(
                   padding: EdgeInsetsGeometry.zero,
                   shrinkWrap: true,
@@ -97,19 +118,38 @@ class SearchFriendBottomSheet extends GetView<TeamController> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(user.fullName, style: GoogleFonts.inter(fontWeight: FontWeight.w600, fontSize: 15)),
-                                Text(user.email, style: GoogleFonts.inter(color: AppColors.third, fontSize: 13)),
+                                Text(
+                                  user.fullName,
+                                  style: GoogleFonts.inter(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                                Text(
+                                  user.email,
+                                  style: GoogleFonts.inter(
+                                    color: AppColors.third,
+                                    fontSize: 13,
+                                  ),
+                                ),
                               ],
                             ),
                           ),
-      
+
                           IconButton(
-                            onPressed: () => controller.sendFriendRequest(user.id),
+                            onPressed: () =>
+                                controller.sendFriendRequest(user.id),
                             style: IconButton.styleFrom(
-                              backgroundColor: AppColors.primary.withValues(alpha: 0.1),
+                              backgroundColor: AppColors.primary.withValues(
+                                alpha: 0.1,
+                              ),
                             ),
-                            icon: HugeIcon(icon: HugeIcons.strokeRoundedUserAdd01, color: AppColors.primary, size: 20),
-                          )
+                            icon: HugeIcon(
+                              icon: HugeIcons.strokeRoundedUserAdd01,
+                              color: AppColors.primary,
+                              size: 20,
+                            ),
+                          ),
                         ],
                       ),
                     );

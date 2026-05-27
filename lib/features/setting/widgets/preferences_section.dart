@@ -24,32 +24,50 @@ class PreferencesSection extends GetView<SettingsController> {
         child: Column(
           children: [
             SettingsListTile(
-              icon: controller.isNotiEnabled.value ? Icons.notifications_active : Icons.notifications_none,
+              icon: controller.isNotiEnabled.value
+                  ? Icons.notifications_active
+                  : Icons.notifications_none,
               iconColor: Colors.deepOrange,
               iconBgColor: Colors.deepOrange.withValues(alpha: 0.1),
               title: "Notifications",
-              trailing: Text(controller.isNotiEnabled.value ? "On" : "Off", style: const TextStyle(color: Colors.grey, fontSize: 14)),
+              trailing: Text(
+                controller.isNotiEnabled.value ? "On" : "Off",
+                style: const TextStyle(color: Colors.grey, fontSize: 14),
+              ),
               onTap: () => controller.handleNotificationTap(),
             ),
 
-            Divider(height: 1, indent: 16, endIndent: 16, color: isDark ? Colors.grey.withValues(alpha: 0.15) : const Color(0xFFEEEEEE)),
+            Divider(
+              height: 1,
+              indent: 16,
+              endIndent: 16,
+              color: isDark
+                  ? Colors.grey.withValues(alpha: 0.15)
+                  : const Color(0xFFEEEEEE),
+            ),
 
             SettingsListTile(
               icon: Icons.palette_outlined,
               iconColor: Colors.deepPurple,
               iconBgColor: Colors.deepPurple.withValues(alpha: 0.1),
               title: "Appearance",
-              trailing: Text(controller.selectedAppearance.value, style: const TextStyle(color: Colors.grey, fontSize: 14)),
+              trailing: Text(
+                controller.selectedAppearance.value,
+                style: const TextStyle(color: Colors.grey, fontSize: 14),
+              ),
               onTap: () {
                 Get.bottomSheet(
                   Obx(() {
                     final isDarkSheet = ThemeHelper.isDark;
-                    final currentAppearance = controller.selectedAppearance.value;
+                    final currentAppearance =
+                        controller.selectedAppearance.value;
                     return Container(
                       padding: const EdgeInsets.only(top: 10, bottom: 24),
                       decoration: BoxDecoration(
                         color: AppColors.secondary,
-                        borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
+                        borderRadius: const BorderRadius.vertical(
+                          top: Radius.circular(28),
+                        ),
                       ),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
@@ -59,7 +77,9 @@ class PreferencesSection extends GetView<SettingsController> {
                             width: 40,
                             height: 5,
                             decoration: BoxDecoration(
-                              color: isDarkSheet ? Colors.grey.shade700 : Colors.grey.shade300,
+                              color: isDarkSheet
+                                  ? Colors.grey.shade700
+                                  : Colors.grey.shade300,
                               borderRadius: BorderRadius.circular(10),
                             ),
                           ),
@@ -73,25 +93,45 @@ class PreferencesSection extends GetView<SettingsController> {
                                 style: GoogleFonts.inter(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w800,
-                                  color: isDarkSheet ? Colors.white : Colors.black87,
+                                  color: isDarkSheet
+                                      ? Colors.white
+                                      : Colors.black87,
                                   letterSpacing: -0.5,
                                 ),
                               ),
                             ),
                           ),
                           const SizedBox(height: 8),
-                          AppearanceOption(title: "Light Mode", icon: Icons.wb_sunny_outlined, isSelected: currentAppearance == "Light", onTap: () {
+                          AppearanceOption(
+                            title: "Light Mode",
+                            icon: Icons.wb_sunny_outlined,
+                            isSelected: currentAppearance == "Light",
+                            onTap: () {
                               controller.changeAppearance("Light");
                               Get.back();
-                            }, isDark: isDarkSheet),
-                          AppearanceOption(title: "Dark Mode", icon: Icons.dark_mode_outlined, isSelected: currentAppearance == "Dark", onTap: () {
+                            },
+                            isDark: isDarkSheet,
+                          ),
+                          AppearanceOption(
+                            title: "Dark Mode",
+                            icon: Icons.dark_mode_outlined,
+                            isSelected: currentAppearance == "Dark",
+                            onTap: () {
                               controller.changeAppearance("Dark");
                               Get.back();
-                            }, isDark: isDarkSheet),
-                          AppearanceOption(title: "System default", icon: Icons.settings_suggest_outlined, isSelected: currentAppearance == "System", onTap: () {
+                            },
+                            isDark: isDarkSheet,
+                          ),
+                          AppearanceOption(
+                            title: "System default",
+                            icon: Icons.settings_suggest_outlined,
+                            isSelected: currentAppearance == "System",
+                            onTap: () {
                               controller.changeAppearance("System");
                               Get.back();
-                            }, isDark: isDarkSheet),
+                            },
+                            isDark: isDarkSheet,
+                          ),
                         ],
                       ),
                     );
@@ -101,14 +141,22 @@ class PreferencesSection extends GetView<SettingsController> {
               },
             ),
 
-            Divider(height: 1, indent: 16, endIndent: 16, color: isDark ? Colors.grey.withValues(alpha: 0.15) : const Color(0xFFEEEEEE)),
+            Divider(
+              height: 1,
+              indent: 16,
+              endIndent: 16,
+              color: isDark
+                  ? Colors.grey.withValues(alpha: 0.15)
+                  : const Color(0xFFEEEEEE),
+            ),
 
             SettingsListTile(
               icon: Icons.extension_outlined,
               iconColor: Colors.teal,
               iconBgColor: Colors.teal.withValues(alpha: 0.1),
               title: "Integrations",
-              onTap: () => AppAlerts.warning(message: AppMessages.featureComingSoon),
+              onTap: () =>
+                  AppAlerts.warning(message: AppMessages.featureComingSoon),
             ),
           ],
         ),

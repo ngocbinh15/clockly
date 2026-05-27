@@ -1,7 +1,7 @@
 import 'package:clockly/core/services/auth_service.dart';
 import 'package:get/get.dart';
 
-class SplashController extends GetxController{
+class SplashController extends GetxController {
   final authService = Get.find<AuthService>();
 
   @override

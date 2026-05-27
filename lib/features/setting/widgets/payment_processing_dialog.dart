@@ -30,21 +30,17 @@ class PaymentProcessingDialog extends GetView<OptionPlanController> {
                   ),
                 )
               else if (controller.paymentSuccess.value)
-                 Icon(
-                  Icons.check_circle_rounded,
-                  color: Colors.green,
-                  size: 70,
-                ),
-              
+                Icon(Icons.check_circle_rounded, color: Colors.green, size: 70),
+
               const SizedBox(height: 24),
-              
+
               Text(
                 controller.paymentStatus.value,
                 textAlign: TextAlign.center,
                 style: GoogleFonts.inter(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
-                  color: ThemeHelper.isDark? Colors.white : Colors.black54,
+                  color: ThemeHelper.isDark ? Colors.white : Colors.black54,
                 ),
               ),
 
@@ -52,12 +48,9 @@ class PaymentProcessingDialog extends GetView<OptionPlanController> {
                 const SizedBox(height: 12),
                 Text(
                   "Please do not close the app",
-                  style: GoogleFonts.inter(
-                    fontSize: 13,
-                    color: Colors.grey,
-                  ),
+                  style: GoogleFonts.inter(fontSize: 13, color: Colors.grey),
                 ),
-              ]
+              ],
             ],
           );
         }),

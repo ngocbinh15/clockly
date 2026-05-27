@@ -8,6 +8,6 @@ class LocalChatMessage {
     required this.text,
     required this.isSender,
     this.isTaskCard = false,
-    this.taskData
+    this.taskData,
   });
 }

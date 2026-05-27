@@ -8,9 +8,8 @@ import 'package:clockly/features/auth/splash/widget/loading_process.dart';
 import 'package:clockly/features/auth/splash/widget/main_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-class PageSplash extends GetView <SplashController> {
+class PageSplash extends GetView<SplashController> {
   const PageSplash({super.key});
 
   @override
@@ -19,7 +18,7 @@ class PageSplash extends GetView <SplashController> {
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        decoration:  BoxDecoration(
+        decoration: BoxDecoration(
           color: AppColors.background,
           gradient: RadialGradient(
             center: Alignment(0.0, -0.2),
@@ -36,17 +35,17 @@ class PageSplash extends GetView <SplashController> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Spacer(flex: 3,),
+            const Spacer(flex: 3),
             const MainLogo(),
-            SizedBox(height: AppSizes.p16,),
+            SizedBox(height: AppSizes.p16),
             TextHeading(textHeading: "Clockly"),
-            SizedBox(height: AppSizes.p16,),
+            SizedBox(height: AppSizes.p16),
             TextTitle(titleText: "Smart Attendance & Workforce Management"),
             const Spacer(flex: 4),
             const LoadingProcess(),
-            SizedBox(height: AppSizes.p16,),
+            SizedBox(height: AppSizes.p16),
             const BottomText(),
-            SizedBox(height: AppSizes.p40,)
+            SizedBox(height: AppSizes.p40),
           ],
         ),
       ),

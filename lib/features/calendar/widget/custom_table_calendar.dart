@@ -24,125 +24,143 @@ class CustomTableCalendar extends GetView<CalendarController> {
             color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 20,
             offset: const Offset(0, 10),
-          )
+          ),
         ],
       ),
       child: Obx(() {
-        final trackingTasks = controller.taskHome.allTasks.length;
+        final _ = controller.taskHome.allTasks.length;
 
-        return TableCalendar (
-        firstDay: DateTime.utc(2020, 1, 1),
-        lastDay: DateTime.utc(2030, 12, 31),
-        focusedDay: controller.focusedDay.value,
-        calendarFormat: controller.calendarFormat.value,
-        rowHeight: 56,
+        return TableCalendar(
+          firstDay: DateTime.utc(2020, 1, 1),
+          lastDay: DateTime.utc(2030, 12, 31),
+          focusedDay: controller.focusedDay.value,
+          calendarFormat: controller.calendarFormat.value,
+          rowHeight: 56,
 
-        eventLoader: controller.getEventsForDay,
+          eventLoader: controller.getEventsForDay,
 
-        pageAnimationEnabled: true,
-        pageJumpingEnabled: true,
+          pageAnimationEnabled: true,
+          pageJumpingEnabled: true,
 
-        selectedDayPredicate: (day) => isSameDay(controller.selectedDay.value, day),
+          selectedDayPredicate: (day) =>
+              isSameDay(controller.selectedDay.value, day),
 
-        onDaySelected: controller.onDaySelected,
+          onDaySelected: controller.onDaySelected,
 
-        onFormatChanged: (format) {
-          controller.calendarFormat.value = format;
-        },
-        onPageChanged: (focusedDay) {
-          controller.focusedDay.value = focusedDay;
-        },
-
-        headerStyle: HeaderStyle(
-          titleTextFormatter: (date, locale) =>
-              DateFormat.yMMM(locale).format(date),
-          formatButtonVisible: true,
-          formatButtonDecoration: BoxDecoration(
-
-          ),
-          titleCentered: true,
-          titleTextStyle: GoogleFonts.inter(
-            fontSize: 18,
-            fontWeight: FontWeight.w700,
-            color: ThemeHelper.isDark ? Colors.white70 : Colors.black87,
-          ),
-          leftChevronIcon: Icon(Icons.chevron_left, color: ThemeHelper.isDark ? Colors.white70 : Colors.black54),
-          rightChevronIcon: Icon(Icons.chevron_right, color: ThemeHelper.isDark ? Colors.white70 : Colors.black54),
-        ),
-        daysOfWeekStyle: DaysOfWeekStyle(
-          weekdayStyle: GoogleFonts.inter(color: Colors.grey, fontWeight: FontWeight.w600),
-          weekendStyle: GoogleFonts.inter(color: Colors.grey, fontWeight: FontWeight.w600),
-        ),
-        calendarStyle: CalendarStyle(
-          outsideDaysVisible: false,
-          defaultTextStyle: TextStyle(color: ThemeHelper.isDark ? Colors.white70 : Colors.black87, fontWeight: FontWeight.w500),
-          weekendTextStyle: TextStyle(color: ThemeHelper.isDark ? Colors.white70 : Colors.black87, fontWeight: FontWeight.w500),
-        ),
-
-        calendarBuilders: CalendarBuilders(
-          selectedBuilder: (context, date, events) {
-            return Container(
-              margin: const EdgeInsets.all(6.0),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: AppColors.primary,
-                shape: BoxShape.circle,
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.primary.withValues(alpha: 0.4),
-                    blurRadius: 10,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
-              ),
-              child: Text(
-                '${date.day}',
-                style: GoogleFonts.inter(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
-              ),
-            );
+          onFormatChanged: (format) {
+            controller.calendarFormat.value = format;
+          },
+          onPageChanged: (focusedDay) {
+            controller.focusedDay.value = focusedDay;
           },
 
-          todayBuilder: (context, date, events) {
-            return Container(
-              margin: const EdgeInsets.all(6.0),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: AppColors.primary.withValues(alpha: 0.12),
-                shape: BoxShape.circle,
-              ),
-              child: Text(
-                '${date.day}',
-                style: GoogleFonts.inter(
+          headerStyle: HeaderStyle(
+            titleTextFormatter: (date, locale) =>
+                DateFormat.yMMM(locale).format(date),
+            formatButtonVisible: true,
+            formatButtonDecoration: BoxDecoration(),
+            titleCentered: true,
+            titleTextStyle: GoogleFonts.inter(
+              fontSize: 18,
+              fontWeight: FontWeight.w700,
+              color: ThemeHelper.isDark ? Colors.white70 : Colors.black87,
+            ),
+            leftChevronIcon: Icon(
+              Icons.chevron_left,
+              color: ThemeHelper.isDark ? Colors.white70 : Colors.black54,
+            ),
+            rightChevronIcon: Icon(
+              Icons.chevron_right,
+              color: ThemeHelper.isDark ? Colors.white70 : Colors.black54,
+            ),
+          ),
+          daysOfWeekStyle: DaysOfWeekStyle(
+            weekdayStyle: GoogleFonts.inter(
+              color: Colors.grey,
+              fontWeight: FontWeight.w600,
+            ),
+            weekendStyle: GoogleFonts.inter(
+              color: Colors.grey,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          calendarStyle: CalendarStyle(
+            outsideDaysVisible: false,
+            defaultTextStyle: TextStyle(
+              color: ThemeHelper.isDark ? Colors.white70 : Colors.black87,
+              fontWeight: FontWeight.w500,
+            ),
+            weekendTextStyle: TextStyle(
+              color: ThemeHelper.isDark ? Colors.white70 : Colors.black87,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+
+          calendarBuilders: CalendarBuilders(
+            selectedBuilder: (context, date, events) {
+              return Container(
+                margin: const EdgeInsets.all(6.0),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
                   color: AppColors.primary,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.primary.withValues(alpha: 0.4),
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
                 ),
-              ),
-            );
-          },
-
-          markerBuilder: (context, date, events) {
-            if (events.isNotEmpty) {
-              return Positioned(
-                bottom: AppSizes.p4,
-                child: Container(
-                  height: AppSizes.p4,
-                  width: AppSizes.p4,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: AppColors.primary,
+                child: Text(
+                  '${date.day}',
+                  style: GoogleFonts.inter(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
                   ),
                 ),
               );
-            }
-            return const SizedBox();
-          },
-        ),
-      );}),
+            },
+
+            todayBuilder: (context, date, events) {
+              return Container(
+                margin: const EdgeInsets.all(6.0),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: AppColors.primary.withValues(alpha: 0.12),
+                  shape: BoxShape.circle,
+                ),
+                child: Text(
+                  '${date.day}',
+                  style: GoogleFonts.inter(
+                    color: AppColors.primary,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+              );
+            },
+
+            markerBuilder: (context, date, events) {
+              if (events.isNotEmpty) {
+                return Positioned(
+                  bottom: AppSizes.p4,
+                  child: Container(
+                    height: AppSizes.p4,
+                    width: AppSizes.p4,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: AppColors.primary,
+                    ),
+                  ),
+                );
+              }
+              return const SizedBox();
+            },
+          ),
+        );
+      }),
     );
   }
 }

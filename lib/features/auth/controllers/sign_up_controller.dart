@@ -1,6 +1,4 @@
-import 'package:clockly/core/components/custom_snackbar.dart';
 import 'package:clockly/core/services/auth_service.dart';
-import 'package:clockly/core/theme/app_colors.dart';
 import 'package:clockly/features/auth/controllers/auth_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';

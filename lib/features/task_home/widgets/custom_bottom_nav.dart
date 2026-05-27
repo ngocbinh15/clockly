@@ -35,11 +35,7 @@ class CustomBottomNav extends StatelessWidget {
         tabBuilder: (int index, bool isActive) {
           final color = isActive ? AppColors.primary : AppColors.grey;
           return Center(
-            child: HugeIcon(
-              icon: iconList[index],
-              color: color,
-              size: 24,
-            ),
+            child: HugeIcon(icon: iconList[index], color: color, size: 24),
           );
         },
         onTap: (index) {

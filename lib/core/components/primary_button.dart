@@ -51,11 +51,7 @@ class PrimaryButton extends StatelessWidget {
             ),
             if (suffixIcon != null) ...[
               const SizedBox(width: 8),
-              HugeIcon(
-                icon: suffixIcon!,
-                color: Colors.white,
-                size: 20,
-              ),
+              HugeIcon(icon: suffixIcon!, color: Colors.white, size: 20),
             ],
           ],
         ),

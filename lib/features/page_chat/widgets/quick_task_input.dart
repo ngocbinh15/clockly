@@ -14,7 +14,9 @@ class QuickTaskInput extends GetView<TaskHomeController> {
   Widget build(BuildContext context) {
     return Obx(() {
       final isDark = ThemeHelper.isDark;
-      final borderColor = isDark ? AppColors.grey.withValues(alpha: 0.2) : const Color(0xFFCBD5E1);
+      final borderColor = isDark
+          ? AppColors.grey.withValues(alpha: 0.2)
+          : const Color(0xFFCBD5E1);
 
       return TextField(
         controller: controller.quickTaskController,
@@ -30,7 +32,9 @@ class QuickTaskInput extends GetView<TaskHomeController> {
         decoration: InputDecoration(
           isDense: true,
           filled: true,
-          fillColor: isDark ? Colors.transparent : Colors.grey.withValues(alpha: 0.03),
+          fillColor: isDark
+              ? Colors.transparent
+              : Colors.grey.withValues(alpha: 0.03),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
             borderSide: BorderSide(color: borderColor, width: 1.5),
@@ -45,9 +49,15 @@ class QuickTaskInput extends GetView<TaskHomeController> {
           ),
           hintText: "What's on your mind?",
           hintStyle: GoogleFonts.inter(color: Colors.grey, fontSize: 14),
-          contentPadding: const EdgeInsets.symmetric(horizontal: AppSizes.p20, vertical: AppSizes.p16),
-          
-          suffixIconConstraints: const BoxConstraints(minHeight: 48, minWidth: 48),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: AppSizes.p20,
+            vertical: AppSizes.p16,
+          ),
+
+          suffixIconConstraints: const BoxConstraints(
+            minHeight: 48,
+            minWidth: 48,
+          ),
           suffixIcon: Padding(
             padding: const EdgeInsets.only(right: AppSizes.p8),
             child: IconButton(
