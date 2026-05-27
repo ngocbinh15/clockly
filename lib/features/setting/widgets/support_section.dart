@@ -1,4 +1,4 @@
-import 'package:clockly/features/page_chat/widgets/quick_task_dialog.dart';
+import 'package:clockly/core/components/app_alerts.dart';
 import 'package:clockly/features/setting/controller/settings_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -39,7 +39,7 @@ class SupportSection extends GetView<SettingsController> {
             iconColor: Colors.blueGrey,
             iconBgColor: Colors.blueGrey.withValues(alpha: 0.1),
             title: "Privacy & Terms",
-            onTap: () => Get.dialog(QuickTaskDialog()),
+            onTap: () => AppAlerts.warning(message: "Comming soon!"),
           ),
         ],
       ),
