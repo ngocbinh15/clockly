@@ -2,9 +2,11 @@ import 'package:clockly/core/components/app_alerts.dart';
 import 'package:clockly/core/constants/app_message.dart';
 import 'package:clockly/core/services/ai_service.dart';
 import 'package:clockly/core/services/auth_service.dart';
+import 'package:clockly/core/services/notification_service.dart';
 import 'package:clockly/core/theme/app_colors.dart';
 import 'package:clockly/features/auth/controllers/auth_helper.dart';
 import 'package:clockly/features/page_chat/model/local_chat_message.dart';
+import 'package:clockly/features/setting/controller/notification_controller.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,6 +26,8 @@ class TaskHomeController extends GetxController {
   RxString selected = "All Tasks".obs;
 
   final aiService = Get.find<AiService>();
+  final notificationService = Get.find<NotificationService>();
+  final notificationController = Get.find<NotificationController>();
 
   late ConfettiController confettiController;
 
@@ -467,11 +471,20 @@ class TaskHomeController extends GetxController {
       } else {
         taskMembersMap.clear();
       }
+
+      updateAllNotifications();
     } catch (e) {
       AppAlerts.error(message: "Lỗi tải Task: $e");
     } finally {
       isLoading.value = false;
     }
+  }
+
+  Future<void> updateAllNotifications() async {
+    await notificationService.clearAllData();
+
+    await notificationController.createAllTasksNotification();
+    await notificationController.createSingleTaskNotification();
   }
 
   Future<void> toggleTaskStatus(TaskModel task) async {
@@ -509,6 +522,7 @@ class TaskHomeController extends GetxController {
 
     try {
       await _supabase.from('tasks').delete().eq('id', task.id);
+      notificationService.cancelNotification(task.id.hashCode);
       AppAlerts.success(message: AppMessages.deleteSuccess);
     } catch (e) {
       AppAlerts.error(message: "$e");

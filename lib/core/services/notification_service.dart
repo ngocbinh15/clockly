@@ -1,5 +1,6 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 class NotificationService extends GetxService {
@@ -8,21 +9,27 @@ class NotificationService extends GetxService {
   late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
   late tz.Location location;
 
+  List<String> totalDailyIds = [];
+  List<String> totalSingleIds = [];
+
   @override
   void onInit() {
     super.onInit();
+    _setupSettings();
+    flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+    location = tz.getLocation('Asia/Ho_Chi_Minh');
+
+    initialize();
+    _loadStoredIds();
+  }
+
+  void _setupSettings() {
     androidInitializationSettings = const AndroidInitializationSettings(
       '@mipmap/ic_launcher',
     );
-
     initializationSettings = InitializationSettings(
       android: androidInitializationSettings,
     );
-
-    flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-
-    location = tz.getLocation('Asia/Ho_Chi_Minh');
-    initialize();
   }
 
   Future<void> initialize() async {
@@ -32,83 +39,135 @@ class NotificationService extends GetxService {
     );
   }
 
-  Future<void> setAllTasksNotification(
-    int id,
-    int totalTasks,
-    DateTime date,
-  ) async {
-    const AndroidNotificationDetails androidNotificationDetails =
-        AndroidNotificationDetails(
-          'daily_digest_channel',
-          'Daily Notification',
-          priority: Priority.high,
-          importance: Importance.max,
-        );
+  Future<void> _loadStoredIds() async {
+    final pref = await SharedPreferences.getInstance();
+    totalDailyIds = pref.getStringList('totalDailyIds') ?? [];
+    totalSingleIds = pref.getStringList('totalSingleIds') ?? [];
+  }
 
-    const NotificationDetails notificationDetails = NotificationDetails(
-      android: androidNotificationDetails,
+  Future<void> _saveDailyIds() async {
+    final pref = await SharedPreferences.getInstance();
+    await pref.setStringList('totalDailyIds', totalDailyIds);
+  }
+
+  Future<void> _saveSingleIds() async {
+    final pref = await SharedPreferences.getInstance();
+    await pref.setStringList('totalSingleIds', totalSingleIds);
+  }
+
+  Future<void> setDailySummaryNotification({
+    required int id,
+    required int totalTasks,
+    required DateTime date,
+  }) async {
+    const androidDetails = AndroidNotificationDetails(
+      'daily_digest_channel',
+      'Daily Summary',
+      importance: Importance.max,
+      priority: Priority.high,
     );
 
     final time = tz.TZDateTime(location, date.year, date.month, date.day, 8, 0);
 
-    String title = totalTasks > 0
-        ? 'Good morning! ☀️'
-        : 'Relaxing day ahead! ☕';
-    String body = totalTasks > 0
-        ? 'You have $totalTasks tasks waiting. Let\'s get things done!'
-        : 'No tasks scheduled for today. Take some time to recharge!';
+    if (time.isBefore(tz.TZDateTime.now(location))) return;
 
     await flutterLocalNotificationsPlugin.zonedSchedule(
       id: id,
-      title: title,
-      body: body,
+      title: totalTasks > 0 ? 'Good morning! ☀️' : 'Relaxing day ahead! ☕',
+      body: totalTasks > 0
+          ? 'You have $totalTasks tasks waiting for today.'
+          : 'No tasks scheduled for today. Enjoy your day!',
       scheduledDate: time,
-      notificationDetails: notificationDetails,
+      notificationDetails: const NotificationDetails(android: androidDetails),
       androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
     );
+
+    if (!totalDailyIds.contains(id.toString())) {
+      totalDailyIds.add(id.toString());
+      await _saveDailyIds();
+
+      print(totalDailyIds.length);
+    }
   }
 
-  Future<void> setSingleTaskNotification(
-    int id,
-    String taskName,
-    DateTime date,
-  ) async {
-    const AndroidNotificationDetails androidNotificationDetails =
-        AndroidNotificationDetails(
-          'single_task_channel',
-          'Single Task Notification',
-          priority: Priority.high,
-          importance: Importance.max,
-        );
-
-    const NotificationDetails notificationDetails = NotificationDetails(
-      android: androidNotificationDetails,
+  Future<void> setSingleTaskNotification({
+    required int id,
+    required String taskName,
+    required DateTime date,
+  }) async {
+    const androidDetails = AndroidNotificationDetails(
+      'single_task_channel',
+      'Task Reminders',
+      importance: Importance.max,
+      priority: Priority.high,
     );
 
-    final time = tz.TZDateTime(
+    final scheduledTime = tz.TZDateTime(
       location,
       date.year,
       date.month,
       date.day,
       date.hour,
-      date.minute,
+      date.minute - 15,
     );
+
+    if (scheduledTime.isBefore(tz.TZDateTime.now(location))) return;
 
     await flutterLocalNotificationsPlugin.zonedSchedule(
       id: id,
       title: 'Upcoming Task! ⏰',
       body: 'It\'s almost time for: $taskName',
-      scheduledDate: time,
-      notificationDetails: notificationDetails,
+      scheduledDate: scheduledTime,
+      notificationDetails: const NotificationDetails(android: androidDetails),
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
     );
+
+    if (!totalSingleIds.contains(id.toString())) {
+      totalSingleIds.add(id.toString());
+      await _saveSingleIds();
+      print(totalSingleIds.length);
+    }
   }
 
   Future<void> cancelNotification(int id) async {
     await flutterLocalNotificationsPlugin.cancel(id: id);
+    totalSingleIds.remove(id.toString());
+    totalDailyIds.remove(id.toString());
+    await _saveSingleIds();
+    await _saveDailyIds();
   }
 
-  Future<void> cancelAllNotifications() async {
+  Future<void> cancelAllSingleNotifications() async {
+    if (totalSingleIds.isEmpty) return;
+
+    final List<Future<void>> cancels = totalSingleIds
+        .map((id) => flutterLocalNotificationsPlugin.cancel(id: int.parse(id)))
+        .toList();
+
+    await Future.wait(cancels);
+    totalSingleIds.clear();
+    await _saveSingleIds();
+    print(totalDailyIds.length);
+  }
+
+  Future<void> cancelAllDailyNotifications() async {
+    if (totalDailyIds.isEmpty) return;
+
+    final List<Future<void>> cancels = totalDailyIds
+        .map((id) => flutterLocalNotificationsPlugin.cancel(id: int.parse(id)))
+        .toList();
+
+    await Future.wait(cancels);
+    totalDailyIds.clear();
+    await _saveDailyIds();
+    print(totalDailyIds.length);
+  }
+
+  Future<void> clearAllData() async {
     await flutterLocalNotificationsPlugin.cancelAll();
+    totalSingleIds.clear();
+    totalDailyIds.clear();
+    await _saveSingleIds();
+    await _saveDailyIds();
   }
 }

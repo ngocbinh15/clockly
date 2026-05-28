@@ -1,8 +1,7 @@
+import 'package:clockly/core/theme/app_colors.dart' show AppColors;
 import 'package:clockly/features/setting/controller/settings_controller.dart';
-import 'package:clockly/features/test/test_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:clockly/core/theme/app_colors.dart';
 import 'package:clockly/core/utils/theme_helper.dart';
 import 'settings_list_tile.dart';
 
@@ -39,7 +38,7 @@ class SupportSection extends GetView<SettingsController> {
             iconColor: Colors.blueGrey,
             iconBgColor: Colors.blueGrey.withValues(alpha: 0.1),
             title: "Privacy & Terms",
-            onTap: () => Get.to(TestNotification()),
+            onTap: () {},
           ),
         ],
       ),
