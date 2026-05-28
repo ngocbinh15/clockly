@@ -1,16 +1,18 @@
+import 'package:clockly/features/setting/controller/notification_controller.dart';
+import 'package:clockly/features/setting/widgets/appearance_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:clockly/core/theme/app_colors.dart';
 import 'package:clockly/core/utils/theme_helper.dart';
 import '../../../core/components/app_alerts.dart';
 import '../../../core/constants/app_message.dart';
 import '../controller/settings_controller.dart';
 import 'settings_list_tile.dart';
-import 'appearance_option.dart';
 
 class PreferencesSection extends GetView<SettingsController> {
-  const PreferencesSection({super.key});
+  PreferencesSection({super.key});
+
+  final notificationController = Get.find<NotificationController>();
 
   @override
   Widget build(BuildContext context) {
@@ -24,17 +26,19 @@ class PreferencesSection extends GetView<SettingsController> {
         child: Column(
           children: [
             SettingsListTile(
-              icon: controller.isNotiEnabled.value
+              icon: notificationController.isNotiEnabled.value
                   ? Icons.notifications_active
                   : Icons.notifications_none,
               iconColor: Colors.deepOrange,
               iconBgColor: Colors.deepOrange.withValues(alpha: 0.1),
               title: "Notifications",
               trailing: Text(
-                controller.isNotiEnabled.value ? "On" : "Off",
+                notificationController.isNotiEnabled.value ? "On" : "Off",
                 style: const TextStyle(color: Colors.grey, fontSize: 14),
               ),
-              onTap: () => controller.handleNotificationTap(),
+              onTap: () {
+                notificationController.requestPermissionNotification();
+              },
             ),
 
             Divider(
@@ -56,88 +60,7 @@ class PreferencesSection extends GetView<SettingsController> {
                 style: const TextStyle(color: Colors.grey, fontSize: 14),
               ),
               onTap: () {
-                Get.bottomSheet(
-                  Obx(() {
-                    final isDarkSheet = ThemeHelper.isDark;
-                    final currentAppearance =
-                        controller.selectedAppearance.value;
-                    return Container(
-                      padding: const EdgeInsets.only(top: 10, bottom: 24),
-                      decoration: BoxDecoration(
-                        color: AppColors.secondary,
-                        borderRadius: const BorderRadius.vertical(
-                          top: Radius.circular(28),
-                        ),
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          // Drag handle
-                          Container(
-                            width: 40,
-                            height: 5,
-                            decoration: BoxDecoration(
-                              color: isDarkSheet
-                                  ? Colors.grey.shade700
-                                  : Colors.grey.shade300,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                          // Title
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(24, 20, 24, 16),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                "Appearance Mode",
-                                style: GoogleFonts.inter(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w800,
-                                  color: isDarkSheet
-                                      ? Colors.white
-                                      : Colors.black87,
-                                  letterSpacing: -0.5,
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          AppearanceOption(
-                            title: "Light Mode",
-                            icon: Icons.wb_sunny_outlined,
-                            isSelected: currentAppearance == "Light",
-                            onTap: () {
-                              controller.changeAppearance("Light");
-                              Get.back();
-                            },
-                            isDark: isDarkSheet,
-                          ),
-                          AppearanceOption(
-                            title: "Dark Mode",
-                            icon: Icons.dark_mode_outlined,
-                            isSelected: currentAppearance == "Dark",
-                            onTap: () {
-                              controller.changeAppearance("Dark");
-                              Get.back();
-                            },
-                            isDark: isDarkSheet,
-                          ),
-                          AppearanceOption(
-                            title: "System default",
-                            icon: Icons.settings_suggest_outlined,
-                            isSelected: currentAppearance == "System",
-                            onTap: () {
-                              controller.changeAppearance("System");
-                              Get.back();
-                            },
-                            isDark: isDarkSheet,
-                          ),
-                        ],
-                      ),
-                    );
-                  }),
-                  isScrollControlled: true,
-                );
+                Get.bottomSheet(AppearanceDialog(), isScrollControlled: true);
               },
             ),
 

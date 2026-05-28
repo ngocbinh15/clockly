@@ -1,7 +1,7 @@
 import 'dart:io';
+import 'package:clockly/features/setting/controller/notification_controller.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -21,7 +21,6 @@ class SettingsController extends GetxController {
   var userEmail = "".obs;
   var avatarUrl = "".obs;
 
-  var isNotiEnabled = false.obs;
   var selectedAppearance = "System".obs;
 
   @override
@@ -34,7 +33,7 @@ class SettingsController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    checkNotificationStatus();
+    Get.find<NotificationController>().checkNotificationStatus();
   }
 
   Future<void> loadUserData() async {
@@ -88,24 +87,6 @@ class SettingsController extends GetxController {
       AuthHelper.hideLoading();
       AppAlerts.error(message: e.toString());
     }
-  }
-
-  Future<void> checkNotificationStatus() async {
-    isNotiEnabled.value = await Permission.notification.isGranted;
-  }
-
-  Future<void> handleNotificationTap() async {
-    if (await Permission.notification.isGranted) {
-      await openAppSettings();
-    } else {
-      PermissionStatus status = await Permission.notification.request();
-      if (status.isGranted) {
-        isNotiEnabled.value = true;
-      } else {
-        await openAppSettings();
-      }
-    }
-    await checkNotificationStatus();
   }
 
   Future<void> loadThemeSettings() async {
