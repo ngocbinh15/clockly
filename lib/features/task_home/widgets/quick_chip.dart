@@ -4,11 +4,16 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../core/theme/app_colors.dart';
 
 class QuickChip extends StatelessWidget {
-  QuickChip({super.key, required this.label, required this.icon, required this.onTap});
+  const QuickChip({
+    super.key,
+    required this.label,
+    required this.icon,
+    required this.onTap,
+  });
 
-  String label;
-  IconData icon;
-  VoidCallback onTap;
+  final String label;
+  final IconData icon;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {

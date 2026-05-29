@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../core/theme/app_colors.dart';
 
-class CustomButtonDropdown extends GetView <AnalysisController> {
+class CustomButtonDropdown extends GetView<AnalysisController> {
   const CustomButtonDropdown({super.key});
 
   @override
@@ -21,7 +21,7 @@ class CustomButtonDropdown extends GetView <AnalysisController> {
               color: Colors.black.withValues(alpha: 0.03),
               blurRadius: 10,
               offset: const Offset(0, 4),
-            )
+            ),
           ],
         ),
         child: DropdownButtonHideUnderline(
@@ -41,11 +41,12 @@ class CustomButtonDropdown extends GetView <AnalysisController> {
             borderRadius: BorderRadius.circular(12),
             items: <String>['Today', 'This Week', 'This Month']
                 .map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                })
+                .toList(),
             onChanged: (String? newValue) {
               if (newValue != null) {
                 controller.timeFilter.value = newValue;

@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 class MainIcon extends StatelessWidget {
-  MainIcon({super.key, required this.icon});
+  const MainIcon({super.key, required this.icon});
 
-  final icon;
+  final dynamic icon;
 
   @override
   Widget build(BuildContext context) {
@@ -16,11 +16,7 @@ class MainIcon extends StatelessWidget {
         color: AppColors.primary.withValues(alpha: 0.1),
         shape: BoxShape.circle,
       ),
-      child: HugeIcon(
-        icon: icon,
-        color: AppColors.primary,
-        size: 40,
-      ),
+      child: HugeIcon(icon: icon, color: AppColors.primary, size: 40),
     );
   }
 }

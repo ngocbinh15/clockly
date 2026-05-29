@@ -18,7 +18,7 @@ class CustomChoicesChip extends GetView<TaskHomeController> {
         color: AppColors.secondary,
         fontSize: 18,
         fontWeight: FontWeight.w700,
-      )
+      ),
     };
 
     final Map<String, dynamic> noneSelectedTheme = {
@@ -27,7 +27,7 @@ class CustomChoicesChip extends GetView<TaskHomeController> {
         color: AppColors.third,
         fontSize: 18,
         fontWeight: FontWeight.w500,
-      )
+      ),
     };
 
     return SizedBox(
@@ -40,7 +40,9 @@ class CustomChoicesChip extends GetView<TaskHomeController> {
 
           return Obx(() {
             final isSelected = controller.selected.value == categoryEnum;
-            Map<String, dynamic> theme = isSelected ? selectedTheme : noneSelectedTheme;
+            Map<String, dynamic> theme = isSelected
+                ? selectedTheme
+                : noneSelectedTheme;
 
             return Padding(
               padding: const EdgeInsets.only(right: AppSizes.p12),
@@ -53,7 +55,9 @@ class CustomChoicesChip extends GetView<TaskHomeController> {
                   duration: const Duration(milliseconds: 300),
                   curve: Curves.easeInOut,
                   padding: const EdgeInsets.symmetric(
-                      horizontal: AppSizes.p24, vertical: AppSizes.p8),
+                    horizontal: AppSizes.p24,
+                    vertical: AppSizes.p8,
+                  ),
                   decoration: BoxDecoration(
                     color: theme["color"],
                     borderRadius: BorderRadius.circular(100),

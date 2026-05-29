@@ -28,7 +28,8 @@ class CategorizedTaskList extends GetView<TaskHomeController> {
         },
 
         transitionBuilder: (Widget child, Animation<double> animation) {
-          final isIncoming = child.key == ValueKey<String>(controller.selected.value);
+          final isIncoming =
+              child.key == ValueKey<String>(controller.selected.value);
 
           final offset = isIncoming
               ? Offset(controller.slideDirection.value, 0.0)
@@ -41,10 +42,7 @@ class CategorizedTaskList extends GetView<TaskHomeController> {
 
           return SlideTransition(
             position: slideAnimation,
-            child: FadeTransition(
-              opacity: animation,
-              child: child,
-            ),
+            child: FadeTransition(opacity: animation, child: child),
           );
         },
         child: _buildTaskListContent(),
@@ -63,9 +61,7 @@ class CategorizedTaskList extends GetView<TaskHomeController> {
 
   Widget _getFilteredView(String currentCategory) {
     if (controller.filteredTasks.isEmpty) {
-      return EmptyTaskWidget(
-        categoryName: currentCategory,
-      );
+      return EmptyTaskWidget(categoryName: currentCategory);
     }
 
     if (controller.todayTasks.isEmpty && controller.tomorrowTasks.isEmpty) {
@@ -85,22 +81,13 @@ class CategorizedTaskList extends GetView<TaskHomeController> {
           ),
 
         if (controller.todayTasks.isNotEmpty)
-          TaskList(
-            label: "TODAY",
-            tasks: controller.todayTasks,
-          ),
+          TaskList(label: "TODAY", tasks: controller.todayTasks),
 
         if (controller.tomorrowTasks.isNotEmpty)
-          TaskList(
-            label: "TOMORROW",
-            tasks: controller.tomorrowTasks,
-          ),
+          TaskList(label: "TOMORROW", tasks: controller.tomorrowTasks),
 
         if (controller.upcomingTasks.isNotEmpty)
-          TaskList(
-            label: "UPCOMING",
-            tasks: controller.upcomingTasks,
-          ),
+          TaskList(label: "UPCOMING", tasks: controller.upcomingTasks),
       ],
     );
   }

@@ -53,7 +53,10 @@ class PickDateAddTask extends StatelessWidget {
                 borderRadius: BorderRadius.circular(AppSizes.p12),
                 borderSide: BorderSide.none,
               ),
-              contentPadding: const EdgeInsets.symmetric(horizontal: AppSizes.p16, vertical: 14),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: AppSizes.p16,
+                vertical: 14,
+              ),
               suffixIcon: Padding(
                 padding: const EdgeInsets.only(right: AppSizes.p12),
                 child: HugeIcon(
@@ -62,27 +65,50 @@ class PickDateAddTask extends StatelessWidget {
                   size: 20,
                 ),
               ),
-              suffixIconConstraints: const BoxConstraints(minWidth: AppSizes.p24, minHeight: AppSizes.p24),
+              suffixIconConstraints: const BoxConstraints(
+                minWidth: AppSizes.p24,
+                minHeight: AppSizes.p24,
+              ),
             ),
           ),
 
           const SizedBox(height: AppSizes.p12),
 
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              QuickChip(label: "Tomorrow", icon: Icons.wb_sunny_outlined, onTap: () => controller.updateDueDate(DateHelper.getTomorrow())),
-              QuickChip(label: "In 3 days", icon: Icons.next_plan_outlined, onTap: () => controller.updateDueDate(DateHelper.getIn3Days())),
-              QuickChip(label: "This Sunday", icon: Icons.weekend_outlined, onTap: () => controller.updateDueDate(DateHelper.getThisSunday())),
-              QuickChip(label: "End of month", icon: Icons.event_available_outlined, onTap: () => controller.updateDueDate(DateHelper.getEndOfMonth())),
-            ],
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                QuickChip(
+                  label: "Tomorrow",
+                  icon: Icons.wb_sunny_outlined,
+                  onTap: () =>
+                      controller.updateDueDate(DateHelper.getTomorrow()),
+                ),
+                QuickChip(
+                  label: "In 3 days",
+                  icon: Icons.next_plan_outlined,
+                  onTap: () =>
+                      controller.updateDueDate(DateHelper.getIn3Days()),
+                ),
+                QuickChip(
+                  label: "This Sunday",
+                  icon: Icons.weekend_outlined,
+                  onTap: () =>
+                      controller.updateDueDate(DateHelper.getThisSunday()),
+                ),
+                QuickChip(
+                  label: "End of month",
+                  icon: Icons.event_available_outlined,
+                  onTap: () =>
+                      controller.updateDueDate(DateHelper.getEndOfMonth()),
+                ),
+              ],
+            ),
           ),
-        ),
 
-        const SizedBox(height: AppSizes.p12),
-      ],
-    );
+          const SizedBox(height: AppSizes.p12),
+        ],
+      );
     });
   }
 }

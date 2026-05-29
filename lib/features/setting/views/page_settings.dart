@@ -17,10 +17,10 @@ class PageSettings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(SettingsController());
+    final _ = Get.put(SettingsController());
 
     return Obx(() {
-      final isDark = ThemeHelper.isDark;
+      final _ = ThemeHelper.isDark;
 
       return Scaffold(
         backgroundColor: AppColors.background,
@@ -31,7 +31,7 @@ class PageSettings extends StatelessWidget {
               vertical: AppSizes.p16,
             ),
             children: [
-              HeadingSetting(text: "Settings",),
+              HeadingSetting(text: "Settings"),
               const SizedBox(height: AppSizes.p24),
 
               const SectionTitle(title: "ACCOUNT"),

@@ -1,3 +1,4 @@
+import 'package:clockly/bidings/initial_biding.dart';
 import 'package:clockly/core/theme/app_theme.dart';
 import 'package:clockly/routes/app_pages.dart';
 import 'package:clockly/routes/app_routes.dart';
@@ -15,6 +16,7 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.light,
 
       initialRoute: AppRoutes.splash,
+      initialBinding: InitialBinding(),
       getPages: AppPages.routes,
       debugShowCheckedModeBanner: false,
       darkTheme: AppTheme.dark,

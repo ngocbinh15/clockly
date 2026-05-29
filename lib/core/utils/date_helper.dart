@@ -8,7 +8,9 @@ class DateHelper {
     return DateFormat('MMM dd, yyyy - hh:mm a').format(date);
   }
 
-  static Future<DateTime?> showCustomDateTimePicker(BuildContext context) async {
+  static Future<DateTime?> showCustomDateTimePicker(
+    BuildContext context,
+  ) async {
     FocusScope.of(context).unfocus();
     final isDark = ThemeHelper.isDark;
 
@@ -34,26 +36,37 @@ class DateHelper {
                     backgroundColor: const Color(0xFF1E1E1E),
                     headerBackgroundColor: AppColors.primary,
                     headerForegroundColor: Colors.white,
-                    dayForegroundColor: WidgetStateProperty.resolveWith((states) {
+                    dayForegroundColor: WidgetStateProperty.resolveWith((
+                      states,
+                    ) {
                       if (states.contains(WidgetState.selected)) {
                         return Colors.white;
                       }
                       return Colors.white;
                     }),
-                    dayBackgroundColor: WidgetStateProperty.resolveWith((states) {
+                    dayBackgroundColor: WidgetStateProperty.resolveWith((
+                      states,
+                    ) {
                       if (states.contains(WidgetState.selected)) {
                         return AppColors.primary;
                       }
                       return Colors.transparent;
                     }),
-                    todayForegroundColor: WidgetStateProperty.resolveWith((states) {
+                    todayForegroundColor: WidgetStateProperty.resolveWith((
+                      states,
+                    ) {
                       if (states.contains(WidgetState.selected)) {
                         return Colors.white;
                       }
                       return AppColors.primary;
                     }),
-                    todayBorder: const BorderSide(color: AppColors.primary, width: 1.5),
-                    yearForegroundColor: WidgetStateProperty.resolveWith((states) {
+                    todayBorder: const BorderSide(
+                      color: AppColors.primary,
+                      width: 1.5,
+                    ),
+                    yearForegroundColor: WidgetStateProperty.resolveWith((
+                      states,
+                    ) {
                       if (states.contains(WidgetState.selected)) {
                         return Colors.white;
                       }
@@ -61,7 +74,9 @@ class DateHelper {
                     }),
                   ),
                   textButtonTheme: TextButtonThemeData(
-                    style: TextButton.styleFrom(foregroundColor: AppColors.primary),
+                    style: TextButton.styleFrom(
+                      foregroundColor: AppColors.primary,
+                    ),
                   ),
                 )
               : ThemeData.light().copyWith(
@@ -78,26 +93,37 @@ class DateHelper {
                     backgroundColor: Colors.white,
                     headerBackgroundColor: AppColors.primary,
                     headerForegroundColor: Colors.white,
-                    dayForegroundColor: WidgetStateProperty.resolveWith((states) {
+                    dayForegroundColor: WidgetStateProperty.resolveWith((
+                      states,
+                    ) {
                       if (states.contains(WidgetState.selected)) {
                         return Colors.white;
                       }
                       return Colors.black87;
                     }),
-                    dayBackgroundColor: WidgetStateProperty.resolveWith((states) {
+                    dayBackgroundColor: WidgetStateProperty.resolveWith((
+                      states,
+                    ) {
                       if (states.contains(WidgetState.selected)) {
                         return AppColors.primary;
                       }
                       return Colors.transparent;
                     }),
-                    todayForegroundColor: WidgetStateProperty.resolveWith((states) {
+                    todayForegroundColor: WidgetStateProperty.resolveWith((
+                      states,
+                    ) {
                       if (states.contains(WidgetState.selected)) {
                         return Colors.white;
                       }
                       return AppColors.primary;
                     }),
-                    todayBorder: const BorderSide(color: AppColors.primary, width: 1.5),
-                    yearForegroundColor: WidgetStateProperty.resolveWith((states) {
+                    todayBorder: const BorderSide(
+                      color: AppColors.primary,
+                      width: 1.5,
+                    ),
+                    yearForegroundColor: WidgetStateProperty.resolveWith((
+                      states,
+                    ) {
                       if (states.contains(WidgetState.selected)) {
                         return Colors.white;
                       }
@@ -105,7 +131,9 @@ class DateHelper {
                     }),
                   ),
                   textButtonTheme: TextButtonThemeData(
-                    style: TextButton.styleFrom(foregroundColor: AppColors.primary),
+                    style: TextButton.styleFrom(
+                      foregroundColor: AppColors.primary,
+                    ),
                   ),
                 ),
           child: child!,
@@ -179,7 +207,9 @@ class DateHelper {
                     }),
                   ),
                   textButtonTheme: TextButtonThemeData(
-                    style: TextButton.styleFrom(foregroundColor: AppColors.primary),
+                    style: TextButton.styleFrom(
+                      foregroundColor: AppColors.primary,
+                    ),
                   ),
                 )
               : ThemeData.light().copyWith(
@@ -240,7 +270,9 @@ class DateHelper {
                     }),
                   ),
                   textButtonTheme: TextButtonThemeData(
-                    style: TextButton.styleFrom(foregroundColor: AppColors.primary),
+                    style: TextButton.styleFrom(
+                      foregroundColor: AppColors.primary,
+                    ),
                   ),
                 ),
           child: child!,
@@ -250,7 +282,6 @@ class DateHelper {
 
     final TimeOfDay finalTime = pickedTime ?? TimeOfDay.now();
 
-    print("ALOALAOALAOAA: ${finalTime.hour}:${finalTime.minute}");
 
     return DateTime(
       pickedDate.year,

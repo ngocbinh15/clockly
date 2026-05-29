@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 import '../../../core/theme/app_colors.dart';
@@ -34,8 +33,8 @@ class LeaderboardHeader extends GetView<TeamController> {
                 children: [
                   Container(
                     decoration: BoxDecoration(
-                        color: AppColors.grey.withValues(alpha: 0.05),
-                        shape: BoxShape.circle
+                      color: AppColors.grey.withValues(alpha: 0.05),
+                      shape: BoxShape.circle,
                     ),
                     child: IconButton(
                       onPressed: () {
@@ -54,16 +53,24 @@ class LeaderboardHeader extends GetView<TeamController> {
                   ),
                   if (controller.pendingRequests.isNotEmpty)
                     Positioned(
-                      right: 0, top: 0,
+                      right: 0,
+                      top: 0,
                       child: Container(
                         padding: const EdgeInsets.all(5),
-                        decoration: const BoxDecoration(color: Colors.red, shape: BoxShape.circle),
+                        decoration: const BoxDecoration(
+                          color: Colors.red,
+                          shape: BoxShape.circle,
+                        ),
                         child: Text(
-                            '${controller.pendingRequests.length}',
-                            style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold)
+                          '${controller.pendingRequests.length}',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                    )
+                    ),
                 ],
               );
             }),
@@ -71,7 +78,10 @@ class LeaderboardHeader extends GetView<TeamController> {
             const SizedBox(width: 12),
 
             Container(
-              decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.1), shape: BoxShape.circle),
+              decoration: BoxDecoration(
+                color: AppColors.primary.withValues(alpha: 0.1),
+                shape: BoxShape.circle,
+              ),
               child: IconButton(
                 onPressed: () {
                   controller.searchResults.clear();
@@ -81,11 +91,15 @@ class LeaderboardHeader extends GetView<TeamController> {
                     backgroundColor: Colors.transparent,
                   );
                 },
-                icon: HugeIcon(icon: HugeIcons.strokeRoundedUserAdd01, color: AppColors.primary, size: 24),
+                icon: HugeIcon(
+                  icon: HugeIcons.strokeRoundedUserAdd01,
+                  color: AppColors.primary,
+                  size: 24,
+                ),
               ),
             ),
           ],
-        )
+        ),
       ],
     );
   }

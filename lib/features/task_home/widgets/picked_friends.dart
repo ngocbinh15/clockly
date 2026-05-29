@@ -37,8 +37,9 @@ class PickedFriends extends StatelessWidget {
             return Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: teamLogic.friendList.map((user) {
-
-                final isSelected = taskLogic.selectedMemberIds.contains(user.id);
+                final isSelected = taskLogic.selectedMemberIds.contains(
+                  user.id,
+                );
 
                 final shortName = user.fullName.split(' ').last;
 
@@ -69,7 +70,9 @@ class PickedFriends extends StatelessWidget {
                                   margin: const EdgeInsets.all(3),
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
-                                    color: AppColors.primary.withValues(alpha: 0.4),
+                                    color: AppColors.primary.withValues(
+                                      alpha: 0.4,
+                                    ),
                                   ),
                                   child: const Center(
                                     child: Icon(
@@ -94,8 +97,14 @@ class PickedFriends extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: GoogleFonts.inter(
                             fontSize: 12,
-                            color: isSelected ? AppColors.primary : (ThemeHelper.isDark ? Colors.white70 : Colors.black87),
-                            fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+                            color: isSelected
+                                ? AppColors.primary
+                                : (ThemeHelper.isDark
+                                      ? Colors.white70
+                                      : Colors.black87),
+                            fontWeight: isSelected
+                                ? FontWeight.w600
+                                : FontWeight.w500,
                           ),
                         ),
                       ],

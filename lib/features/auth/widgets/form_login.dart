@@ -27,7 +27,7 @@ class FormLogin extends GetView<LoginController> {
           Text("Email Address", style: AppTextStyles.title),
           SizedBox(height: AppSizes.p12),
           CustomTextField(
-          txtController: controller.emailController,
+            txtController: controller.emailController,
             hintText: "name@company.com",
             prefixIcon: HugeIcons.strokeRoundedMail01,
             validator: (value) => Validate.validEmail(value),
@@ -40,10 +40,10 @@ class FormLogin extends GetView<LoginController> {
             children: [
               Text("Password", style: AppTextStyles.title),
               CustomTextButton(
-                  color: AppColors.primary,
-                  text: "Forgot password?",
-                  onTap: () => Get.toNamed(AppRoutes.forgotPassword),
-              )
+                color: AppColors.primary,
+                text: "Forgot password?",
+                onTap: () => Get.toNamed(AppRoutes.forgotPassword),
+              ),
             ],
           ),
           SizedBox(height: AppSizes.p12),

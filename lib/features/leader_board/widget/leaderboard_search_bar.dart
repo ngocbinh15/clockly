@@ -17,16 +17,16 @@ class LeaderboardSearchBar extends GetView<TeamController> {
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
         decoration: BoxDecoration(
-            color: AppColors.secondary,
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: AppColors.grey.withValues(alpha: 0.15)),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.03),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
-              )
-            ]
+          color: AppColors.secondary,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: AppColors.grey.withValues(alpha: 0.15)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.03),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
         ),
         child: TextField(
           style: GoogleFonts.inter(
@@ -35,12 +35,15 @@ class LeaderboardSearchBar extends GetView<TeamController> {
           ),
           decoration: InputDecoration(
             hintText: "Search friends by name or email...",
-            hintStyle: GoogleFonts.inter(color: AppColors.grey.withValues(alpha: 0.8), fontSize: 14),
+            hintStyle: GoogleFonts.inter(
+              color: AppColors.grey.withValues(alpha: 0.8),
+              fontSize: 14,
+            ),
             border: InputBorder.none,
             icon: HugeIcon(
-                icon: HugeIcons.strokeRoundedSearch01,
-                color: AppColors.grey,
-                size: 20
+              icon: HugeIcons.strokeRoundedSearch01,
+              color: AppColors.grey,
+              size: 20,
             ),
           ),
           onChanged: (value) => controller.searchLocalFriends(value),

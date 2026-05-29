@@ -9,8 +9,7 @@ import 'package:clockly/core/utils/theme_helper.dart';
 
 import 'note_chart.dart';
 
-
-class CustomPieChart extends GetView <AnalysisController> {
+class CustomPieChart extends GetView<AnalysisController> {
   const CustomPieChart({super.key});
 
   @override
@@ -28,23 +27,26 @@ class CustomPieChart extends GetView <AnalysisController> {
               color: Colors.black.withValues(alpha: 0.03),
               blurRadius: 10,
               offset: const Offset(0, 4),
-            )
+            ),
           ],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Task Distribution", style: GoogleFonts.inter(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-              color: isDark ? Colors.white : Colors.black87,
-            ),),
+            Text(
+              "Task Distribution",
+              style: GoogleFonts.inter(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                color: isDark ? Colors.white : Colors.black87,
+              ),
+            ),
 
-            CustomChart (),
+            CustomChart(),
 
-            SizedBox(height: AppSizes.p4,),
+            SizedBox(height: AppSizes.p4),
 
-            NoteChart()
+            NoteChart(),
           ],
         ),
       );

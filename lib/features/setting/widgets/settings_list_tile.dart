@@ -26,10 +26,7 @@ class SettingsListTile extends StatelessWidget {
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       leading: Container(
         padding: const EdgeInsets.all(8),
-        decoration: BoxDecoration(
-          color: iconBgColor,
-          shape: BoxShape.circle,
-        ),
+        decoration: BoxDecoration(color: iconBgColor, shape: BoxShape.circle),
         child: Icon(icon, color: iconColor, size: 20),
       ),
       title: Text(
@@ -39,10 +36,7 @@ class SettingsListTile extends StatelessWidget {
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (trailing != null) ...[
-            trailing!,
-            const SizedBox(width: 8),
-          ],
+          if (trailing != null) ...[trailing!, const SizedBox(width: 8)],
           Icon(
             isExternalLink ? Icons.open_in_new : Icons.chevron_right,
             color: Colors.grey[400],

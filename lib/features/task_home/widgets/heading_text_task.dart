@@ -17,16 +17,16 @@ class HeadingTextTask extends StatelessWidget {
       children: [
         TextHeading(textHeading: "My Tasks"),
         IconButton(
-            onPressed: () {
-              Get.toNamed(AppRoutes.chat);
-            },
-            icon: HugeIcon(
-              icon: HugeIcons.strokeRoundedChatAdd01,
-              size: 30,
-              strokeWidth: 1.8,
-              color: AppColors.primary,
-            )
-        )
+          onPressed: () {
+            Get.toNamed(AppRoutes.chat);
+          },
+          icon: HugeIcon(
+            icon: HugeIcons.strokeRoundedChatAdd01,
+            size: 30,
+            strokeWidth: 1.8,
+            color: AppColors.primary,
+          ),
+        ),
       ],
     );
   }

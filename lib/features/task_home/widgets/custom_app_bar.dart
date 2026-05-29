@@ -6,12 +6,10 @@ import 'package:clockly/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../core/components/avatar.dart';
-
 class CustomAppBar extends StatelessWidget {
   CustomAppBar({super.key});
 
-  final controller = Get.find <TaskHomeController>();
+  final controller = Get.find<TaskHomeController>();
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +30,7 @@ class CustomAppBar extends StatelessWidget {
             SizedBox(height: AppSizes.p4),
             Text(
               controller.getGreetingText(),
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 25,
-              ),
+              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 25),
             ),
           ],
         ),
@@ -49,12 +44,11 @@ class CustomAppBar extends StatelessWidget {
               backgroundColor: AppColors.grey,
               child: CircleAvatar(
                 radius: 28,
-                backgroundImage: NetworkImage(
-                  url ?? " "
-                ),),
+                backgroundImage: NetworkImage(url ?? " "),
+              ),
             ),
           );
-        })
+        }),
       ],
     );
   }

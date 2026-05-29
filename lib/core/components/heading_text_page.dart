@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import '../utils/theme_helper.dart';
 
 class HeadingTextPage extends StatelessWidget {
-  HeadingTextPage({super.key, required this.text});
+  const HeadingTextPage({super.key, required this.text});
 
   final String text;
 

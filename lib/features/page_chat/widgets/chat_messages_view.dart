@@ -22,7 +22,9 @@ class ChatMessagesView extends GetView<TaskHomeController> {
       return ListView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        itemCount: controller.chatMessages.length + (controller.isGenerating.value ? 1 : 0),
+        itemCount:
+            controller.chatMessages.length +
+            (controller.isGenerating.value ? 1 : 0),
         itemBuilder: (context, index) {
           if (index == controller.chatMessages.length) {
             return Align(
@@ -31,7 +33,9 @@ class ChatMessagesView extends GetView<TaskHomeController> {
                 padding: const EdgeInsets.only(left: 16.0, top: 8, bottom: 16),
                 child: TypingIndicatorWave(
                   showIndicator: true,
-                  bubbleColor: ThemeHelper.isDark ? AppColors.secondary : Colors.white,
+                  bubbleColor: ThemeHelper.isDark
+                      ? AppColors.secondary
+                      : Colors.white,
                   dotColor: Colors.grey.shade400,
                 ),
               ),
@@ -53,7 +57,9 @@ class ChatMessagesView extends GetView<TaskHomeController> {
                   ? AppColors.primary.withValues(alpha: 0.9)
                   : (ThemeHelper.isDark ? AppColors.secondary : Colors.white),
               textStyle: GoogleFonts.inter(
-                color: msg.isSender ? Colors.white : (ThemeHelper.isDark ? Colors.white70 : Colors.black87),
+                color: msg.isSender
+                    ? Colors.white
+                    : (ThemeHelper.isDark ? Colors.white70 : Colors.black87),
                 fontSize: 15,
                 height: 1.4,
               ),
@@ -78,7 +84,7 @@ class ChatMessagesView extends GetView<TaskHomeController> {
 
         try {
           targetTask = controller.allTasks.firstWhere(
-                (t) => t.title == title && t.description == (description ?? ''),
+            (t) => t.title == title && t.description == (description ?? ''),
           );
         } catch (e) {
           DateTime? parsedDate;
@@ -119,13 +125,18 @@ class ChatMessagesView extends GetView<TaskHomeController> {
         decoration: BoxDecoration(
           color: AppColors.secondary,
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: AppColors.grey.withValues(alpha: ThemeHelper.isDark ? 0.15 : 0.3), width: 1),
+          border: Border.all(
+            color: AppColors.grey.withValues(
+              alpha: ThemeHelper.isDark ? 0.15 : 0.3,
+            ),
+            width: 1,
+          ),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withValues(alpha: 0.04),
               blurRadius: 12,
               offset: const Offset(0, 6),
-            )
+            ),
           ],
         ),
         child: Column(
@@ -150,7 +161,9 @@ class ChatMessagesView extends GetView<TaskHomeController> {
               ],
             ),
 
-            if (description != null && description != " " && description.isNotEmpty)
+            if (description != null &&
+                description != " " &&
+                description.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.only(top: 8),
                 child: Text(
@@ -182,14 +195,19 @@ class ChatMessagesView extends GetView<TaskHomeController> {
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.inter(
                       fontSize: 13,
-                      color: ThemeHelper.isDark ? Colors.white70 : Colors.black54,
+                      color: ThemeHelper.isDark
+                          ? Colors.white70
+                          : Colors.black54,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
                 ),
 
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 5,
+                  ),
                   decoration: BoxDecoration(
                     color: AppColors.primary.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(20),

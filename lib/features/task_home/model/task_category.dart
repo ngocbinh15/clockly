@@ -9,20 +9,28 @@ enum TaskCategory {
   teaching,
   work,
   health,
-  personal
+  personal,
 }
 
 extension TaskCategoryExtension on TaskCategory {
   String get displayName {
     switch (this) {
-      case TaskCategory.general: return 'General';
-      case TaskCategory.all: return 'All Tasks';
-      case TaskCategory.study: return 'Study';
-      case TaskCategory.coding: return 'Coding';
-      case TaskCategory.teaching: return 'Teaching';
-      case TaskCategory.work: return 'Work';
-      case TaskCategory.health: return 'Health';
-      case TaskCategory.personal: return 'Personal';
+      case TaskCategory.general:
+        return 'General';
+      case TaskCategory.all:
+        return 'All Tasks';
+      case TaskCategory.study:
+        return 'Study';
+      case TaskCategory.coding:
+        return 'Coding';
+      case TaskCategory.teaching:
+        return 'Teaching';
+      case TaskCategory.work:
+        return 'Work';
+      case TaskCategory.health:
+        return 'Health';
+      case TaskCategory.personal:
+        return 'Personal';
     }
   }
 
@@ -32,14 +40,22 @@ extension TaskCategoryExtension on TaskCategory {
 
   dynamic get icon {
     switch (this) {
-      case TaskCategory.general: return HugeIcons.strokeRoundedTask01;
-      case TaskCategory.all: return HugeIcons.strokeRoundedBorderFull;
-      case TaskCategory.study: return HugeIcons.strokeRoundedBookOpen01;
-      case TaskCategory.coding: return HugeIcons.strokeRoundedCodeCircle;
-      case TaskCategory.teaching: return HugeIcons.strokeRoundedPresentation02;
-      case TaskCategory.work: return HugeIcons.strokeRoundedBriefcase02;
-      case TaskCategory.health: return HugeIcons.strokeRoundedHeartAdd;
-      case TaskCategory.personal: return HugeIcons.strokeRoundedHome01;
+      case TaskCategory.general:
+        return HugeIcons.strokeRoundedTask01;
+      case TaskCategory.all:
+        return HugeIcons.strokeRoundedBorderFull;
+      case TaskCategory.study:
+        return HugeIcons.strokeRoundedBookOpen01;
+      case TaskCategory.coding:
+        return HugeIcons.strokeRoundedCodeCircle;
+      case TaskCategory.teaching:
+        return HugeIcons.strokeRoundedPresentation02;
+      case TaskCategory.work:
+        return HugeIcons.strokeRoundedBriefcase02;
+      case TaskCategory.health:
+        return HugeIcons.strokeRoundedHeartAdd;
+      case TaskCategory.personal:
+        return HugeIcons.strokeRoundedHome01;
     }
   }
 
@@ -74,7 +90,7 @@ extension TaskCategoryExtension on TaskCategory {
 
 TaskCategory categoryFromDb(String? dbValue) {
   return TaskCategory.values.firstWhere(
-        (e) => e.dbValue.toLowerCase() == dbValue!.toLowerCase(),
+    (e) => e.dbValue.toLowerCase() == dbValue!.toLowerCase(),
     orElse: () => TaskCategory.general,
   );
 }

@@ -12,13 +12,13 @@ import '../validators/validate.dart';
 
 class FormForgotPassword extends StatelessWidget {
   FormForgotPassword({super.key});
-  GlobalKey<FormState> formState = GlobalKey<FormState>();
+  final GlobalKey<FormState> formState = GlobalKey<FormState>();
   final controller = Get.find<ForgotPasswordController>();
   final authService = Get.find<AuthService>();
 
   @override
   Widget build(BuildContext context) {
-    return Form (
+    return Form(
       key: formState,
       autovalidateMode: AutovalidateMode.disabled,
       child: Column(

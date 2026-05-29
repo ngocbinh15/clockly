@@ -31,9 +31,7 @@ class PrioritySelector extends StatelessWidget {
           decoration: BoxDecoration(
             color: AppColors.background,
             borderRadius: BorderRadius.circular(100),
-            border: Border.all(
-              color: AppColors.grey.withValues(alpha: 0.2),
-            ),
+            border: Border.all(color: AppColors.grey.withValues(alpha: 0.2)),
           ),
           child: Row(
             children: priorities.map((priority) {
@@ -51,7 +49,9 @@ class PrioritySelector extends StatelessWidget {
                           : Colors.transparent,
                       borderRadius: BorderRadius.circular(100),
                       border: Border.all(
-                        color: isSelected ? AppColors.primary : Colors.transparent,
+                        color: isSelected
+                            ? AppColors.primary
+                            : Colors.transparent,
                         width: 1.5,
                       ),
                     ),
@@ -60,7 +60,9 @@ class PrioritySelector extends StatelessWidget {
                       style: GoogleFonts.inter(
                         fontSize: 14,
                         color: isSelected ? AppColors.primary : AppColors.grey,
-                        fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+                        fontWeight: isSelected
+                            ? FontWeight.w600
+                            : FontWeight.w500,
                       ),
                     ),
                   ),

@@ -18,7 +18,7 @@ class PageMainHome extends GetView<TaskHomeController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      final isDark = ThemeHelper.isDark;
+      final _ = ThemeHelper.isDark;
 
       return Scaffold(
         backgroundColor: AppColors.background,

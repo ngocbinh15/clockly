@@ -32,7 +32,7 @@ class LoginController extends GetxController {
 
       emailController.clear();
       passwordController.clear();
-    } on AuthException catch (e) {
+    } on AuthException catch (_) {
       AuthHelper.hideLoading();
       AppAlerts.error(message: AppMessages.defaultError);
     } catch (e) {

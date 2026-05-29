@@ -6,11 +6,11 @@ import 'package:google_fonts/google_fonts.dart';
 class AppInfo extends StatelessWidget {
   AppInfo({super.key});
 
-  final appInfoService = Get.find <AppInfoService> ();
+  final appInfoService = Get.find<AppInfoService>();
 
   @override
   Widget build(BuildContext context) {
-    return  Text(
+    return Text(
       "${appInfoService.appName} ${appInfoService.version}",
       style: GoogleFonts.inter(
         color: const Color(0xFF64748B),

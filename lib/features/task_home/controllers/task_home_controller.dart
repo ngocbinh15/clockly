@@ -2,10 +2,12 @@ import 'package:clockly/core/components/app_alerts.dart';
 import 'package:clockly/core/constants/app_message.dart';
 import 'package:clockly/core/services/ai_service.dart';
 import 'package:clockly/core/services/auth_service.dart';
+import 'package:clockly/core/services/notification_service.dart';
+import 'package:clockly/core/theme/app_colors.dart';
 import 'package:clockly/features/auth/controllers/auth_helper.dart';
 import 'package:clockly/features/page_chat/model/local_chat_message.dart';
+import 'package:clockly/features/setting/controller/notification_controller.dart';
 import 'package:confetti/confetti.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -15,12 +17,17 @@ import '../../../core/utils/date_helper.dart';
 import '../model/task.dart';
 import '../model/task_category.dart';
 
+import 'package:app_links/app_links.dart';
+import 'package:clockly/features/page_chat/widgets/quick_task_dialog.dart';
+
 class TaskHomeController extends GetxController {
   final String today = DateFormat('MMM dd, yyyy').format(DateTime.now());
   final currUser = Get.find<AuthService>().currentUser.value;
   RxString selected = "All Tasks".obs;
 
   final aiService = Get.find<AiService>();
+  final notificationService = Get.find<NotificationService>();
+  final notificationController = Get.find<NotificationController>();
 
   late ConfettiController confettiController;
 
@@ -28,7 +35,7 @@ class TaskHomeController extends GetxController {
   var isGenerating = false.obs;
   var isGenerated = false.obs;
   String taskPrompt = "";
-  var chatMessages = <LocalChatMessage> [].obs;
+  var chatMessages = <LocalChatMessage>[].obs;
 
   var isSend = false.obs;
 
@@ -50,6 +57,7 @@ class TaskHomeController extends GetxController {
   late TextEditingController decriptionController;
   late TextEditingController dateController;
   late TextEditingController chatController;
+  late TextEditingController quickTaskController;
 
   GlobalKey<FormState> formStateAddTask = GlobalKey<FormState>();
 
@@ -57,16 +65,22 @@ class TaskHomeController extends GetxController {
 
   late final RealtimeChannel _realtimeChannel;
 
+  final _appLinks = AppLinks();
+
   @override
   void onInit() {
     super.onInit();
     fetchTasks();
-    confettiController = ConfettiController(duration: const Duration(seconds: 1));
+    confettiController = ConfettiController(
+      duration: const Duration(seconds: 1),
+    );
     nameController = TextEditingController();
     decriptionController = TextEditingController();
     dateController = TextEditingController();
     chatController = TextEditingController();
+    quickTaskController = TextEditingController();
     _setupRealtimeTaskList();
+    _initDeepLinkListener();
   }
 
   @override
@@ -77,6 +91,7 @@ class TaskHomeController extends GetxController {
     decriptionController.dispose();
     dateController.dispose();
     chatController.dispose();
+    quickTaskController.dispose();
     super.onClose();
   }
 
@@ -88,6 +103,16 @@ class TaskHomeController extends GetxController {
     isGenerating.value = false;
     isGenerated.value = false;
     isSend.value = false;
+  }
+
+  void _initDeepLinkListener() {
+    _appLinks.uriLinkStream.listen((uri) {
+      if (uri.scheme == 'clockly' && uri.host == 'addtask') {
+        Future.delayed(const Duration(milliseconds: 300), () {
+          Get.dialog(const QuickTaskDialog(), barrierDismissible: true);
+        });
+      }
+    });
   }
 
   Future<void> generateTask() async {
@@ -108,7 +133,6 @@ class TaskHomeController extends GetxController {
       selectedAddTask.value = newTask["category"] ?? "General";
 
       isGenerated.value = true;
-
     } catch (e) {
       AppAlerts.error(message: e.toString());
     } finally {
@@ -125,7 +149,7 @@ class TaskHomeController extends GetxController {
     try {
       final result = await Future.wait([
         aiService.parseTaskFromText(text),
-        Future.delayed(const Duration(milliseconds: 1500))
+        Future.delayed(const Duration(milliseconds: 1500)),
       ]);
 
       final newTask = result[0] as Map<String, dynamic>?;
@@ -137,17 +161,21 @@ class TaskHomeController extends GetxController {
         selectedPriority.value = newTask["priority"] ?? "Low";
         selectedAddTask.value = newTask["category"] ?? "General";
 
-        chatMessages.add(LocalChatMessage(
+        chatMessages.add(
+          LocalChatMessage(
             text: "Task added successfully! Here are the details ✨",
-            isSender: false
-        ));
+            isSender: false,
+          ),
+        );
 
-        chatMessages.add(LocalChatMessage(
+        chatMessages.add(
+          LocalChatMessage(
             text: "",
             isSender: false,
             isTaskCard: true,
             taskData: newTask,
-        ));
+          ),
+        );
 
         await saveTaskFromChatSilent();
       }
@@ -163,24 +191,31 @@ class TaskHomeController extends GetxController {
       DateTime? parsedDate;
       if (dateController.text.isNotEmpty) {
         try {
-          parsedDate = DateFormat('MMM dd, yyyy - hh:mm a').parse(dateController.text);
+          parsedDate = DateFormat(
+            'MMM dd, yyyy - hh:mm a',
+          ).parse(dateController.text);
         } catch (_) {
           parsedDate = DateTime.tryParse(dateController.text);
         }
       }
 
+      final userId = _authService.currentUser.value?.id;
+      if (userId == null) {
+        AppAlerts.error(message: "Your login session has expired.");
+        return;
+      }
+
       await _supabase.from('tasks').insert({
-        'profile_id': currUser!.id,
+        'profile_id': userId,
         'title': nameController.text.trim(),
         'description': decriptionController.text.trim(),
         'status': 'pending',
         'priority': selectedPriority.value.toLowerCase(),
         'due_date': parsedDate?.toIso8601String(),
-        'category': selectedAddTask.value.toLowerCase()
+        'category': selectedAddTask.value.toLowerCase(),
       });
 
       await fetchTasks();
-
     } catch (e) {
       AppAlerts.error(message: e.toString());
     }
@@ -190,19 +225,22 @@ class TaskHomeController extends GetxController {
     _realtimeChannel = _supabase
         .channel('public:tasks')
         .onPostgresChanges(
-      event: PostgresChangeEvent.all,
-      schema: 'public',
-      table: 'tasks',
-      callback: (payload) {
-        fetchTasks();
-      },
-    ).subscribe();
+          event: PostgresChangeEvent.all,
+          schema: 'public',
+          table: 'tasks',
+          callback: (payload) {
+            fetchTasks();
+          },
+        )
+        .subscribe();
   }
 
   void prepareEditData(TaskModel task) {
     nameController.text = task.title;
     decriptionController.text = task.description ?? '';
-    dateController.text = task.dueDate != null ? DateHelper.formatDateTime(task.dueDate!) : '';
+    dateController.text = task.dueDate != null
+        ? DateHelper.formatDateTime(task.dueDate!)
+        : '';
 
     selectedPriority.value = task.priority.isNotEmpty
         ? "${task.priority[0].toUpperCase()}${task.priority.substring(1)}"
@@ -215,18 +253,23 @@ class TaskHomeController extends GetxController {
     try {
       DateTime? parsedDate;
       if (dateController.text.isNotEmpty) {
-        parsedDate = DateFormat('MMM dd, yyyy - hh:mm a').parse(dateController.text);
+        parsedDate = DateFormat(
+          'MMM dd, yyyy - hh:mm a',
+        ).parse(dateController.text);
       }
 
       AuthHelper.showLoading();
 
-      await _supabase.from('tasks').update({
-        'title': nameController.text.trim(),
-        'description': decriptionController.text.trim(),
-        'priority': selectedPriority.value.toLowerCase(),
-        'due_date': parsedDate?.toIso8601String(),
-        'category': selectedAddTask.value.toLowerCase()
-      }).eq('id', taskId);
+      await _supabase
+          .from('tasks')
+          .update({
+            'title': nameController.text.trim(),
+            'description': decriptionController.text.trim(),
+            'priority': selectedPriority.value.toLowerCase(),
+            'due_date': parsedDate?.toIso8601String(),
+            'category': selectedAddTask.value.toLowerCase(),
+          })
+          .eq('id', taskId);
 
       await fetchTasks();
 
@@ -239,7 +282,6 @@ class TaskHomeController extends GetxController {
       dateController.clear();
       selectedAddTask.value = "General";
       selectedPriority.value = "Low";
-
     } catch (e) {
       AuthHelper.hideLoading();
       AppAlerts.error(message: "Lỗi cập nhật: $e");
@@ -258,7 +300,9 @@ class TaskHomeController extends GetxController {
     try {
       DateTime? parsedDate;
       if (dateController.text.isNotEmpty) {
-        parsedDate = DateFormat('MMM dd, yyyy - hh:mm a').parse(dateController.text);
+        parsedDate = DateFormat(
+          'MMM dd, yyyy - hh:mm a',
+        ).parse(dateController.text);
       }
 
       isTyping.value = false;
@@ -271,18 +315,17 @@ class TaskHomeController extends GetxController {
         'status': 'pending',
         'priority': selectedPriority.value.toLowerCase(),
         'due_date': parsedDate?.toIso8601String(),
-        'category': selectedAddTask.value.toLowerCase()
+        'category': selectedAddTask.value.toLowerCase(),
       }).select();
 
       final String newTaskId = taskResponse.first['id'];
 
       if (selectedMemberIds.isNotEmpty) {
-        final List<Map<String, dynamic>> membersToInsert = selectedMemberIds.map((userId) {
-          return {
-            'task_id': newTaskId,
-            'profile_id': userId,
-          };
-        }).toList();
+        final List<Map<String, dynamic>> membersToInsert = selectedMemberIds
+            .map((userId) {
+              return {'task_id': newTaskId, 'profile_id': userId};
+            })
+            .toList();
 
         await _supabase.from('task_members').insert(membersToInsert);
       }
@@ -312,7 +355,9 @@ class TaskHomeController extends GetxController {
     if (selected.value == TaskCategory.all.displayName) {
       return allTasks;
     }
-    return allTasks.where((task) => task.category.displayName == selected.value).toList();
+    return allTasks
+        .where((task) => task.category.displayName == selected.value)
+        .toList();
   }
 
   List<TaskModel> get todayTasks {
@@ -346,7 +391,14 @@ class TaskHomeController extends GetxController {
 
   List<TaskModel> get upcomingTasks {
     final tomorrow = DateTime.now().add(const Duration(days: 1));
-    final endOfTomorrow = DateTime(tomorrow.year, tomorrow.month, tomorrow.day, 23, 59, 59);
+    final endOfTomorrow = DateTime(
+      tomorrow.year,
+      tomorrow.month,
+      tomorrow.day,
+      23,
+      59,
+      59,
+    );
     return filteredTasks.where((task) {
       if (task.dueDate == null) return false;
       return task.dueDate!.isAfter(endOfTomorrow);
@@ -370,7 +422,9 @@ class TaskHomeController extends GetxController {
           .eq('profile_id', userId);
 
       List<TaskModel> tempList = [];
-      tempList.addAll(myTasksResponse.map((e) => TaskModel.fromMap(e)).toList());
+      tempList.addAll(
+        myTasksResponse.map((e) => TaskModel.fromMap(e)).toList(),
+      );
 
       for (var row in teamTasksResponse) {
         if (row['tasks'] != null) {
@@ -418,11 +472,19 @@ class TaskHomeController extends GetxController {
         taskMembersMap.clear();
       }
 
+      updateAllNotifications();
     } catch (e) {
       AppAlerts.error(message: "Lỗi tải Task: $e");
     } finally {
-    isLoading.value = false;
+      isLoading.value = false;
+    }
   }
+
+  Future<void> updateAllNotifications() async {
+    await notificationService.clearAllData();
+
+    await notificationController.createAllTasksNotification();
+    await notificationController.createSingleTaskNotification();
   }
 
   Future<void> toggleTaskStatus(TaskModel task) async {
@@ -460,6 +522,7 @@ class TaskHomeController extends GetxController {
 
     try {
       await _supabase.from('tasks').delete().eq('id', task.id);
+      notificationService.cancelNotification(task.id.hashCode);
       AppAlerts.success(message: AppMessages.deleteSuccess);
     } catch (e) {
       AppAlerts.error(message: "$e");
@@ -512,5 +575,27 @@ class TaskHomeController extends GetxController {
 
     selected.value = categoryName;
     currentCategoryIndex.value = newIndex;
+  }
+
+  Future<void> processQuickTask() async {
+    final text = quickTaskController.text.trim();
+    if (text.isEmpty) return;
+
+    Get.back();
+
+    nameController.text = text;
+    quickTaskController.clear();
+
+    AppAlerts.success(
+      message: "AI is analyzing your task",
+      title: "Processing...",
+      color: AppColors.primary.withValues(alpha: 0.5),
+    );
+
+    await handleChatSubmission(text);
+
+    AppAlerts.success(message: "Task added to your list.");
+
+    resetStateController();
   }
 }

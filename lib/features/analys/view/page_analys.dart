@@ -7,7 +7,6 @@ import 'package:clockly/features/analys/widget/productivity_trend_card.dart';
 import 'package:clockly/features/analys/widget/weekly_performance_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../../core/constants/app_size.dart';
 import '../../../core/theme/app_colors.dart';
@@ -49,7 +48,6 @@ class PageAnalys extends GetView<AnalysisController> {
                   const SizedBox(height: AppSizes.p24),
 
                   CustomPieChart(),
-
 
                   const SizedBox(height: AppSizes.p16),
 

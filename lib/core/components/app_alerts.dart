@@ -1,4 +1,5 @@
 import 'package:clockly/core/theme/app_colors.dart';
+import 'package:flutter/material.dart';
 
 import '../constants/app_message.dart';
 import 'custom_snackbar.dart';
@@ -6,9 +7,10 @@ import 'custom_snackbar.dart';
 class AppAlerts {
   static void success({
     String title = AppMessages.success,
+    Color? color,
     required String message,
   }) {
-    CustomSnackbar.snackbar(title, message, AppColors.green);
+    CustomSnackbar.snackbar(title, message, color ?? AppColors.green);
   }
 
   static void error({

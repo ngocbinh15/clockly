@@ -1,6 +1,5 @@
 import 'package:clockly/core/constants/app_size.dart';
 import 'package:clockly/core/theme/app_colors.dart';
-import 'package:clockly/features/auth/controllers/login_controller.dart';
 import 'package:clockly/features/auth/controllers/otp_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -34,9 +33,7 @@ class AuthHelper {
                   ),
                 ],
               ),
-              child: CircularProgressIndicator(
-                color: AppColors.primary,
-              ),
+              child: CircularProgressIndicator(color: AppColors.primary),
             ),
           ),
         ),
@@ -62,15 +59,10 @@ class AuthHelper {
     Get.dialog(
       barrierDismissible: false,
       Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(24),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
         insetPadding: const EdgeInsets.symmetric(horizontal: 24),
         child: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 24,
-            vertical: 28,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 28),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(24),
@@ -95,10 +87,7 @@ class AuthHelper {
 
               const Text(
                 "Verify OTP",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
 
               const SizedBox(height: 8),
@@ -106,86 +95,85 @@ class AuthHelper {
               Text(
                 "Enter the 6-digit code sent to your email",
                 textAlign: TextAlign.center,
-                style: GoogleFonts.inter(
-                  fontSize: 14,
-                  color: Colors.grey[600],
-                ),
+                style: GoogleFonts.inter(fontSize: 14, color: Colors.grey[600]),
               ),
 
               const SizedBox(height: 24),
 
-              Obx(() => MaterialPinField(
-                length: 6,
-                pinController: controller.pinController,
-                errorText: controller.otpErrorText.value,
+              Obx(
+                () => MaterialPinField(
+                  length: 6,
+                  pinController: controller.pinController,
+                  errorText: controller.otpErrorText.value,
 
-                theme: MaterialPinTheme(
-                  shape: MaterialPinShape.outlined,
-                  cellSize: const Size(45, 55),
-                  borderRadius: BorderRadius.circular(AppSizes.p12),
+                  theme: MaterialPinTheme(
+                    shape: MaterialPinShape.outlined,
+                    cellSize: const Size(45, 55),
+                    borderRadius: BorderRadius.circular(AppSizes.p12),
 
-                  focusedBorderColor: AppColors.primary,
-                  focusedFillColor: AppColors.secondary,
-                  focusedElevation: 0,
-                  completeBorderColor: AppColors.grey.withValues(alpha: 0.7),
-                  completeFillColor: AppColors.background,
-                  filledBorderColor: AppColors.primary.withValues(alpha: 0.4),
-                  filledFillColor: AppColors.secondary,
-                  borderColor: AppColors.grey.withValues(alpha: 0.4),
-                  fillColor: AppColors.background,
+                    focusedBorderColor: AppColors.primary,
+                    focusedFillColor: AppColors.secondary,
+                    focusedElevation: 0,
+                    completeBorderColor: AppColors.grey.withValues(alpha: 0.7),
+                    completeFillColor: AppColors.background,
+                    filledBorderColor: AppColors.primary.withValues(alpha: 0.4),
+                    filledFillColor: AppColors.secondary,
+                    borderColor: AppColors.grey.withValues(alpha: 0.4),
+                    fillColor: AppColors.background,
 
-                  textStyle: GoogleFonts.inter(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.primary,
+                    textStyle: GoogleFonts.inter(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.primary,
+                    ),
+
+                    errorBorderColor: AppColors.red,
+                    errorFillColor: AppColors.red.withValues(alpha: 0.1),
+                    errorAnimationDuration: const Duration(milliseconds: 500),
                   ),
 
-                  errorBorderColor: AppColors.red,
-                  errorFillColor: AppColors.red.withValues(alpha: 0.1),
-                  errorAnimationDuration: const Duration(milliseconds: 500),
-                ),
+                  onChanged: (value) {
+                    if (controller.otpErrorText.value != null) {
+                      controller.otpErrorText.value = null;
+                    }
+                  },
 
-                onChanged: (value) {
-                  if (controller.otpErrorText.value != null) {
-                    controller.otpErrorText.value = null;
-                  }
-                },
+                  onCompleted: (value) {
+                    controller.confirmOTP(value, type, email);
+                  },
 
-                onCompleted: (value) {
-                  controller.confirmOTP(value, type, email);
-                },
+                  errorBuilder: (errorText) {
+                    if (errorText == null || errorText.isEmpty) {
+                      return const SizedBox.shrink();
+                    }
 
-                errorBuilder: (errorText) {
-                  if (errorText == null || errorText.isEmpty) {
-                    return const SizedBox.shrink();
-                  }
-
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 16.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        HugeIcon(
-                        icon: HugeIcons.strokeRoundedSettingError03,
-                          color: AppColors.red,
-                          size: 18,
-                        ),
-                        const SizedBox(width: 8),
-                        Text(
-                          errorText,
-                          style: GoogleFonts.inter(
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 16.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          HugeIcon(
+                            icon: HugeIcons.strokeRoundedSettingError03,
                             color: AppColors.red,
-                            fontSize: 13,
-                            fontWeight: FontWeight.w500,
+                            size: 18,
                           ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              )),
+                          const SizedBox(width: 8),
+                          Text(
+                            errorText,
+                            style: GoogleFonts.inter(
+                              color: AppColors.red,
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
 
-              SizedBox(height: AppSizes.p24 ),
+              SizedBox(height: AppSizes.p24),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

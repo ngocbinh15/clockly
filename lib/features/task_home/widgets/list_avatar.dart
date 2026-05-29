@@ -3,14 +3,16 @@ import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
 
 class ListAvatar extends StatelessWidget {
-  ListAvatar({super.key, required this.avatarUrls});
+  const ListAvatar({super.key, required this.avatarUrls});
 
-  List<String> avatarUrls;
+  final List<String> avatarUrls;
 
   @override
   Widget build(BuildContext context) {
     const int maxDisplay = 3;
-    final int displayCount = avatarUrls.length > maxDisplay ? maxDisplay : avatarUrls.length;
+    final int displayCount = avatarUrls.length > maxDisplay
+        ? maxDisplay
+        : avatarUrls.length;
 
     const double avatarSize = 24.0;
     const double overlap = 10.0;

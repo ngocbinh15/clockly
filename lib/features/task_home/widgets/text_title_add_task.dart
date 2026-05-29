@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import '../../../core/utils/theme_helper.dart';
 
 class TextTitleAddTask extends StatelessWidget {
-  TextTitleAddTask({super.key, required this.text});
+  const TextTitleAddTask({super.key, required this.text});
 
   final String text;
 

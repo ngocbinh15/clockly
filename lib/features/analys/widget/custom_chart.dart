@@ -87,7 +87,7 @@ class CustomChart extends GetView<AnalysisController> {
           value: 100,
           title: '',
           radius: 50,
-        )
+        ),
       ];
     }
 

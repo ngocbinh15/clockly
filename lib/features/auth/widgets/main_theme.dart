@@ -6,8 +6,8 @@ import '../../../core/constants/app_size.dart';
 import '../../../core/theme/app_colors.dart';
 
 class MainTheme extends StatelessWidget {
-  MainTheme({super.key, required this.body});
-  Widget body;
+  const MainTheme({super.key, required this.body});
+  final Widget body;
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +18,7 @@ class MainTheme extends StatelessWidget {
         height: double.infinity,
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [
-              AppColors.background,
-              AppColors.primary,
-            ],
+            colors: [AppColors.background, AppColors.primary],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -39,13 +36,15 @@ class MainTheme extends StatelessWidget {
                     child: BackdropFilter(
                       filter: ImageFilter.blur(sigmaX: 16.0, sigmaY: 16.0),
                       child: Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: AppSizes.p24, vertical: AppSizes.p32),
-                          decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: 0.6),
-                            borderRadius: BorderRadius.circular(AppSizes.p24),
-                          ),
-                          child: body
+                        padding: EdgeInsets.symmetric(
+                          horizontal: AppSizes.p24,
+                          vertical: AppSizes.p32,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.6),
+                          borderRadius: BorderRadius.circular(AppSizes.p24),
+                        ),
+                        child: body,
                       ),
                     ),
                   ),

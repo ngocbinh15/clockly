@@ -22,52 +22,43 @@ import '../features/task_home/bidings/main_home_biding.dart';
 class AppPages {
   static final routes = [
     GetPage(
-        name: AppRoutes.login,
-        page: () => PageLogin(),
-      binding: LoginBidings()
+      name: AppRoutes.login,
+      page: () => PageLogin(),
+      binding: LoginBidings(),
     ),
     GetPage(
-        name: AppRoutes.home,
-        page: () => PageMainHome(),
-      binding: MainHomeBiding()
+      name: AppRoutes.home,
+      page: () => PageMainHome(),
+      binding: MainHomeBiding(),
     ),
     GetPage(
-        name: AppRoutes.splash,
-        page: () => PageSplash(),
-      binding: SplashBidings()
+      name: AppRoutes.splash,
+      page: () => PageSplash(),
+      binding: SplashBidings(),
     ),
     GetPage(
-        name: AppRoutes.forgotPassword,
-        page: () => PageForgotpassword(),
-      binding: ForgotPasswordBidings()
+      name: AppRoutes.forgotPassword,
+      page: () => PageForgotpassword(),
+      binding: ForgotPasswordBidings(),
     ),
 
+    GetPage(name: AppRoutes.resetPassword, page: () => PageResetPassword()),
     GetPage(
-        name: AppRoutes.resetPassword,
-        page: () => PageResetPassword(),
+      name: AppRoutes.signUp,
+      page: () => PageSignUp(),
+      binding: SignUpBidings(),
     ),
     GetPage(
-        name: AppRoutes.signUp,
-        page: () => PageSignUp(),
-      binding: SignUpBidings()
+      name: AppRoutes.editProfile,
+      page: () => PageEditProfile(),
+      binding: EditBidings(),
     ),
     GetPage(
-        name: AppRoutes.editProfile,
-        page: () => PageEditProfile(),
-      binding: EditBidings()
+      name: AppRoutes.setting,
+      page: () => PageSettings(),
+      binding: SettingsBinding(),
     ),
-    GetPage(
-        name: AppRoutes.setting,
-        page: () => PageSettings(),
-      binding: SettingsBinding()
-    ),
-    GetPage(
-        name: AppRoutes.chat,
-        page: () => PageChat(),
-    ),
-    GetPage(
-      name: AppRoutes.subcription,
-       page: () => PageSubcription(),
-       )
+    GetPage(name: AppRoutes.chat, page: () => PageChat()),
+    GetPage(name: AppRoutes.subcription, page: () => PageSubcription()),
   ];
 }

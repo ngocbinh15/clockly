@@ -25,14 +25,16 @@ class EditableAvatar extends GetView<EditProfileController> {
                   color: Colors.black.withValues(alpha: 0.04),
                   blurRadius: 16,
                   offset: const Offset(0, 6),
-                )
+                ),
               ],
             ),
             child: Obx(() {
               if (controller.selectedImagePath.value.isNotEmpty) {
                 return CircleAvatar(
                   radius: 60,
-                  backgroundImage: FileImage(File(controller.selectedImagePath.value)),
+                  backgroundImage: FileImage(
+                    File(controller.selectedImagePath.value),
+                  ),
                 );
               } else if (controller.avatarUrl.value.isNotEmpty) {
                 return CircleAvatar(
@@ -43,7 +45,11 @@ class EditableAvatar extends GetView<EditProfileController> {
                 return CircleAvatar(
                   radius: 60,
                   backgroundColor: AppColors.grey.withValues(alpha: 0.1),
-                  child: Icon(Icons.person_rounded, size: 50, color: AppColors.grey),
+                  child: Icon(
+                    Icons.person_rounded,
+                    size: 50,
+                    color: AppColors.grey,
+                  ),
                 );
               }
             }),
@@ -56,7 +62,11 @@ class EditableAvatar extends GetView<EditProfileController> {
               shape: BoxShape.circle,
               border: Border.all(color: AppColors.secondary, width: 3),
             ),
-            child: const Icon(Icons.camera_alt_rounded, color: Colors.white, size: 16),
+            child: const Icon(
+              Icons.camera_alt_rounded,
+              color: Colors.white,
+              size: 16,
+            ),
           ),
         ],
       ),

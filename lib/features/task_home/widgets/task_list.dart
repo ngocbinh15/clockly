@@ -16,7 +16,12 @@ import '../model/task.dart';
 import '../model/task_category.dart';
 
 class TaskList extends GetView<TaskHomeController> {
-  const TaskList({super.key, required this.label, required this.tasks, this.labelColor});
+  const TaskList({
+    super.key,
+    required this.label,
+    required this.tasks,
+    this.labelColor,
+  });
 
   final String label;
   final List<TaskModel> tasks;
@@ -51,166 +56,195 @@ class TaskList extends GetView<TaskHomeController> {
               final task = tasks[index];
               final isCompleted = task.status == 'completed';
 
-              final List<String> listAvatars = controller.taskMembersMap[task.id] ?? [];
+              final List<String> listAvatars =
+                  controller.taskMembersMap[task.id] ?? [];
               final bool isTeamTask = listAvatars.isNotEmpty;
 
               return Padding(
                 padding: EdgeInsets.only(bottom: AppSizes.p12),
                 child: Slidable(
-                    key: ValueKey(task.id),
-                    startActionPane: ActionPane(
-                        motion: const StretchMotion(),
-                        children: [
-                          CustomSlidableAction(
-                            onPressed: (context) {
-                              CustomDialog.confirmDialog(
-                                title: "Delete task?",
-                                content: "This will permanently delete this task. You can’t undo this action.",
-                                cancel: "Cancel",
-                                confirm: "Delete",
-                                onConfirm: () => controller.deleteTask(task),
-                              );
-                            },
-                            backgroundColor: AppColors.fouth,
-                            borderRadius: BorderRadius.circular(16),
-                            child: const SizedBox(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  HugeIcon(
-                                    icon: HugeIcons.strokeRoundedDelete02,
-                                    color: Colors.white,
-                                    size: 22,
-                                  ),
-                                  SizedBox(height: 4),
-                                  Text('Delete', style: TextStyle(color: Colors.white)),
-                                ],
-                              ),
-                            ),
-                          )
-                        ]
-                    ),
-                    child: Container(
-                      padding: const EdgeInsets.all(AppSizes.p16),
-                      decoration: BoxDecoration(
-                        color: isCompleted ? AppColors.background : AppColors.secondary,
+                  key: ValueKey(task.id),
+                  startActionPane: ActionPane(
+                    motion: const StretchMotion(),
+                    children: [
+                      CustomSlidableAction(
+                        onPressed: (context) {
+                          CustomDialog.confirmDialog(
+                            title: "Delete task?",
+                            content:
+                                "This will permanently delete this task. You can’t undo this action.",
+                            cancel: "Cancel",
+                            confirm: "Delete",
+                            onConfirm: () => controller.deleteTask(task),
+                          );
+                        },
+                        backgroundColor: AppColors.fouth,
                         borderRadius: BorderRadius.circular(16),
-                        border: Border(
-                          right: BorderSide(
-                            color: controller.getPriorityColor(task.priority),
-                            width: 4,
+                        child: const SizedBox(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              HugeIcon(
+                                icon: HugeIcons.strokeRoundedDelete02,
+                                color: Colors.white,
+                                size: 22,
+                              ),
+                              SizedBox(height: 4),
+                              Text(
+                                'Delete',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ],
                           ),
                         ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.03),
-                            blurRadius: 10,
-                            offset: const Offset(0, 4),
-                          )
-                        ],
                       ),
-                      child: Row(
-                        children: [
-                          Transform.scale(
-                            scale: 1.25,
-                            child: GestureDetector(
-                              child: Checkbox(
-                                side: BorderSide(color: AppColors.grey, width: 1.2),
-                                value: isCompleted,
-                                shape: const CircleBorder(),
-                                activeColor: AppColors.primary,
-                                onChanged: (bool? newValue) {
-                                  controller.toggleTaskStatus(task);
-
-                                  if (newValue == true) {
-                                    HapticFeedback.heavyImpact();
-                                    controller.playConfetti();
-                                  }
-                                },
+                    ],
+                  ),
+                  child: Container(
+                    padding: const EdgeInsets.all(AppSizes.p16),
+                    decoration: BoxDecoration(
+                      color: isCompleted
+                          ? AppColors.background
+                          : AppColors.secondary,
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border(
+                        right: BorderSide(
+                          color: controller.getPriorityColor(task.priority),
+                          width: 4,
+                        ),
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.03),
+                          blurRadius: 10,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      children: [
+                        Transform.scale(
+                          scale: 1.25,
+                          child: GestureDetector(
+                            child: Checkbox(
+                              side: BorderSide(
+                                color: AppColors.grey,
+                                width: 1.2,
                               ),
-                            ),
-                          ),
-                          const SizedBox(width: AppSizes.p8),
+                              value: isCompleted,
+                              shape: const CircleBorder(),
+                              activeColor: AppColors.primary,
+                              onChanged: (bool? newValue) {
+                                controller.toggleTaskStatus(task);
 
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  task.title,
-                                  style: GoogleFonts.inter(
-                                    color: isCompleted ? AppColors.grey : (ThemeHelper.isDark ? Colors.white70 : Colors.black87),
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 17,
-                                    letterSpacing: 0,
-                                    decoration: isCompleted ? TextDecoration.lineThrough : null,
-                                  ),
-                                ),
-                                const SizedBox(height: 6),
-
-                                Row(
-                                  children: [
-                                    Container(
-                                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                                      decoration: BoxDecoration(
-                                        color: isCompleted ? AppColors.grey.withValues(alpha: 0.1) : task.category.color.withValues(alpha: 0.1),
-                                        borderRadius: BorderRadius.circular(6),
-                                      ),
-                                      child: Text(
-                                        task.category.displayName.toUpperCase(),
-                                        style: GoogleFonts.inter(
-                                          color: isCompleted ? AppColors.grey : task.category.color,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-
-                                    SizedBox(width: AppSizes.p12,),
-
-                                    Text(
-                                      controller.formatTime(task.dueDate),
-                                      style: GoogleFonts.inter(
-                                        color: AppColors.third,
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-
-
-                                if (isTeamTask) ...[
-                                  SizedBox(height: AppSizes.p8),
-                                  ListAvatar(avatarUrls: listAvatars,),
-                                ],
-                              ],
-                            ),
-                          ),
-
-                          if (!isCompleted)
-                            IconButton(
-                              icon: const Icon(Icons.more_vert, color: Colors.grey),
-                              onPressed: () {
-                                Get.bottomSheet(
-                                  TaskDetailsBottomSheet(
-                                    task: task,
-                                    isTeamTask: isTeamTask,
-                                    listAvatars: listAvatars,
-                                  ),
-                                  isScrollControlled: true,
-                                  backgroundColor: Colors.transparent,
-                                );
+                                if (newValue == true) {
+                                  HapticFeedback.heavyImpact();
+                                  controller.playConfetti();
+                                }
                               },
-                            )
-                        ],
-                      ),
-                    )
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: AppSizes.p8),
+
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                task.title,
+                                style: GoogleFonts.inter(
+                                  color: isCompleted
+                                      ? AppColors.grey
+                                      : (ThemeHelper.isDark
+                                            ? Colors.white70
+                                            : Colors.black87),
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 17,
+                                  letterSpacing: 0,
+                                  decoration: isCompleted
+                                      ? TextDecoration.lineThrough
+                                      : null,
+                                ),
+                              ),
+                              const SizedBox(height: 6),
+
+                              Row(
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 8,
+                                      vertical: 4,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: isCompleted
+                                          ? AppColors.grey.withValues(
+                                              alpha: 0.1,
+                                            )
+                                          : task.category.color.withValues(
+                                              alpha: 0.1,
+                                            ),
+                                      borderRadius: BorderRadius.circular(6),
+                                    ),
+                                    child: Text(
+                                      task.category.displayName.toUpperCase(),
+                                      style: GoogleFonts.inter(
+                                        color: isCompleted
+                                            ? AppColors.grey
+                                            : task.category.color,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+
+                                  SizedBox(width: 10),
+
+                                  Text(
+                                    controller.formatTime(task.dueDate),
+                                    style: GoogleFonts.inter(
+                                      color: AppColors.third,
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+                              if (isTeamTask) ...[
+                                SizedBox(height: AppSizes.p8),
+                                ListAvatar(avatarUrls: listAvatars),
+                              ],
+                            ],
+                          ),
+                        ),
+
+                        if (!isCompleted)
+                          IconButton(
+                            icon: const Icon(
+                              Icons.more_vert,
+                              color: Colors.grey,
+                            ),
+                            onPressed: () {
+                              Get.bottomSheet(
+                                TaskDetailsBottomSheet(
+                                  task: task,
+                                  isTeamTask: isTeamTask,
+                                  listAvatars: listAvatars,
+                                ),
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent,
+                              );
+                            },
+                          ),
+                      ],
+                    ),
+                  ),
                 ),
               );
             },
-          )
+          ),
         ],
       ),
     );
