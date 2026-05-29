@@ -79,14 +79,12 @@ class NotificationService extends GetxService {
           : 'No tasks scheduled for today. Enjoy your day!',
       scheduledDate: time,
       notificationDetails: const NotificationDetails(android: androidDetails),
-      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
     );
 
     if (!totalDailyIds.contains(id.toString())) {
       totalDailyIds.add(id.toString());
       await _saveDailyIds();
-
-      print(totalDailyIds.length);
     }
   }
 
@@ -125,7 +123,6 @@ class NotificationService extends GetxService {
     if (!totalSingleIds.contains(id.toString())) {
       totalSingleIds.add(id.toString());
       await _saveSingleIds();
-      print(totalSingleIds.length);
     }
   }
 
@@ -147,7 +144,6 @@ class NotificationService extends GetxService {
     await Future.wait(cancels);
     totalSingleIds.clear();
     await _saveSingleIds();
-    print(totalDailyIds.length);
   }
 
   Future<void> cancelAllDailyNotifications() async {
@@ -160,7 +156,6 @@ class NotificationService extends GetxService {
     await Future.wait(cancels);
     totalDailyIds.clear();
     await _saveDailyIds();
-    print(totalDailyIds.length);
   }
 
   Future<void> clearAllData() async {

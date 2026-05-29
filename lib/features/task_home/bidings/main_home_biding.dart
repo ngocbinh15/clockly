@@ -1,3 +1,4 @@
+import 'package:clockly/features/setting/controller/notification_controller.dart';
 import 'package:get/get.dart';
 import '../../analys/controller/analysis_controller.dart';
 import '../../calendar/controller/calendar_controller.dart';
@@ -11,5 +12,6 @@ class MainHomeBiding extends Bindings {
     Get.lazyPut(() => TeamController());
     Get.lazyPut(() => AnalysisController());
     Get.lazyPut(() => CalendarController());
+    Get.put(NotificationController());
   }
 }
