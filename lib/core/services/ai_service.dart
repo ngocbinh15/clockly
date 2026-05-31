@@ -10,7 +10,6 @@ class AiService extends GetxService {
 
   final _groqApiKey = dotenv.env['GROQ_API_KEY'] ?? "";
 
-
   Future<Map<String, dynamic>?> parseTaskFromText(String prompt) async {
     if (_groqApiKey.trim().isEmpty) {
       AppAlerts.error(message: "API Key is missing");
@@ -31,7 +30,8 @@ class AiService extends GetxService {
           "messages": [
             {
               "role": "system",
-              "content": '''
+              "content":
+                  '''
                   You are a task parsing system.
                   Read the user's input and return ONLY a standard JSON object,
                   without markdown, without explanation, and without any additional text outside the JSON.
@@ -76,10 +76,7 @@ class AiService extends GetxService {
                   }
                   ''',
             },
-            {
-              "role": "user",
-              "content": prompt
-            }
+            {"role": "user", "content": prompt},
           ],
           "response_format": {"type": "json_object"},
         }),
@@ -91,7 +88,9 @@ class AiService extends GetxService {
 
         return jsonDecode(jsonString) as Map<String, dynamic>;
       } else {
-        AppAlerts.error(message: "Something went wrong on the server: ${response.statusCode}");
+        AppAlerts.error(
+          message: "Something went wrong on the server: ${response.statusCode}",
+        );
         return null;
       }
     } catch (e) {
