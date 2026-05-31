@@ -115,7 +115,7 @@ class BottomDialog {
 
                         TextFiledAddTask(),
 
-                        CustomActiomChip(),
+                        CustomActionChip(),
 
                         SizedBox(height: AppSizes.p16),
 

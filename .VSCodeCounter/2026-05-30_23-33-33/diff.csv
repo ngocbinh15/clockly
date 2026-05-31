@@ -1,0 +1,9 @@
+"filename", "language", "Dart", "XML", "comment", "blank", "total"
+"f:\androidstudio\clockly\android\app\src\main\AndroidManifest.xml", "XML", 0, 1, 0, 0, 1
+"f:\androidstudio\clockly\lib\bidings\initial_biding.dart", "Dart", -2, 0, 0, 0, -2
+"f:\androidstudio\clockly\lib\core\services\notification_service.dart", "Dart", 41, 0, 0, 9, 50
+"f:\androidstudio\clockly\lib\features\setting\controller\notification_controller.dart", "Dart", 60, 0, 0, 20, 80
+"f:\androidstudio\clockly\lib\features\setting\widgets\support_section.dart", "Dart", 1, 0, 0, 0, 1
+"f:\androidstudio\clockly\lib\features\task_home\bidings\main_home_biding.dart", "Dart", 2, 0, 0, 0, 2
+"f:\androidstudio\clockly\lib\features\task_home\controllers\task_home_controller.dart", "Dart", 11, 0, 0, 3, 14
+"Total", "-", 113, 1, 0, 32, 146

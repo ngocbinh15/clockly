@@ -56,6 +56,8 @@ class PageCalendar extends GetView<CalendarController> {
                     SizedBox(height: AppSizes.p16),
 
                     TodayTask(),
+
+                    SizedBox(height: 60),
                   ],
                 ),
               ),

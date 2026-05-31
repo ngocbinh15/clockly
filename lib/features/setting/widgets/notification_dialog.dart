@@ -46,7 +46,7 @@ class NotificationDialog extends GetView<NotificationController> {
                     ),
                   ),
                   const Spacer(),
-                  // Nút đóng nhanh
+                  // Quick close button
                   IconButton(
                     onPressed: () => Get.back(),
                     icon: Icon(
@@ -129,7 +129,7 @@ class NotificationDialog extends GetView<NotificationController> {
             child: Icon(icon, color: iconColor, size: 24),
           ),
           const SizedBox(width: 16),
-          // Chữ
+          // Text details
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

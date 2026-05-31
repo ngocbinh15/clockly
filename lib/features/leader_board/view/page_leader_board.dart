@@ -46,6 +46,8 @@ class PageLeaderBoard extends GetView<TeamController> {
                     const SizedBox(height: AppSizes.p24),
 
                     LeaderBoard(),
+
+                    SizedBox(height: AppSizes.p40),
                   ],
                 ),
               ),

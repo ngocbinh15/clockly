@@ -40,7 +40,7 @@ class AppearanceDialog extends GetView<SettingsController> {
                 top: 24,
                 bottom: 10,
                 left: 24,
-                right: 24
+                right: 24,
               ),
               child: Row(
                 children: [
@@ -53,7 +53,7 @@ class AppearanceDialog extends GetView<SettingsController> {
                     ),
                   ),
                   const Spacer(),
-                  // Nút đóng nhanh
+                  // Quick close button
                   IconButton(
                     onPressed: () => Get.back(),
                     icon: Icon(

@@ -284,7 +284,7 @@ class TaskHomeController extends GetxController {
       selectedPriority.value = "Low";
     } catch (e) {
       AuthHelper.hideLoading();
-      AppAlerts.error(message: "Lỗi cập nhật: $e");
+      AppAlerts.error(message: "Failed to update task: $e");
     }
   }
 
@@ -303,6 +303,11 @@ class TaskHomeController extends GetxController {
         parsedDate = DateFormat(
           'MMM dd, yyyy - hh:mm a',
         ).parse(dateController.text);
+      }
+
+      if (currUser == null) {
+        AppAlerts.error(message: "User session not found!");
+        return;
       }
 
       isTyping.value = false;
@@ -474,7 +479,7 @@ class TaskHomeController extends GetxController {
 
       updateAllNotifications();
     } catch (e) {
-      AppAlerts.error(message: "Lỗi tải Task: $e");
+      AppAlerts.error(message: "Failed to load tasks: $e");
     } finally {
       isLoading.value = false;
     }

@@ -1,8 +1,7 @@
+import 'package:clockly/core/components/app_alerts.dart';
 import 'package:clockly/features/setting/widgets/payment_processing_dialog.dart';
 import 'package:get/get.dart';
-import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../core/theme/app_colors.dart';
 
 class OptionPlanController extends GetxController {
   var isChoose = 1.obs;
@@ -44,13 +43,9 @@ class OptionPlanController extends GetxController {
     Get.back();
 
     String planName = isChoose.value == 1 ? "Yearly Pro" : "Monthly Pro";
-    Get.snackbar(
-      "Welcome to $planName!",
-      "All premium features are now unlocked.",
-      backgroundColor: AppColors.green,
-      colorText: Colors.white,
-      snackPosition: SnackPosition.TOP,
-      duration: const Duration(seconds: 1),
+    AppAlerts.success(
+      title: "Welcome to $planName!",
+      message: "All premium features are now unlocked.",
     );
   }
 
@@ -90,16 +85,9 @@ class OptionPlanController extends GetxController {
     savePro();
     Get.back();
 
-    Get.snackbar(
-      "Welcome back!",
-      "Your previous purchases have been restored.",
-      backgroundColor: AppColors.green,
-      colorText: Colors.white,
-      snackPosition: SnackPosition.TOP,
-      margin: const EdgeInsets.all(16),
-      borderRadius: 16,
-      icon: const Icon(Icons.check_circle, color: Colors.white),
-      duration: const Duration(seconds: 1),
+    AppAlerts.success(
+      title: "Welcome back!",
+      message: "Your previous purchases have been restored.",
     );
   }
 }

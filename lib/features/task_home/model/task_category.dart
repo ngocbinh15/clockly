@@ -89,8 +89,10 @@ extension TaskCategoryExtension on TaskCategory {
 }
 
 TaskCategory categoryFromDb(String? dbValue) {
+  if (dbValue == null) return TaskCategory.general;
+
   return TaskCategory.values.firstWhere(
-    (e) => e.dbValue.toLowerCase() == dbValue!.toLowerCase(),
+    (e) => e.dbValue.toLowerCase() == dbValue.toLowerCase(),
     orElse: () => TaskCategory.general,
   );
 }

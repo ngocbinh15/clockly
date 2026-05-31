@@ -58,6 +58,8 @@ class PageTask extends GetView<TaskHomeController> {
                       const SizedBox(height: AppSizes.p32),
 
                       CategorizedTaskList(),
+
+                      SizedBox(height: AppSizes.p40),
                     ],
                   ),
                 ),

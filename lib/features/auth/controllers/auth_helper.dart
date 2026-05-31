@@ -184,7 +184,7 @@ class AuthHelper {
                   ),
                   GestureDetector(
                     onTap: () {
-                      // TODO: Gọi lại hàm gửi OTP
+                      // TODO: Recall send OTP function
                     },
                     child: Text(
                       "Resend",

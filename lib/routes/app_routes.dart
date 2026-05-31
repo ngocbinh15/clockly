@@ -12,4 +12,6 @@ class AppRoutes {
   static const setting = "/setting";
   static const chat = "/chat";
   static const subcription = "/subcription";
+  static const privacy = "/privacy";
+  static const integration = "/integration";
 }

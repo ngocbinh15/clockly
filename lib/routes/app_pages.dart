@@ -12,6 +12,8 @@ import 'package:clockly/features/page_main_home.dart';
 import 'package:clockly/features/setting/bidings/edit_bidings.dart';
 import 'package:clockly/features/setting/bidings/setting_binding.dart';
 import 'package:clockly/features/setting/views/page_edit_profile.dart';
+import 'package:clockly/features/setting/views/page_integrations.dart';
+import 'package:clockly/features/setting/views/page_privacy_terms.dart';
 import 'package:clockly/features/setting/views/page_settings.dart';
 import 'package:clockly/features/setting/views/page_subcription.dart';
 import 'package:clockly/routes/app_routes.dart';
@@ -60,5 +62,7 @@ class AppPages {
     ),
     GetPage(name: AppRoutes.chat, page: () => PageChat()),
     GetPage(name: AppRoutes.subcription, page: () => PageSubcription()),
+    GetPage(name: AppRoutes.privacy, page: () => PagePrivacyTerms()),
+    GetPage(name: AppRoutes.integration, page: () => PageIntegrations()),
   ];
 }

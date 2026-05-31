@@ -169,7 +169,7 @@ class ProductivityTrendCard extends GetView<AnalysisController> {
                                   fontSize: 12,
                                   fontWeight: isTouched
                                       ? FontWeight.w700
-                                      : FontWeight.w500, // Đậm lên nếu chạm
+                                      : FontWeight.w500, // Bold when touched
                                 ),
                               ),
                             );
