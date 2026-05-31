@@ -224,4 +224,4 @@ We release Clockly under the MIT License. Contributions to enhance features or r
 * **Email**: binhnguyenngoc.it@gmail.com
 * **GitHub**: [@ngocbinh15](https://github.com/ngocbinh15)
 
-_We develop Clockly as an active project. Report issues or send recommendations to support our roadmap! 🚀_
+_Keep coding, Keep learning 🚀_
