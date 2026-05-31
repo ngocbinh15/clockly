@@ -89,7 +89,7 @@ class EditTaskBottomSheet extends GetView<TaskHomeController> {
                     const SizedBox(height: AppSizes.p16),
 
                     TextFiledAddTask(),
-                    CustomActiomChip(),
+                    CustomActionChip(),
                     const SizedBox(height: AppSizes.p16),
 
                     Obx(() {

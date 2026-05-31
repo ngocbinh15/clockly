@@ -21,6 +21,7 @@ class PageMainHome extends GetView<TaskHomeController> {
       final _ = ThemeHelper.isDark;
 
       return Scaffold(
+        extendBody: true,
         backgroundColor: AppColors.background,
         body: IndexedStack(
           index: controller.bottomNavIndex.value,

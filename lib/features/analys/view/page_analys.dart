@@ -61,7 +61,7 @@ class PageAnalys extends GetView<AnalysisController> {
 
                   const WeeklyPerformanceCard(),
 
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 100),
                 ],
               ),
             ),

@@ -19,7 +19,7 @@ class PageSplash extends GetView<SplashController> {
         height: double.infinity,
         width: double.infinity,
         decoration: BoxDecoration(
-          color: AppColors.background,
+          color: Color(0xFFF6F6F8),
           gradient: RadialGradient(
             center: Alignment(0.0, -0.2),
             radius: 1.7,

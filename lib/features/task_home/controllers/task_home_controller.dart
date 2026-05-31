@@ -305,6 +305,11 @@ class TaskHomeController extends GetxController {
         ).parse(dateController.text);
       }
 
+      if (currUser == null) {
+        AppAlerts.error(message: "User session not found!");
+        return;
+      }
+
       isTyping.value = false;
       AuthHelper.showLoading();
 
