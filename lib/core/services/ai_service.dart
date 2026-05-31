@@ -32,11 +32,11 @@ class AiService extends GetxService {
             {
               "role": "system",
               "content": '''
-                  Bạn là hệ thống bóc tách dữ liệu công việc. 
-                  Hãy đọc câu của người dùng và CHỈ trả về JSON chuẩn, 
-                  không markdown, không giải thích, không thêm text ngoài JSON.
+                  You are a task parsing system.
+                  Read the user's input and return ONLY a standard JSON object,
+                  without markdown, without explanation, and without any additional text outside the JSON.
                   
-                  Cấu trúc yêu cầu:
+                  Required JSON structure:
                   {
                     "title": String,
                     "description": String,
@@ -45,28 +45,28 @@ class AiService extends GetxService {
                     "priority": "Low | Medium | High"
                   }
                   
-                  Hôm nay là ngày $today.
+                  Today is $today.
                   
-                  Quy tắc thời gian:
-                  - ngày mai = +1 ngày
-                  - ngày mốt = +2 ngày
-                  - ngày kia = +3 ngày
+                  Time rules:
+                  - "ngày mai" (tomorrow) = +1 day
+                  - "ngày mốt" (day after tomorrow) = +2 days
+                  - "ngày kia" (3 days from now) = +3 days
                   
                   Rules:
-                  - "title" phải ngắn gọn, súc tích
-                  - "description" mô tả chi tiết hơn nếu có thông tin,
-                  - Nếu người dùng không nhập giờ thì mặc định là "12:00"
-                  - Nếu không xác định được category thì dùng "General"
-                  - Nếu không xác định được priority thì dùng "Medium"
+                  - "title" must be short and concise
+                  - "description" should describe details if information is present
+                  - If the user does not input a specific time, default to "12:00"
+                  - If the category cannot be determined, use "General"
+                  - If the priority cannot be determined, use "Medium"
                   
                   Priority rules:
-                  - Từ như "gấp", "quan trọng", "urgent", "ASAP" => "High"
-                  - Từ như "khi rảnh", "không gấp" => "Low"
+                  - Words like "gấp", "quan trọng", "urgent", "ASAP" => "High"
+                  - Words like "khi rảnh", "không gấp" => "Low"
                   
-                  Ví dụ Input:
+                  Example Input:
                   "mai 8h học DSA chapter graph để chuẩn bị phỏng vấn"
                   
-                  Ví dụ Output:
+                  Example Output:
                   {
                     "title": "Học DSA",
                     "description": "Học chapter graph để chuẩn bị phỏng vấn",

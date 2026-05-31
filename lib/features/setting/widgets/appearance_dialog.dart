@@ -53,7 +53,7 @@ class AppearanceDialog extends GetView<SettingsController> {
                     ),
                   ),
                   const Spacer(),
-                  // Nút đóng nhanh
+                  // Quick close button
                   IconButton(
                     onPressed: () => Get.back(),
                     icon: Icon(

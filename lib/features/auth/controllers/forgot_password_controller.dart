@@ -4,9 +4,7 @@ import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../core/components/custom_snackbar.dart';
 import '../../../core/services/auth_service.dart';
-import '../../../core/theme/app_colors.dart';
 import 'auth_helper.dart';
 
 class ForgotPasswordController extends GetxController {
@@ -65,10 +63,9 @@ class ForgotPasswordController extends GetxController {
     try {
       await authService.resetPassword(passwordController.text.trim());
       authService.logout();
-      CustomSnackbar.snackbar(
-        "Welcome!",
-        "Your account is ready.",
-        AppColors.green,
+      AppAlerts.success(
+        title: "Welcome!",
+        message: "Your account is ready.",
       );
     } catch (e) {
       AppAlerts.error(message: "$e");

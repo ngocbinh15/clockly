@@ -1,10 +1,9 @@
+import 'package:clockly/core/components/app_alerts.dart';
 import 'package:clockly/core/services/auth_service.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../core/components/custom_snackbar.dart';
-import '../../../core/theme/app_colors.dart';
 import '../../../routes/app_routes.dart';
 import 'auth_helper.dart';
 
@@ -52,10 +51,9 @@ class OtpController extends GetxController {
     switch (type) {
       case OtpType.signup:
         await Get.find<AuthService>().logout();
-        CustomSnackbar.snackbar(
-          "Welcome!",
-          "Your account is ready. You can now log in.",
-          AppColors.green,
+        AppAlerts.success(
+          title: "Welcome!",
+          message: "Your account is ready. You can now log in.",
         );
         break;
 

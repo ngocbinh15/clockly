@@ -1,4 +1,3 @@
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:clockly/core/components/app_alerts.dart';
 import 'package:clockly/core/constants/app_size.dart';
 import 'package:clockly/core/theme/app_colors.dart';
@@ -62,14 +61,6 @@ class IntegrationTile extends StatelessWidget {
 
           TextButton(
             onPressed: () {
-              // Get.snackbar(
-              //   "Integrations",
-              //   "${item.name} integration will be available soon!",
-              //   snackPosition: SnackPosition.TOP,
-              //   backgroundColor: AppColors.primary.withValues(alpha: 0.1),
-              //   colorText: isDark ? Colors.white : Colors.black,
-              // );
-
               AppAlerts.warning(
                 message: "${item.name} integration will be available soon!",
                 title: "Integrations",

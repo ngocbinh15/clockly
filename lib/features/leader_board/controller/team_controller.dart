@@ -116,7 +116,7 @@ class TeamController extends GetxController{
 
       searchResults.assignAll(response.map((e) => UserModel.fromMap(e)).toList());
     } catch (e) {
-      debugPrint("Lỗi tìm kiếm: $e");
+      debugPrint("Search error: $e");
     } finally {
       isSearching.value = false;
     }
@@ -175,7 +175,7 @@ class TeamController extends GetxController{
 
       pendingRequests.assignAll(List<Map<String, dynamic>>.from(response));
     } catch (e) {
-      debugPrint("Lỗi tải lời mời kết bạn: $e");
+      debugPrint("Error loading friend requests: $e");
     }
   }
 

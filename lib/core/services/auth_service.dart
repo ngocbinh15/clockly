@@ -1,5 +1,4 @@
-import 'package:clockly/core/components/custom_snackbar.dart';
-import 'package:clockly/core/theme/app_colors.dart';
+import 'package:clockly/core/components/app_alerts.dart';
 import 'package:clockly/features/auth/model/user_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
@@ -23,10 +22,10 @@ class AuthService extends GetxService {
     final session = _supabase.auth.currentSession;
 
     if (session != null) {
-      debugPrint("[AuthService] Đã tìm thấy session, đang tải profile...");
+      debugPrint("[AuthService] Session found, loading profile...");
       await _fetchProfileAndRoute(session.user.id);
     } else {
-      debugPrint("[AuthService] Không có session, chuẩn bị ra màn Login.");
+      debugPrint("[AuthService] No session found, preparing to redirect to Login screen.");
       _handleNoSession();
     }
 
@@ -34,7 +33,7 @@ class AuthService extends GetxService {
       final event = data.event;
       final session = data.session;
 
-      debugPrint("[AuthService] Sự kiện Auth mới: $event");
+      debugPrint("[AuthService] New Auth event: $event");
 
       if (event == AuthChangeEvent.signedIn && session != null) {
         _fetchProfileAndRoute(session.user.id);
@@ -60,15 +59,14 @@ class AuthService extends GetxService {
       currentUser.value = UserModel.fromMap(response);
       isLoggedIn.value = true;
 
-      debugPrint("[AuthService] Tải profile thành công");
+      debugPrint("[AuthService] Profile loaded successfully");
       Get.offAllNamed(AppRoutes.home);
 
     } catch (e, stacktrace) {
-      debugPrint('[AuthService] LỖI TẢI PROFILE: $e\n$stacktrace');
-      CustomSnackbar.snackbar(
-          'Lỗi kết nối',
-          'Không thể lấy dữ liệu người dùng. Vui lòng kiểm tra mạng.',
-          AppColors.red
+      debugPrint('[AuthService] PROFILE LOAD ERROR: $e\n$stacktrace');
+      AppAlerts.error(
+          title: 'Connection Error',
+          message: 'Failed to retrieve user data. Please check your network connection.',
       );
       _clearStateAndGoToLogin();
     }

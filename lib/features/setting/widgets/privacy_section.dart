@@ -49,7 +49,7 @@ class PrivacySection extends StatelessWidget {
                 child: Text(
                   title,
                   style: GoogleFonts.plusJakartaSans(
-                    // Dùng font tiêu đề đồng bộ
+                    // Use a synchronized title font
                     fontSize: 17,
                     fontWeight: FontWeight.w800,
                     color: isDark ? Colors.white : colorScheme.onSurface,
