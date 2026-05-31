@@ -13,4 +13,5 @@ class AppRoutes {
   static const chat = "/chat";
   static const subcription = "/subcription";
   static const privacy = "/privacy";
+  static const integration = "/integration";
 }
