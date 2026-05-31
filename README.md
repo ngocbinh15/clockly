@@ -1,4 +1,4 @@
-# Clockly 🕒
+# Clockly 
 
 <p align="center">
   <img src="assets/images/logo.png" alt="Clockly Logo" width="180px" style="border-radius: 20%;"/>
@@ -150,10 +150,13 @@ We welcome contributions to Clockly! If you'd like to improve the app:
 ---
 
 ## 📄 License
-This project is developed as a final university/coursework project. You may use, inspect, and modify the source code for learning or non-commercial purposes. 
+This project is developed as a coursework project. You may use, inspect, and modify the source code for learning or non-commercial purposes. 
 
 ---
+## 👨‍💻 Author
 
-<p align="center">
-  Made with ❤️ for a better, more organized workspace.
-</p>
+> **Author:** Nguyễn Ngọc Bình  
+> **Email:** binhnguyenngoc.it@gmail.com  
+> **GitHub:** [@ngocbinh15](https://github.com/ngocbinh15) 
+
+_Keep coding, keep learning! 🚀_
